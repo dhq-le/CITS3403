@@ -9,12 +9,12 @@
     <!-- BOOTSTRAP CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <!-- CSS Styles (REPLACE WITH FLASK VERSION WHEN BACKEND IS ADDED) -->
-    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="../static/css/base.css">
     <!------ <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}"> -->
 
     <!------ Favicon (REPLACE WITH FLASK VERSION WHEN BACKEND IS ADDED) -->
-    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
     <!------
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
@@ -28,24 +28,43 @@
 <body>
 
 <!-- Header section -->
-<header>
-    <h1>💪 WELCOME TO GAINSBORO 💪</h1>
-</header>
-<div class="wrapper">
-    <aside id="sidebar">
-        <div class="d-flex justify-content-between p-4">
-            <div class="sidebar-logo">
-                <a href="#">Gainsboro</a>
-            </div>
-            <button class="toggle-btn border-0" type="button">
-                <i id="icon" class='bx bx-menu'></i>
-            </button>
-        </div>
-    </aside>
-    <div class="main">
+    <header>
+        <h1>
+            <i class='bx bx-dumbbell' ></i> WELCOME TO GAINSBORO <i class='bx bx-dumbbell' ></i>
+        </h1>
+    </header>
 
+<!-- Navbar / Toggle -->
+  <div>
+    <div class="container-fluid">
+      <button class="btn btn-outline-primary" type="button" id="menu-button" onclick="toggleSidebar()">
+          <i class='bx bx-menu'></i>
+      </button>
     </div>
-</div>
+  </div>
+
+  <div class="container-fluid">
+      <div class="row">
+      <!-- Sidebar -->
+          <nav id="sidebarMenu" class="sidebar position-fixed">
+              <ul class="nav flex-column p-3">
+                  <li class="nav-item">
+                      <a class="nav-link active" href="#">Start Course</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#">Health</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#">Profile</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#">Logout</a>
+                  </li>
+              </ul>
+          </nav>
+      </div>
+  </div>
+
 <!-- Footer section -->
 <footer>
     <p>&copy; 2025 CITS3403 Group 45. No rights reserved.</p>
@@ -55,7 +74,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 
 <!------ JavaScript (REPLACE WITH FLASK VERSION WHEN BACKEND IS ADDED) -->
-<script src="../app/static/js/base.js"></script>
+<script src="../static/js/base.js"></script>
 <!-- <script src="{{ url_for('static', filename='js/base.js') }}"></script> -->
 
 </body>
