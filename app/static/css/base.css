@@ -1,28 +1,39 @@
 :root {
 	--font-family-base: "Arial", Helvetica, sans-serif;
 	--font-size-base: 16px;
-	--background-color: Azure;
-	--text-color: Black;
-	--highlight-color: DeepSkyBlue;
-	--settings-color: DarkGrey;
-	--navbar-color: Gainsboro;
-	--warning-color: Red;
-	--success-color: Green;
+	--background-color: azure;
+	--text-color: black;
+	--highlight-color: deepskyblue;
+	--settings-color: darkgrey;
+	--navbar-color: gainsboro;
+	--warning-color: red;
+	--success-color: green;
 }
 
 
 html, body {
 	font-family: var(--font-family-base);
 	font-size: var(--font-size-base);
+	color: var(--text-color);
 	margin: 0;
 	padding: 0;
 	height: 100%;
 }
 
 .sidebar {
-	height: 100vh;
-	background-color: #f8f9fa;
+	height: 85vh !important;
+	width: auto;
+	border: 2px solid var(--settings-color);
+	border-radius: 15px;
+	margin-top: 20px;
+	background-color: var(--navbar-color);
+	color: var(--text-color);
 	transition: all 0.3s ease;
+}
+
+.nav-item:hover {
+	background-color: var(--highlight-color);
+	border-radius: 15px;
 }
 
 /* Desktop view */
@@ -33,7 +44,7 @@ html, body {
 	}
 
 	.sidebar.collapsed {
-		transform: translateX(-100%);
+		transform: translateX(-110%);
 	}
 
 	.main {
@@ -61,7 +72,7 @@ html, body {
 	}
 
 	.sidebar.collapsed {
-		transform: translateY(100%);
+		transform: translateY(120%);
 		transition: transform 0.75s ease;
 	}
 
