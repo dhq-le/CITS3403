@@ -23,32 +23,88 @@ html, body {
 
 
 .sidebar {
-	position: fixed;
-	top: 0;
-	left: 0;
 	z-index: 1000;
 	background-color: var(--navbar-color);
 	color: var(--text-color);
 	transition: all 0.3s ease;
 }
 
+.nav-item {
+	transition: all 0.3s ease;
+}
 .nav-item:hover {
 	background-color: var(--highlight-color);
 }
 
+/***** THIS IS THE HEADER CSS FROM RITCH *****/
+/* NAVBAR */
+#header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(90deg, #1e3c72, #2d5aadd0);
+    /* You can change this to another brand color */
+    color: #fff;
+    padding: 1rem 2rem;
+}
+
+#header-bar .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: 'Monoton', cursive, sans-serif;
+}
+
+#header-nav-links a {
+    position: relative;
+    display: inline-block;
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 5px;
+}
+
+/* Pseudo-element for the underline */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: #fff;
+    transition: width 0.4s ease-in-out;
+}
+
+/* On hover, expand the underline */
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+#menu-button {
+	position: absolute;
+	box-sizing: border-box;
+	display: inline-flex;
+	width: 60px;
+	height: 2.5rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+
 /* Desktop view */
 @media (min-width: 768px) {
 	#menu-button {
-		position: absolute;
+		border: 2px solid;
+		border-radius: 5px;
+		height: 2.5rem;
+		margin-top: 1rem;
 		transition: all 0.3s ease;
-		top: 15%; /* Position from the top */
-		left: 200px; /* Position from the left */
+		left: 175px; /* Position from the left */
 		z-index: 1100; /* Higher than sidebar */
 	}
 
 
 	#menu-button.collapsed {
-		transform: translateX(-175px);
+		transform: translateX(-160px);
 	}
 
 	.sidebar {
@@ -83,12 +139,17 @@ html, body {
 @media (max-width: 768px) {
 	#menu-button {
 		position: absolute;
+		transform: translateX(-50%);
+		height: 50px;
 		bottom: 15%; /* Position from the top */
 		left: 50%;
 		z-index: 1100;
 	}
 
 	.sidebar {
+		position: fixed;
+		top: 0;
+		left: 0;
 		width: 100%;
 		height: calc(var(--vh) * 100);
 		text-align:center;

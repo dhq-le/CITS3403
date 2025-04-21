@@ -26,7 +26,7 @@ function updateIconName() {
   if (window.innerWidth < 768) {
     menuButton.setAttribute('name', 'menu');  // Change to 'menu' if width is less than 768px
   } else {
-    menuButton.setAttribute('name', 'menu-alt-left');  // Revert to 'menu-alt-left' if width is greater than or equal to 768px
+    menuButton.setAttribute('name', 'chevrons-right');  // Revert to 'menu-alt-left' if width is greater than or equal to 768px
   }
 }
 
