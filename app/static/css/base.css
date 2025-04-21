@@ -1,9 +1,10 @@
 :root {
+	--vh: 1vh;
 	--font-family-base: "Arial", Helvetica, sans-serif;
 	--font-size-base: 16px;
 	--background-color: azure;
 	--text-color: black;
-	--highlight-color: deepskyblue;
+	--highlight-color: rgba(0, 191, 255, 0.5);
 	--settings-color: darkgrey;
 	--navbar-color: gainsboro;
 	--warning-color: red;
@@ -17,15 +18,15 @@ html, body {
 	color: var(--text-color);
 	margin: 0;
 	padding: 0;
-	height: 100%;
+	height: calc(var(--vh) * 100);
 }
 
+
 .sidebar {
-	height: 85vh !important;
-	width: auto;
-	border: 2px solid var(--settings-color);
-	border-radius: 15px;
-	margin-top: 20px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1000;
 	background-color: var(--navbar-color);
 	color: var(--text-color);
 	transition: all 0.3s ease;
@@ -33,18 +34,39 @@ html, body {
 
 .nav-item:hover {
 	background-color: var(--highlight-color);
-	border-radius: 15px;
 }
 
 /* Desktop view */
 @media (min-width: 768px) {
+	#menu-button {
+		position: absolute;
+		transition: all 0.3s ease;
+		top: 15%; /* Position from the top */
+		left: 200px; /* Position from the left */
+		z-index: 1100; /* Higher than sidebar */
+	}
+
+
+	#menu-button.collapsed {
+		transform: translateX(-175px);
+	}
+
 	.sidebar {
+		height: calc(var(--vh) * 100) !important;
 		width: 250px;
+		padding: 0;
+		margin: 0;
 		transform: translateX(0);
 	}
 
 	.sidebar.collapsed {
 		transform: translateX(-110%);
+	}
+
+	.nav-item {
+		padding: 0;
+		width: 100%;
+		left: 0;
 	}
 
 	.main {
@@ -60,12 +82,15 @@ html, body {
 /* Mobile view */
 @media (max-width: 768px) {
 	#menu-button {
-		display: flex;
-		justify-content: center;
+		position: absolute;
+		bottom: 15%; /* Position from the top */
+		left: 50%;
+		z-index: 1100;
 	}
+
 	.sidebar {
 		width: 100%;
-		height: 100vh;
+		height: calc(var(--vh) * 100);
 		text-align:center;
 		transform: translateY(0);
 		transition: transform 0.75s ease;
