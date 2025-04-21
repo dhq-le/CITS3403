@@ -16,7 +16,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: navy; /* You can change this to another brand color */
+    background: linear-gradient(90deg, #1e3c72, #2d5aadd0);
+    /* You can change this to another brand color */
     color: #fff;
     padding: 1rem 2rem;
 }
@@ -85,22 +86,25 @@ body {
 
 /* CARD STRUCTURE */
 .card-header {
-    background-color: #f7f9fc;
-    padding: 0.75rem 1rem;
+    background-color: rgb(35, 225, 246);
+    height: 2.5rem;
+    padding: 0 1rem;
+    display: flex;
     border-bottom: 1px solid #e0e0e0;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    margin-bottom: 1rem;
 }
 
 .card-header h2 {
-    margin: 0;
+    line-height: 2.5rem;
     font-size: 1rem;
-    color: #333;
+    color: inherit;
     font-weight: 600;
 }
 
 .card-body {
-    padding: 1rem 1.25rem;
+    padding: 1rem 1.25rem
 }
 
 .card-body ul {
@@ -120,22 +124,18 @@ body {
     margin-bottom: 1rem;
 }
 
-.card:hover {
-    transform: translateY(-2px);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+.card:hover .card-header{
+    background-color: #1e3c72;
+    transition: background-color 0.5s ease;
+}
+
+.card:hover h2{
+    color: #fff;
+    transition: color 0.5s ease;
 }
 
 /* PROGRESS TRACKER CARD */
-.progress-tracker-card {
-    grid-column: span 1;
-}
-
 .progress-tracker-item {
-    margin-bottom: 1rem;
-}
-
-.progress-tracker-item h3 {
     margin-bottom: 1rem;
 }
 
@@ -152,10 +152,6 @@ body {
 }
 
 /* NOTES CARD */
-.notes-card {
-    grid-column: span 1;
-}
-
 .note-list p {
     background-color: #f9f9f9;
     margin-bottom: 5px;
@@ -177,11 +173,36 @@ body {
     cursor: pointer;
 }
 
+#note-input{
+    width: 100%;
+    height: 50px;
+    margin-bottom: 0.5rem;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+}
+
+#add-note-btn{
+    background-color: #0366d6;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 30px;
+    transition: all 0.2s ease;
+}
+
+#add-note-btn:hover{
+    background-color: #0056b3;
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 86, 179, 0.4);
+}
+
 .skeleton {
     width: 100%;
     height: 80px; /* adjust height based on content you're mimicking */
     border-radius: 6px;
-    background: linear-gradient(90deg, #eee, #ddd, #eee);
+    background: linear-gradient(90deg, #eee, #d2d0d0, #eee);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;
     margin-bottom: 1rem;
@@ -190,39 +211,4 @@ body {
 @keyframes shimmer {
     0% { background-position: -100% 0; }
     100% { background-position: 100% 0; }
-}
-
-/* TRAINING CARD */
-.training-card {
-    grid-column: span 1;
-}
-
-.training-summary p {
-    margin-bottom: 0.5rem;
-}
-
-.check-result button {
-    margin-top: 0.5rem;
-    background-color: #0366d6;
-    color: #fff;
-    border: none;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-}
-
-.photo-card {
-    grid-column: span 1;
-}
-
-/* PROFILE CARD */
-.profile-card {
-    grid-column: span 1;
-}
-
-.profile-card button {
-    background-color: #0366d6;
-    color: #fff;
-    border: none;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
 }
