@@ -30,9 +30,9 @@
   <main class="dashboard">
 
     <!-- Today's Workout CARD -->
-    <section class="card">
+    <section class="card" id="today-workout">
         <div class="card-header">
-          <h2>Today's Workout</h2>
+          <h2>🏋 Today's Workout</h2>
         </div>
         <div class="card-body">
           <ul>
@@ -43,9 +43,9 @@
       </section>
 
     <!-- Progress Tracker CARD -->
-    <section class="card">
+    <section class="card" id="progress-tracker">
         <div class="card-header">
-            <h2>Progress Tracker</h2>
+            <h2>📈 Progress Tracker</h2>
         </div>
         <!-- Placeholder for progress tracker items @special case -->
         <div class="progress-tracker-item">
@@ -64,23 +64,39 @@
         </div>
     </section>
 
-    <!-- NOTES CARD -->
-    <section class="card">
+    <!-- Health CARD -->
+    <section class="card" id="health">
         <div class="card-header">
-          <h2>Notes</h2>
+            <h2>♥️ Health</h2>
         </div>
-        <div class="note-list skeleton"></div>
-        <!-- Placeholder for notes, skeleton gives like a loading screen for the previous notes added-->
-        <div class="note-list">
-            <textarea placeholder="Add new note here..."></textarea>
-            <button>Add Note</button>
+        <div class="card-body">
+          <p>Name: <span id="user-name">John Doe</span></p>
+          <p>Age: <span id="user-agedddd">30</span></p>
+          <p>Height: <span id="user-height">180 cm</span></p>
+          <p>Weight: <span id="user-weight">75 kg</span></p>
+        </div>
+      <button>Get Started</button>
+    </section>
+
+    <!-- NOTES CARD -->
+    <section class="card" id="notes">
+        <div class="card-header">
+          <h2>📝 Notes</h2>
+        </div>
+        <div id="note-list" class="note-list skeleton">
+          <!-- Notes will be dynamically inserted here -->
+        </div>
+        
+        <div class="note-input-area">
+          <textarea id="note-input" placeholder="Add new note here..."></textarea>
+          <button id="add-note-btn">Add Note</button>
         </div>
     </section>
 
      <!-- TRAINING CARD -->
-     <section class="card">
+     <section class="card" id="training">
         <div class="card-header">
-          <h2>Training</h2>
+          <h2>💪Training</h2>
         </div>
         <div class="card-body">
           <p>Last 7 Days: <span>1/4</span></p>
@@ -94,9 +110,9 @@
   
 
     <!-- PROGRESS PHOTOS CARD -->
-    <section class="card">
+    <section class="card" id="photo-card">
         <div class ="card-header">
-          <h2>Progress Photos</h2>
+          <h2>📸 Progress Photos</h2>
         </div>
         <div class="card-body">
           <div class="photo-placeholder">Photo Placeholder</div>
@@ -104,20 +120,6 @@
           <div class="photo-placeholder">Photo Placeholder</div>
         <p>No photos uploaded yet. <br><em>Progress photo feature coming soon!</em></p>
         </div>
-    </section>
-
-    <!-- PROFILE CARD -->
-    <section class="card" id="profile">
-        <div class="card-header">
-            <h2>Profile</h2>
-        </div>
-        <div class="card-body">
-          <p>Name: <span id="user-name">John Doe</span></p>
-          <p>Age: <span id="user-agedddd">30</span></p>
-          <p>Height: <span id="user-height">180 cm</span></p>
-          <p>Weight: <span id="user-weight">75 kg</span></p>
-        </div>
-      <button>Edit Profile</button>
     </section>
 
   </main>
