@@ -1,0 +1,5 @@
+#local venv variables
+application-env/
+
+#Byte-compiled
+__pycache__/
