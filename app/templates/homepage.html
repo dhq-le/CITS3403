@@ -1,26 +1,12 @@
 {% extends "base.html" %}
+{% block title %}FitnessPlus Main Page{% endblock %}
+
 {% block head %}
-<title>FitnessPlus Main Page</title>
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/homepage.css') }}">
 {% endblock %}
 
-{% block body %}
-<!-- NAVIGATION BAR -->
-<nav class="navbar">
-  <div class="logo">FitnessPlus</div>
-  <div class="nav-links">
-    <a href="#">Home</a>
-    <a href="#">Metrics</a>
-    <a href="#">Nutrition</a>
-    <a href="#">Profile</a>
-    <a href="#">Training</a>
-  </div>
-</nav>
-
-<!-- DASHBOARD HEADER -->
-<header class="dashboard-header">
-  <h1>Welcome back, <span id="username">Username</span>!</h1>
-</header>
-
+{% block content %}
 <!-- MAIN DASHBOARD CONTENT -->
 <main class="dashboard">
 
