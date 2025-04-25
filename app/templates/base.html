@@ -39,15 +39,15 @@
 
 	<!-- Navbar / Toggle -->
 	<div>
-		<div class="container-fluid">
-			<box-icon name='chevrons-right' type="button" id="menu-button" onclick="toggleSidebar()"></box-icon>
-		</div>
+		<button class="menu-button collapsed" type="button" id="menu-button">
+			<box-icon name='chevrons-right' id="menu-icon"></box-icon>
+		</button>
 	</div>
 
 	<div class="container-fluid">
 		<div class="row">
 			<!-- Sidebar -->
-			<nav id="sidebarMenu" class="sidebar position-fixed">
+			<nav id="sidebarMenu" class="sidebar position-fixed collapsed">
 				<ul class="nav flex-column p-3">
 					<li class="nav-item">
 						<a class="nav-link active" href="#">Start Course</a>

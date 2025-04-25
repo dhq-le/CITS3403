@@ -39,6 +39,7 @@ html, body {
 /***** THIS IS THE HEADER CSS FROM RITCH *****/
 /* NAVBAR */
 #header-bar {
+	position: sticky;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -71,7 +72,7 @@ html, body {
     width: 0;
     height: 2px;
     background-color: #fff;
-    transition: width 0.4s ease-in-out;
+    transition: width 0.2s ease-in-out;
 }
 
 /* On hover, expand the underline */
@@ -80,13 +81,15 @@ html, body {
 }
 
 #menu-button {
+	border: 2px solid;
+	border-radius: 5px;
 	position: absolute;
 	box-sizing: border-box;
 	display: inline-flex;
-	width: 60px;
+	width: 4rem;
 	height: 2.5rem;
-	padding-left: 1rem;
-	padding-right: 1rem;
+	justify-content: center;
+	align-items: center;
 }
 
 
@@ -95,13 +98,20 @@ html, body {
 	#menu-button {
 		border: 2px solid;
 		border-radius: 5px;
-		height: 2.5rem;
 		margin-top: 1rem;
 		transition: all 0.3s ease;
 		left: 175px; /* Position from the left */
 		z-index: 1100; /* Higher than sidebar */
 	}
 
+	#menu-icon {
+
+	}
+
+	#menu-icon.rotate {
+		transform: rotate(180deg);
+		transform-origin: center;
+	}
 
 	#menu-button.collapsed {
 		transform: translateX(-160px);
