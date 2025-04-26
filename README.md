@@ -33,7 +33,7 @@ source venv/bin/activate
 pip install -r 'requirements.txt'
 ```
 
-4. Initialise the database
+4. Initialise the database **(IGNORE THIS STEP FOR NOW, DB DOESNT EXIST YET)**
 ```
 flask db upgrade
 ```
