@@ -8,10 +8,54 @@ placeholder
 | 23625105 | Daniel Le      | dhq-le         |
 | 23101312 | Mos Hassanein  | llullabyee     |
 | 23940731 | Ritch Rayawang | Ritch-Wang     |
-| 24260829 | Ziyuan Jiang   | placeholder    |
+| 24260829 | Ziyuan Jiang   | Michae-ZY    |
 
-## Launch Instructions
-placeholder
+## Environment Setup
+1. Clone the repository. git clone https://github.com/dhq-le/CITS3403-Project.git
 
-## Testing Instructions
-placeholder
+2. Create a virtual environment and activate it.
+
+Windows:
+```
+python -m venv venv
+venv\Scripts\activate
+```
+
+
+macOS/Linux:
+```
+python3 -m venv venv
+source venv/bin/activate
+```
+
+3. Install requirements.txt using:
+```
+pip install -r 'requirements.txt'
+```
+
+4. Initialise the database
+```
+flask db upgrade
+```
+
+5. Start the server (note: On macOS you may need to specify a port, as the default port 5000 is occupied by the AirPlay Receiver):
+```
+flask run --port=7000
+```
+Note: If you specify --debug it will automatically reload python files if you make any edits. Use this while in development.
+```
+flask run --debug
+```
+
+## Uploading to GitHub
+If you install any dependencies, ensure that these are added to the requirements.txt file. 
+This can either be done manually, or you can run:
+```python
+pip freeze > requirements.txt
+```
+OR
+```python
+pip3 freeze > requirements.txt
+```
+
+**NOTE:** When using pip freeze, ensure you are in the virtual environment, otherwise you risk adding any unnecessary modules installed on your computer.
