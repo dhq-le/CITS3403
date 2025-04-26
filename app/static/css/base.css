@@ -24,6 +24,7 @@ html, body {
 
 .sidebar {
 	z-index: 1000;
+	position: fixed;
 	background-color: var(--navbar-color);
 	color: var(--text-color);
 	transition: all 0.3s ease;
@@ -81,9 +82,9 @@ html, body {
 }
 
 #menu-button {
+	position: fixed;
 	border: 2px solid;
 	border-radius: 5px;
-	position: absolute;
 	box-sizing: border-box;
 	display: inline-flex;
 	width: 4rem;
@@ -136,6 +137,7 @@ html, body {
 	}
 
 	.main {
+		z-index: 1;
 		margin-left: 250px;
 		transition: margin-left 0.3s ease;
 	}
@@ -148,7 +150,6 @@ html, body {
 /* Mobile view */
 @media (max-width: 768px) {
 	#menu-button {
-		position: absolute;
 		transform: translateX(-50%);
 		height: 50px;
 		bottom: 15%; /* Position from the top */

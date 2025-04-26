@@ -11,48 +11,6 @@ body {
     color: black;
 }
 
-/* NAVBAR */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(90deg, #1e3c72, #2d5aadd0);
-    /* You can change this to another brand color */
-    color: #fff;
-    padding: 1rem 2rem;
-}
-
-.navbar .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    font-family: 'Monoton', cursive, sans-serif;
-}
-
-.nav-links a {
-    position: relative;
-    display: inline-block;
-    color: #fff;
-    text-decoration: none;
-    padding: 5px 5px;
-}
-
-/* Pseudo-element for the underline */
-.nav-links a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0%;
-    height: 2px;
-    background-color: #fff;
-    transition: width 0.4s ease-in-out;
-}
-
-/* On hover, expand the underline */
-.nav-links a:hover::after {
-    width: 100%;
-}
-
 /* DASHBOARD HEADER */
 .dashboard-header {
     display: flex;

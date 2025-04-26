@@ -25,7 +25,7 @@ def index():
         WorkoutPlan(session['username'], ["Push-ups", "Squats", "Lunges"]),
         WorkoutPlan(session['username'], ["Running", "Cycling", "Swimming"]),
     ]
-    return render_template('homepage.html', plans=plans)
+    return render_template('home.html', plans=plans)
 
 @application.route('/logout')
 def logout():

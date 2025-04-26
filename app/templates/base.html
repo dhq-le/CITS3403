@@ -3,41 +3,42 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="FitnessPlus App">
+
+	<title>{% block title %}FitnessPlus{% endblock %}</title>
+
+	{% block head %}
+	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+
+	<!-- BOOTSTRAP CSS CDN -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+	<!-- CSS Stylesheet -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
 
 	<!-- BOXICONS -->
 	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-	<!-- BOOTSTRAP CSS CDN -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-	<!-- CSS Styles (REPLACE WITH FLASK VERSION WHEN BACKEND IS ADDED) -->
-	<link rel="stylesheet" href="/app/static/css/base.css">
-	<!------ <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}"> -->
-
-	<!------ Favicon (REPLACE WITH FLASK VERSION WHEN BACKEND IS ADDED) -->
-	<link rel="icon" href="/app/static/images/favicon.ico" type="image/x-icon">
-	<link rel="shortcut icon" href="/app/static/images/favicon.ico" type="image/x-icon">
-	<!------
+	<!-- Favicon -->
 	<link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
 	<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
-	-->
 
-	<!------ Meta description (CHANGE THIS LATER) -->
-	<meta name="description" content="Welcome to Gainsboro, the number 1 exercise app for all your needs!">
+	{% endblock %}
 </head>
 
 
 <body>
-
 	<!-- Header section -->
 		<!-- NAVIGATION BAR -->
-	<nav class="navbar" id="header-bar">
-		<div class="logo">FitnessPlus</div>
-		<div class="nav-links" id="header-nav-links">
-			  <a href="#">Profile</a>
-		</div>
-	</nav>
+	<header>
+		<nav class="navbar" id="header-bar">
+			<div class="logo">FitnessPlus</div>
+			<div class="nav-links" id="header-nav-links">
+				  <a href="#">Profile</a>
+			</div>
+		</nav>
+	</header>
 
-
-	<!-- Navbar / Toggle -->
+	<!-- Menu Button -->
 	<div>
 		<button class="menu-button collapsed" type="button" id="menu-button">
 			<box-icon name='chevrons-right' id="menu-icon"></box-icon>
@@ -51,6 +52,9 @@
 				<ul class="nav flex-column p-3">
 					<li class="nav-item">
 						<a class="nav-link active" href="#">Start Course</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#" href=" {{ url_for('index') }}">Home</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="#">Metrics</a>
@@ -69,20 +73,23 @@
 		</div>
 	</div>
 
+	<div class="main-content" id="main">
+		{% block content %} {% endblock %}
+	</div>
+
+
 	<!-- Footer section -->
-	<footer>
+	<footer class="text-center py-3">
 		<p>&copy; 2025 CITS3403 Group 45. No rights reserved.</p>
 	</footer>
 
+	{% block scripts %}
 	<!-- BOXICON JS -->
 	 <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-
 	<!-- BOOTSTRAP JS CDN -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
-
-	<!------ JavaScript (REPLACE WITH FLASK VERSION WHEN BACKEND IS ADDED) -->
-	<script src="../static/js/base.js"></script>
-	<!-- <script src="{{ url_for('static', filename='js/base.js') }}"></script> -->
-
+	<!-- JavaScript -->
+	<script src="{{ url_for('static', filename='js/base.js') }}"></script>
+	{% endblock %}
 </body>
 </html>

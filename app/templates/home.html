@@ -6,7 +6,12 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/homepage.css') }}">
 {% endblock %}
 
+
 {% block content %}
+<header class="dashboard-header">
+  <h1>Welcome back, <span id="username">Username</span>!</h1>
+</header>
+
 <!-- MAIN DASHBOARD CONTENT -->
 <main class="dashboard">
 
@@ -55,7 +60,7 @@
     </div>
     <div class="card-body">
       <p>Name: <span id="user-name">John Doe</span></p>
-      <p>Age: <span id="user-agedddd">30</span></p>
+      <p>Age: <span id="user-age">30</span></p>
       <p>Height: <span id="user-height">180 cm</span></p>
       <p>Weight: <span id="user-weight">75 kg</span></p>
     </div>
@@ -111,5 +116,5 @@
 
 {% block scripts %}
 {{ super() }}
-<script src="{{ url_for('static', filename='js/notes.js') }}"></script>
+<script src="{{ url_for('static', filename='js/home.js') }}"></script>
 {% endblock %}
