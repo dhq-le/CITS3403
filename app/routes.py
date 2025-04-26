@@ -1,7 +1,7 @@
 from flask import render_template, session, redirect, url_for, request
 from app import application
 from app.forms import LoginForm
-from app.models import WorkoutPlan
+from app.models import WorkoutPlan, Workout
 
 @application.route('/login', methods=['GET', 'POST'])
 def login():
@@ -31,3 +31,19 @@ def index():
 def logout():
     session.clear()
     return redirect(url_for('login'))
+
+@application.route('/profile')
+def profile():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    
+    workout_history = [
+        Workout('2025-04-27', 'Bench Press', '4x10', '60kg', 200),
+        Workout('2025-04-26', 'Deadlift', '5x5', '100kg', 300),
+        Workout('2025-04-25', 'Squats', '4x8', '80kg', 250),
+        Workout("2025-04-25", "Running", "30min", "-", 400),
+        Workout("2025-04-24", "Cycling", "45min", "-", 350),
+    ]
+    
+    return render_template('profile.html', username=session['username'], workout_history=workout_history)
+

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}FitnessPlus Profile{% endblock %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+{% block content %}
+<main class="dashboard profile-dashboard">
+  <!-- Profile Info CARD -->
+  <section class="card" id="profile-info">
+    <div class="card-header">
+      <h2>👤 Profile</h2>
+    </div>
+    <div class="card-body profile-info-body">
+      <img src="{{ url_for('static', filename='images/user.png') }}" alt="Profile Picture" class="profile-pic">
+      <div class="profile-details">
+        <p><strong>Username:</strong> {{ username }}</p>
+        <p><strong>Friends:</strong> {{ friends_count }}</p>
+        <button>Edit Profile</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Workout History CARD -->
+  <section class="card" id="workout-history">
+    <div class="card-header">
+      <h2>🏋️ Workout History</h2>
+    </div>
+    <div class="card-body">
+      {% for workout in workout_history %}
+      <div class="workout-entry">
+        <p><strong>Date:</strong> {{ workout.date }}</p>
+        <p><strong>Exercise:</strong> {{ workout.exercise }}</p>
+        <p><strong>Sets x Reps:</strong> {{ workout.sets_x_reps }}</p>
+        <p><strong>Weight:</strong> {{ workout.weights }}</p>
+        <p><strong>Calories Burned:</strong> {{ workout.calories_burned }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+</main>
+
+
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,70 @@
+body {
+  background: #f2f4f8;
+  font-family: Arial, sans-serif;
+}
+
+.profile-dashboard {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin: 2rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+  margin-bottom: 2rem;
+  padding: 0;
+}
+
+.card-header {
+  background: #10e7ff; 
+  display:flex;     
+  padding: 0.8rem 1.3rem;
+  border-bottom: 1px solid #e0e0e0;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  margin-bottom: 1rem;
+}
+
+.card:hover .card-header{
+  background-color: #1e3c72;
+  transition: background-color 0.5s ease;
+}
+
+.card:hover h2{
+  color: #fff;
+  transition: color 0.5s ease;
+}
+
+.card-body {
+  padding: 1.5rem 1.5rem 2rem 1.5rem;
+}
+
+
+.profile-info-body {
+  display: flex;
+  align-items: center;
+}
+
+.profile-pic {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 2rem;
+  border: 3px solid #10e7ff;
+  object-fit: cover;
+}
+
+.profile-details p {
+  margin: 0.5rem 0;
+}
+
+.workout-entry {
+  background: #f7fcfd;
+  border-radius: 0.7rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.2rem;
+  box-shadow: 0 2px 4px rgba(16,231,255,0.06);
+}

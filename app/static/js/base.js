@@ -42,3 +42,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	// Run the function whenever the window is resized
 	window.addEventListener('resize', updateIconName);
 });
+
+window.onload = function() {
+    var profileBtn = document.getElementById("ProfileButton");
+    var profileUrl = profileBtn.getAttribute("data-profile-url");
+    profileBtn.onclick = function() {
+        window.location.href = profileUrl;
+    };
+}
