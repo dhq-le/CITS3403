@@ -1,0 +1,179 @@
+:root {
+	--vh: 1vh;
+	--font-family-base: "Arial", Helvetica, sans-serif;
+	--font-size-base: 16px;
+	--background-color: azure;
+	--text-color: black;
+	--highlight-color: rgba(0, 191, 255, 0.5);
+	--settings-color: darkgrey;
+	--navbar-color: gainsboro;
+	--warning-color: red;
+	--success-color: green;
+}
+
+
+html, body {
+	font-family: var(--font-family-base);
+	font-size: var(--font-size-base);
+	color: var(--text-color);
+	margin: 0;
+	padding: 0;
+	height: calc(var(--vh) * 100);
+}
+
+
+.sidebar {
+	z-index: 1000;
+	position: fixed;
+	background-color: var(--navbar-color);
+	color: var(--text-color);
+	transition: all 0.3s ease;
+}
+
+.nav-item {
+	transition: all 0.3s ease;
+}
+.nav-item:hover {
+	background-color: var(--highlight-color);
+}
+
+/***** THIS IS THE HEADER CSS FROM RITCH *****/
+/* NAVBAR */
+#header-bar {
+	position: sticky;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(90deg, #1e3c72, #2d5aadd0);
+    /* You can change this to another brand color */
+    color: #fff;
+    padding: 1rem 2rem;
+}
+
+#header-bar .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: 'Monoton', cursive, sans-serif;
+}
+
+#header-nav-links a {
+    position: relative;
+    display: inline-block;
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 5px;
+}
+
+/* Pseudo-element for the underline */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: #fff;
+    transition: width 0.2s ease-in-out;
+}
+
+/* On hover, expand the underline */
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+#menu-button {
+	position: fixed;
+	border: 2px solid;
+	border-radius: 5px;
+	box-sizing: border-box;
+	display: inline-flex;
+	width: 4rem;
+	height: 2.5rem;
+	justify-content: center;
+	align-items: center;
+}
+
+
+/* Desktop view */
+@media (min-width: 768px) {
+	#menu-button {
+		border: 2px solid;
+		border-radius: 5px;
+		margin-top: 1rem;
+		transition: all 0.3s ease;
+		left: 175px; /* Position from the left */
+		z-index: 1100; /* Higher than sidebar */
+	}
+
+	#menu-icon {
+
+	}
+
+	#menu-icon.rotate {
+		transform: rotate(180deg);
+		transform-origin: center;
+	}
+
+	#menu-button.collapsed {
+		transform: translateX(-160px);
+	}
+
+	.sidebar {
+		height: calc(var(--vh) * 100) !important;
+		width: 250px;
+		padding: 0;
+		margin: 0;
+		transform: translateX(0);
+	}
+
+	.sidebar.collapsed {
+		transform: translateX(-110%);
+	}
+
+	.nav-item {
+		padding: 0;
+		width: 100%;
+		left: 0;
+	}
+
+	.main {
+		z-index: 1;
+		margin-left: 250px;
+		transition: margin-left 0.3s ease;
+	}
+
+	.main.expanded {
+		margin-left: 0;
+	}
+}
+
+/* Mobile view */
+@media (max-width: 768px) {
+	#menu-button {
+		transform: translateX(-50%);
+		height: 50px;
+		bottom: 15%; /* Position from the top */
+		left: 50%;
+		z-index: 1100;
+	}
+
+	.sidebar {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: calc(var(--vh) * 100);
+		text-align:center;
+		transform: translateY(0);
+		transition: transform 0.75s ease;
+	}
+
+	.sidebar.collapsed {
+		transform: translateY(120%);
+		transition: transform 0.75s ease;
+	}
+
+	.main {
+		margin-top: 60px;
+	}
+}
