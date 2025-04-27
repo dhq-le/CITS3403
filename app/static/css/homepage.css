@@ -140,21 +140,6 @@ body {
     padding: 0.5rem;
 }
 
-#add-note-btn{
-    background-color: #0366d6;
-    color: #fff;
-    border: none;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    border-radius: 30px;
-    transition: all 0.2s ease;
-}
-
-#add-note-btn:hover{
-    background-color: #0056b3;
-    transform: scale(1.02);
-    box-shadow: 0 4px 12px rgba(0, 86, 179, 0.4);
-}
 
 .skeleton {
     width: 100%;
