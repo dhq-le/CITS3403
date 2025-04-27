@@ -1,7 +1,7 @@
-# CITS3403 Project - Group 45
+py# Fitness Exercise Tracker Website (CITS3403) - Group 45
 
 ## Description
-placeholder
+Our project is a fitness exercise tracker designed to help users log their workouts, monitor progress, and comparing with friends. The platform allows users to create and manage their exercise routines. This app will record and visualise progress overtime shown through graphs and history from previous workouts. 
 ### Members
 | UWA ID| Name           |   Github User	 |
 |:---------|:---------------|:---------------|
