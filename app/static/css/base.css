@@ -20,6 +20,7 @@ html, body {
 	margin: 0;
 	padding: 0;
 	height: calc(var(--vh) * 100);
+	overflow-x: hidden;
 }
 
 
@@ -152,15 +153,51 @@ html, body {
 		left: 0;
 	}
 
-	.main {
-		z-index: 1;
-		margin-left: 250px;
-		transition: margin-left 0.3s ease;
+	@keyframes slideOut {
+		from {
+			width: 100%;
+			transform: translateX(0);
+		}
+		to {
+			width: calc(100% - 250px);
+			transform: translateX(250px);
+		}
 	}
 
-	.main.expanded {
+	@keyframes slideIn {
+		from {
+			width: calc(100% - 250px);
+			transform: translateX(250px);
+		}
+		to {
+			width: 100%
+			transform: translateX(0);
+		}
+	}
+
+	main, h1 {
+		width: 100%;
+		transform: translateX(0);
+		z-index: 1;
 		margin-left: 0;
 	}
+
+	h1 {
+		margin-left: 4rem;
+		transition: 0.3s ease;
+	}
+
+	h1.expanded {
+		transform: translateX(186px);
+	}
+
+	main.expanded {
+		animation: slideOut 0.3s ease;
+		width: calc(100% - 250px);
+		transform: translateX(250px);
+	}
+
+
 }
 
 /* Mobile view */
