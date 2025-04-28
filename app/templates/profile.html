@@ -9,20 +9,21 @@
 
 {% block content %}
 <main class="dashboard profile-dashboard">
-	<!-- Profile Info CARD -->
-	<section class="card" id="profile-info">
-		<div class="card-header">
-			<h2>👤 Profile</h2>
-		</div>
-		<div class="card-body profile-info-body">
-			<img src="{{ url_for('static', filename='images/user.png') }}" alt="Profile Picture" class="profile-pic">
-			<div class="profile-details">
-				<p><strong>Username:</strong> {{ username }}</p>
-				<p><strong>Friends:</strong> {{ friends_count }}</p>
-				<button class="cool-button">Edit Profile</button>
-			</div>
-		</div>
-	</section>
+  <!-- Profile Info CARD -->
+  <section class="card" id="profile-info">
+    <div class="card-header">
+      <h2>👤 Profile</h2>
+    </div>
+    <div class="card-body profile-info-body">
+      <img src="{{ url_for('static', filename='images/user.png') }}" alt="Profile Picture" class="profile-pic">
+      <div class="profile-details">
+        <p><strong>Username:</strong> {{ username }}</p>
+        <p><strong>Friends:</strong> {{ friends_count }}</p>
+        <button class="cool-button">Edit Profile</button>
+      </div>
+    </div>
+  </section>
+
 
 	<!-- Workout History CARD -->
 	<section class="card" id="workout-history">
