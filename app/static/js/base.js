@@ -2,7 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	const sidebar = document.getElementById('sidebarMenu');
 	const menuButton = document.getElementById('menu-button');
 	const menuIcon = document.getElementById('menu-icon');
-	const main = document.getElementById('main');
+	const main = document.getElementsByTagName('main')[0];
+	const header = document.getElementsByTagName('h1')[0];
 
 
 	function toggleSidebar() {
@@ -13,6 +14,15 @@ document.addEventListener('DOMContentLoaded', () => {
 		// Only adjust layout on desktop
 		if (window.innerWidth >= 768) {
 			main.classList.toggle('expanded');
+			if (header) {
+				header.classList.toggle('expanded');
+			}
+
+			if (sidebar.classList.contains('collapsed')) {
+				main.style.animation = "slideIn 0.3s ease";
+			} else {
+				main.style.animation = "";
+			}
 
 		}
 	}
@@ -44,8 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.onload = function() {
-    var profileBtn = document.getElementById("ProfileButton");
-    var profileUrl = profileBtn.getAttribute("data-profile-url");
+    const profileBtn = document.getElementById("ProfileButton");
+    const profileUrl = profileBtn.getAttribute("data-profile-url");
     profileBtn.onclick = function() {
         window.location.href = profileUrl;
     };

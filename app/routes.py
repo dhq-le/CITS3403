@@ -25,7 +25,7 @@ def index():
         WorkoutPlan(session['username'], ["Push-ups", "Squats", "Lunges"]),
         WorkoutPlan(session['username'], ["Running", "Cycling", "Swimming"]),
     ]
-    return render_template('home.html', plans=plans)
+    return render_template('home.html', plans=plans, username=session['username'])
 
 @application.route('/logout')
 def logout():
@@ -36,7 +36,8 @@ def logout():
 def profile():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
-    
+
+    #### Temp hardcoded data until we get a working
     workout_history = [
         Workout('2025-04-27', 'Bench Press', '4x10', '60kg', 200),
         Workout('2025-04-26', 'Deadlift', '5x5', '100kg', 300),
