@@ -28,11 +28,10 @@ class SignUpForm(FlaskForm):
 			message="Password must be at least 8 characters long and include a letter, a number, and a special character."
 		)
 	])
-	age = DateField('Date of Birth', validators=[
-		DataRequired(), validate_date],
+	age = DateField('Date of Birth', validators=[validate_date],
 		render_kw={"max": max_date.strftime('%Y-%m-%d')})
-	height = IntegerField('Height (in cm)', validators=[DataRequired()])
-	weight = IntegerField('Weight (in kg)', validators=[DataRequired()])
+	height = IntegerField('Height (in cm)', validators=[])
+	weight = IntegerField('Weight (in kg)', validators=[])
 	submit = SubmitField('Sign Up!')
 
 class WorkoutForm(FlaskForm):

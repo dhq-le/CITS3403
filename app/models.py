@@ -7,9 +7,10 @@ class Usernames(db.Model):
                    primary_key=True, autoincrement=True)  # although not necessary, it is a good practice to have an id column and quicker lookups
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
-    height = db.Column(db.Integer, nullable=False)
-    weight = db.Column(db.Integer, nullable=False)
-    age = db.Column(db.Integer, nullable=False)
+    height = db.Column(db.Integer, nullable=True)
+    weight = db.Column(db.Integer, nullable=True)
+    age = db.Column(db.Integer, nullable=True)
+    ## if we have time later add email here
 
     def __repr__(self):
         return f"Usernames(id={self.id!r}, username={self.username!r}, password={self.password!r}, height={self.height!r}, weight={self.weight!r}, age={self.age!r})"
