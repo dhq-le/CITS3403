@@ -13,6 +13,8 @@ def signup():
             username = form.username.data
             password = form.password.data
             ## check against database, ensure these dont already exist
+            if usernames.query.filter_by(username=username) is not None: ##### this is untested, make signup page and test
+				error = "Username is already taken."
             ## add password salting and hashing
             new_user = Usernames(username=username, password=password)
             db.session.add(new_user)
