@@ -33,18 +33,30 @@ source venv/bin/activate
 pip install -r 'requirements.txt'
 ```
 
-4. Initialise the database **(IGNORE THIS STEP FOR NOW, DB DOESNT EXIST YET)**
+4. Initialise the database.
+
+Windows:
 ```
-flask db upgrade
+python init_db.py
 ```
 
-5. Start the server (note: On macOS you may need to specify a port, as the default port 5000 is occupied by the AirPlay Receiver):
+
+macOS/Linux:
 ```
-flask run --port=7000
+python3 init_db.py
 ```
-Note: If you specify --debug it will automatically reload python files if you make any edits. Use this while in development.
+
+5. Start the server.
+
+Windows:
 ```
-flask run --debug
+python run.py
+```
+
+
+macOS/Linux:
+```
+python3 run.py
 ```
 
 ## Uploading to GitHub
