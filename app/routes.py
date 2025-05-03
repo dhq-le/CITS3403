@@ -1,9 +1,9 @@
-from flask import Blueprint, render_template, session, redirect, url_for, request, flash
+from flask import render_template, session, redirect, url_for, request, flash
 from app.forms import *
 from app.models import WorkoutPlan, Workout
 from app import db
+from app.blueprints import routes_blueprint
 
-routes_blueprint = Blueprint('routes', __name__)
 
 @routes_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
