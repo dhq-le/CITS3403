@@ -170,7 +170,7 @@ html, body {
 			transform: translateX(250px);
 		}
 		to {
-			width: 100%
+			width: 100%;
 			transform: translateX(0);
 		}
 	}
