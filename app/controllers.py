@@ -1,8 +1,22 @@
 from flask import render_template, session, redirect, url_for, request, flash
 from app.forms import *
-from app.models import WorkoutPlan, Workout
+from app.models import WorkoutPlan, Workout, Usernames, Friends
 from app import db
+import hashlib
 
+## sign up page
+def signup():
+    form = SignUpForm()
+    error = None
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            username = form.username.data
+            password = form.password.data
+            ## check against database, ensure these dont already exist
+            ## add password salting and hashing
+            new_user = Usernames(username=username, password=password)
+            db.session.add(new_user)
+            db.session.commit()
 
 ## login page
 def login():
