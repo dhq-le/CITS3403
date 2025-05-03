@@ -3,7 +3,20 @@ from app import application
 from app.forms import LoginForm
 from app.models import WorkoutPlan, Workout
 
+
 @application.route('/login', methods=['GET', 'POST'])
+def signup():
+    form = LoginForm()
+    error = None
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            username = form.username.data
+            password = form.password.data
+            # Here you would typically check the username and password against a database
+            new_user = Usernames(username=username, password=password)
+            db.session.add(new_user)
+            db.session.commit()
+            
 def login():
     form = LoginForm()
     error = None

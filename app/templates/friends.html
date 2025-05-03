@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Friends List{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="dashboard friends-dashboard">
+  <section class="card" id="friends-list">
+    <div class="card-header">
+      <h2>👥 Friends</h2>
+    </div>
+    <div class="card-body">
+      {% if friends %}
+        <ul class="friends-list">
+          {% for friend in friends %}
+            <li class="friend-entry">
+              <p>{{ friend.friend_username }}</p>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>You have no friends yet.</p>
+      {% endif %}
+    </div>
+  </section>
+</main>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/friends.js') }}"></script>
+{% endblock %}
