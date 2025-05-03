@@ -31,9 +31,9 @@
 		<!-- NAVIGATION BAR -->
 	<header>
 		<nav class="navbar" id="header-bar">
-			<a class="logo" href="{{ url_for('index') }}" style="text-decoration: none; color: inherit;">FitnessPlus</a>
+			<a class="logo" href="{{ url_for('routes.index') }}" style="text-decoration: none; color: inherit;">FitnessPlus</a>
 			<div class="nav-links" id="header-nav-links">
-				  <a href="#" id = "ProfileButton" data-profile-url="{{ url_for('profile') }}">Profile</a>
+				  <a href="#" id = "ProfileButton" data-profile-url="{{ url_for('routes.profile') }}">Profile</a>
 			</div>
 		</nav>
 	</header>
@@ -54,7 +54,7 @@
 						<a class="nav-link active" href="#">Start Course</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href=" {{ url_for('index') }}">Home</a>
+						<a class="nav-link" href=" {{ url_for('routes.index') }}">Home</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="#">Metrics</a>
@@ -67,7 +67,7 @@
 						<a class="nav-link" href="#">Training</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+						<a class="nav-link" href="{{ url_for('routes.logout') }}">Logout</a>
 					</li>
 				</ul>
 			</nav>
