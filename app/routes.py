@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, session, redirect, url_for, request
-from app.forms import LoginForm
+from flask import Blueprint, render_template, session, redirect, url_for, request, flash
+from app.forms import *
 from app.models import WorkoutPlan, Workout
+from app import db
 
 routes_blueprint = Blueprint('routes', __name__)
 
@@ -31,21 +32,33 @@ def index():
 @routes_blueprint.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('login'))
+    return redirect(url_for('routes.login'))
 
 @routes_blueprint.route('/profile')
 def profile():
     if not session.get('logged_in'):
-        return redirect(url_for('login'))
+        return redirect(url_for('routes.login'))
 
     #### Temp hardcoded data until we get a working
-    workout_history = [
-        Workout(date=20250427, exercise='Bench Press', sets=4, reps=10, weights=60, calories_burned=200),
-        Workout(date=20250426, exercise='Deadlift', sets=5, reps=5, weights=100, calories_burned=300),
-        Workout(date=20250425, exercise='Squats', sets=4, reps=8, weights=80, calories_burned=250),
-        Workout(date=20250425, exercise='Running', sets=None, reps=None, weights=None, calories_burned=400),
-        Workout(date=20250424, exercise='Cycling', sets=None, reps=None, weights=None, calories_burned=350),
-    ]
-
+    workout_history = Workout.query.filter_by(username=session['username']).all()
     return render_template('profile.html', username=session['username'], workout_history=workout_history)
 
+
+@routes_blueprint.route('/log', methods=['GET', 'POST'])
+def log_workout():
+    form = WorkoutForm()
+    if form.validate_on_submit():
+        workout = Workout(
+        	username=session['username'],
+            exercise=form.exercise.data,
+            date=form.date.data.strftime('%Y%m%d'),
+            sets=form.sets.data,
+            reps=form.reps.data,
+            calories_burned=form.calories_burned.data,
+            weights=form.weights.data
+        )
+        db.session.add(workout)
+        db.session.commit()
+        flash('Workout logged!')
+        return redirect(url_for('routes.index'))
+    return render_template('log.html', form=form)

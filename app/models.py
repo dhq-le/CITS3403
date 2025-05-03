@@ -10,7 +10,7 @@ class WorkoutPlan:
 
 class Workout(db.Model):
     __tablename__ = 'workout_history'
-    workout_id = db.Column(db.Integer, nullable=False, primary_key=True)
+    workout_id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     username = db.Column(db.String(100), nullable=False) ##add db.ForeignKey('user.username') when user table is added.
     exercise = db.Column(db.String(100), nullable=False)
     date = db.Column(db.Integer)
