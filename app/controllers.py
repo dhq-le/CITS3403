@@ -52,7 +52,6 @@ def profile():
     if not session.get('logged_in'):
         return redirect(url_for('routes.login'))
 
-    #### Temp hardcoded data until we get a working
     workout_history = Workout.query.filter_by(username=session['username']).all()
     return render_template('profile.html', username=session['username'], workout_history=workout_history)
 
