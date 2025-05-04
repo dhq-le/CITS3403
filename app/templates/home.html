@@ -45,7 +45,7 @@
 
 		<div class="progress-tracker-item">
 			<h3>Calories Burnt</h3>
-			<div class="chart-placeholder">Chart Placeholder</div>
+			<canvas id="caloriesburntchart" width="400" height="200"></canvas>
 		</div>
 
 		<div class="progress-tracker-item">
@@ -117,4 +117,6 @@
 {% block scripts %}
 {{ super() }}
 <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/caloriesburnt.js') }}"></script
 {% endblock %}
