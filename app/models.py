@@ -18,8 +18,8 @@ class Usernames(db.Model):
 class Friends(db.Model):
     # This is a composite key table
     __tablename__ = 'friends'
-    user_id = db.Column(db.Integer, db.ForeignKey('usernames.id'), primary_key=True, nullable=False)
-    friend_username = db.Column(db.String(80), db.ForeignKey('usernames.username'), primary_key=True, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('usernames.id', name='fk_friends_user_id'), primary_key=True, nullable=False)
+    friend_username = db.Column(db.String(80), db.ForeignKey('usernames.username', name='fk_friends_username'), primary_key=True, nullable=False)
 
     # create a relationship to the Usernames table using the user_id foreign key
     user = db.relationship('Usernames', foreign_keys=[user_id], backref='friends')
@@ -39,7 +39,7 @@ class WorkoutPlan:
 class Workout(db.Model):
     __tablename__ = 'workout_history'
     workout_id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('usernames.id'), nullable=False) ##add db.ForeignKey('user.username') when user table is added.
+    user_id = db.Column(db.Integer, db.ForeignKey('usernames.id', name='fk_workouts_user_id'), nullable=False) ##add db.ForeignKey('user.username') when user table is added.
     exercise = db.Column(db.String(100), nullable=False)
     date = db.Column(db.Integer)
     sets = db.Column(db.Integer)

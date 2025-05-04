@@ -5,12 +5,15 @@ import os
 from app.config import Config
 
 db = SQLAlchemy()
+migrate = Migrate()
 
 def create_app():
         app = Flask(__name__)
-        migrate = Migrate(app, db)
         app.config.from_object(Config)
+
+        from app.models import Workout, Usernames, Friends
         db.init_app(app)
+        migrate.init_app(app,db)
 
         from app.routes import routes_blueprint
         app.register_blueprint(routes_blueprint)
