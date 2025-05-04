@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+    <div class="login-box">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Logo" class="logo">
+        </div>
+        <h1>Create a FitnessPlus Account</h1>
+        <form method="POST" action="{{ url_for('routes.signup') }}">
+            {{ form.hidden_tag() }}
+            {% if error %}
+            <div class="error">
+                {{ error }}
+            </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label>Username:</label>
+                {{ form.username(class="form-control") }}
+            </div>
+            {% if not error and form.username.errors %}
+            <div class="error">
+                {{ form.username.errors[0] }}
+            </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label>Password:</label>
+                {{ form.password(class="form-control") }}
+            </div>
+            {% if not error and form.password.errors %}
+            <div class="error">
+                {{ form.password.errors[0] }}
+            </div>
+            {% endif %}
+            <div class="form-group">
+                <label>Height:</label>
+                {{ form.height(class="form-control") }}
+            </div>
+            {% if not error and form.height.errors %}
+            <div class="error">
+                {{ form.height.errors[0] }}
+            </div>
+            {% endif %}
+            <div class="form-group">
+                <label>Weight:</label>
+                {{ form.weight(class="form-control") }}
+            </div>
+            {% if not error and form.weight.errors %}
+            <div class="error">
+                {{ form.weight.errors[0] }}
+            </div>
+            {% endif %}
+            <div class="form-group">
+                <label>dob:</label>
+                {{ form.dob(class="form-control") }}
+            </div>
+            {% if not error and form.dob.errors %}
+            <div class="error">
+                {{ form.dob.errors[0] }}
+            </div>
+            {% endif %}
+            {{ form.submit(class="btn-submit") }}
+        </form>
+    </div>
+</body>
+</html>
