@@ -8,11 +8,11 @@ class Usernames(db.Model):
     password = db.Column(db.String(120), nullable=False)
     height = db.Column(db.Integer, nullable=True)
     weight = db.Column(db.Integer, nullable=True)
-    age = db.Column(db.Integer, nullable=True)
+    dob = db.Column(db.Integer, nullable=True)
     ## if we have time later add email here
 
     def __repr__(self):
-        return f"Usernames(id={self.id!r}, username={self.username!r}, password={self.password!r}, height={self.height!r}, weight={self.weight!r}, age={self.age!r})"
+        return f"Usernames(id={self.id!r}, username={self.username!r}, password={self.password!r}, height={self.height!r}, weight={self.weight!r}, dob={self.dob!r})"
 
 
 class Friends(db.Model):

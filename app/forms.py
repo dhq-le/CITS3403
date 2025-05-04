@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, DateField, IntegerField, ValidationError
-from wtforms.validators import DataRequired, Regexp
+from wtforms.validators import DataRequired, Regexp, NumberRange
 import datetime
 
 
@@ -28,10 +28,16 @@ class SignUpForm(FlaskForm):
 			message="Password must be at least 8 characters long and include a letter, a number, and a special character."
 		)
 	])
-	age = DateField('Date of Birth', validators=[validate_date],
+	height = IntegerField('Height (in cm)', validators=[
+		DataRequired(),
+		NumberRange(min=100, max=250, message="Height must be between 100 and 250 cm.")
+	])
+	weight = IntegerField('Weight (in kg)', validators=[
+		DataRequired(),
+		NumberRange(min=30, max=200, message="Weight must be between 30 and 200 kg.")
+	])
+	dob = DateField('Date of Birth', validators=[validate_date],
 		render_kw={"max": max_date.strftime('%Y-%m-%d')})
-	height = IntegerField('Height (in cm)', validators=[])
-	weight = IntegerField('Weight (in kg)', validators=[])
 	submit = SubmitField('Sign Up!')
 
 class WorkoutForm(FlaskForm):

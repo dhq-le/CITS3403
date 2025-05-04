@@ -2,7 +2,7 @@ from flask import render_template, session, redirect, url_for, request, flash
 from app.forms import *
 from app.models import WorkoutPlan, Workout, Usernames, Friends
 from app import db
-import hashlib
+from werkzeug.security import generate_password_hash, check_password_hash
 
 ## sign up page
 def signup():
@@ -12,24 +12,39 @@ def signup():
         if form.validate_on_submit():
             username = form.username.data
             password = form.password.data
+            height = form.height.data
+            weight = form.weight.data
+            dob = form.dob.data
             ## check against database, ensure these dont already exist
-            if Usernames.query.filter_by(username=username).first() is not None: ##### this is untested, make signup page and test
-                error = "Username is already taken."
-            ## add password salting and hashing
-            new_user = Usernames(username=username, password=password)
-            db.session.add(new_user)
-            db.session.commit()
+            if Usernames.query.filter_by(username=username).first() is not None:
+                error = "Username is already taken. Please select a new username."
+                return render_template('signup.html', form=form, error=error)
+            else:
+                hashed = generate_password_hash(password, method='pbkdf2:sha256')
+                new_user = Usernames(username=username, password=hashed, height=height, weight=weight, dob=dob)
+                db.session.add(new_user)
+                db.session.commit()
+                return redirect(url_for('routes.login'))
+    return render_template('signup.html', form=form, error=error)   
 
 ## login page
 def login():
     form = LoginForm()
     error = None
     if form.validate_on_submit():
-        if form.username.data == 'testuser' and form.password.data == '123456':
-            session['logged_in'] = True
-            session['username'] = form.username.data
-            return redirect(url_for('routes.index'))
-        error = 'Invalid username or password.'
+        temp_username = form.username.data
+        if not temp_username:
+            error = 'Please enter a username.'
+        else:
+            user = Usernames.query.filter_by(username=temp_username).first()
+            if user is None:
+                error = 'Username not found.'
+            elif not check_password_hash(user.password, form.password.data):
+                error = 'Incorrect password.'
+            else:
+                session['logged_in'] = True
+                session['username'] = temp_username
+                return redirect(url_for('routes.index'))
     elif request.method == 'POST':
         error = 'Form validation failed.'
     return render_template('login.html', form=form, error=error)
