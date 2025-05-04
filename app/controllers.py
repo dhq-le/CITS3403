@@ -68,8 +68,8 @@ def index():
 def profile():
     if not session.get('logged_in'):
         return redirect(url_for('routes.login'))
-
-    workout_history = Workout.query.filter_by(username=session['username']).all()
+    user = Usernames.query.filter_by(username=session['username']).first()
+    workout_history = Workout.query.filter_by(user_id=user.id).all()
     return render_template('profile.html', username=session['username'], workout_history=workout_history)
 
 ## start course page
@@ -77,7 +77,7 @@ def log_workout():
     form = WorkoutForm()
     if form.validate_on_submit():
         workout = Workout(
-        	username=session['username'],
+        	user_id=Usernames.query.filter_by(username=session['username']).first().id,
             exercise=form.exercise.data,
             date=form.date.data.strftime('%Y%m%d'),
             sets=form.sets.data,

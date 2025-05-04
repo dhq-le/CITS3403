@@ -30,11 +30,11 @@ class SignUpForm(FlaskForm):
 	])
 	height = IntegerField('Height (in cm)', validators=[
 		DataRequired(),
-		NumberRange(min=100, max=250, message="Height must be between 100 and 250 cm.")
+		NumberRange(min=0, message="Height must be greater than zero.")
 	])
 	weight = IntegerField('Weight (in kg)', validators=[
 		DataRequired(),
-		NumberRange(min=30, max=200, message="Weight must be between 30 and 200 kg.")
+		NumberRange(min=0, message="Weight must be greater than zero.")
 	])
 	dob = DateField('Date of Birth', validators=[validate_date],
 		render_kw={"max": max_date.strftime('%Y-%m-%d')})
