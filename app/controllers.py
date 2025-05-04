@@ -1,8 +1,24 @@
 from flask import render_template, session, redirect, url_for, request, flash
 from app.forms import *
-from app.models import WorkoutPlan, Workout
+from app.models import WorkoutPlan, Workout, Usernames, Friends
 from app import db
+import hashlib
 
+## sign up page
+def signup():
+    form = SignUpForm()
+    error = None
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            username = form.username.data
+            password = form.password.data
+            ## check against database, ensure these dont already exist
+            if Usernames.query.filter_by(username=username).first() is not None: ##### this is untested, make signup page and test
+                error = "Username is already taken."
+            ## add password salting and hashing
+            new_user = Usernames(username=username, password=password)
+            db.session.add(new_user)
+            db.session.commit()
 
 ## login page
 def login():
@@ -38,7 +54,6 @@ def profile():
     if not session.get('logged_in'):
         return redirect(url_for('routes.login'))
 
-    #### Temp hardcoded data until we get a working
     workout_history = Workout.query.filter_by(username=session['username']).all()
     return render_template('profile.html', username=session['username'], workout_history=workout_history)
 

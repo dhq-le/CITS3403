@@ -1,16 +1,12 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-import os
+from app.config import Config
 
 db = SQLAlchemy()
 
 def create_app():
         app = Flask(__name__)
-        basedir = os.path.abspath(os.path.dirname(__file__))
-        app.config['SECRET_KEY'] = 'yoursecret-key'
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, '../database.db')
-        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+        app.config.from_object(Config)
         db.init_app(app)
 
         from app.routes import routes_blueprint
