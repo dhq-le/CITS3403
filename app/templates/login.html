@@ -8,10 +8,6 @@
 <body>
     <div class="logo-container">
         <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Logo" class="logo">
-    
-        <div class="signup-link">
-            <p>Don't have an account? <a href="{{ url_for('routes.signup') }}">Sign Up</a></p>
-        </div>
     </div>
     <div class="login-box">
         <h1>Login</h1>
@@ -30,6 +26,9 @@
             </div>
             {{ form.submit(class="btn-submit") }}
         </form>
+        <div class="signup-link">
+            <p>Don't have an account? <a href="{{ url_for('routes.signup') }}">Sign Up</a></p>
+        </div>
     </div>
 </body>
 </html>
