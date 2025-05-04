@@ -34,17 +34,12 @@ pip install -r 'requirements.txt'
 ```
 
 4. Initialise the database.
+```
+flask db migrate -m "comment"
+flask db upgrade
+```
 
-Windows:
-```
-python init_db.py
-```
 
-
-macOS/Linux:
-```
-python3 init_db.py
-```
 
 5. Start the server.
 
