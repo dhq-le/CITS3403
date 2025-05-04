@@ -1,4 +1,7 @@
-from flask import render_template, session, redirect, url_for, request, flash
+
+import sqlite3
+from flask import jsonify, render_template, session, redirect, url_for, request, flash
+from sqlalchemy import text
 from app.forms import *
 from app.models import WorkoutPlan, Workout
 from app import db
@@ -60,3 +63,15 @@ def log_workout():
         flash('Workout logged!')
         return redirect(url_for('routes.index'))
     return render_template('log.html', form=form)
+
+def calories_data():
+    query = text("""  
+        SELECT date, SUM(calories_burned) AS calories
+        FROM workout_history
+        GROUP BY date
+        ORDER BY date ASC
+    """)
+    result = db.session.execute(query).fetchall()
+
+    data = [{"date": str(row.date), "calories": row.calories} for row in result]
+    return jsonify(data)
