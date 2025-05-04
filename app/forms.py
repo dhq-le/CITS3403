@@ -42,7 +42,8 @@ class SignUpForm(FlaskForm):
 
 class WorkoutForm(FlaskForm):
 	exercise = StringField('Exercise', validators=[DataRequired()])
-	date = DateField('Date', format='%Y-%m-%d', validators=[DataRequired()])
+	date = DateField('Date', format='%Y-%m-%d', validators=[DataRequired(), validate_date],
+			render_kw={"max": max_date.strftime('%Y-%m-%d')})
 	sets = IntegerField('Sets', validators=[DataRequired()])
 	reps = IntegerField('Reps', validators=[DataRequired()])
 	calories_burned = IntegerField('Calories Burned', validators=[DataRequired()])
