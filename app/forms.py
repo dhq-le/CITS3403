@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, DateField, IntegerField, ValidationError
+from wtforms import StringField, PasswordField, SubmitField, DateField, IntegerField, ValidationError, SelectField
 from wtforms.validators import DataRequired, Regexp, NumberRange
 import datetime
 
@@ -39,6 +39,14 @@ class SignUpForm(FlaskForm):
 	dob = DateField('Date of Birth', validators=[validate_date],
 		render_kw={"max": max_date.strftime('%Y-%m-%d')})
 	submit = SubmitField('Sign Up!')
+
+class MuscleForm(FlaskForm):
+	muscle = SelectField('Target Muscle Group', validators=[DataRequired()])
+	'''sets = IntegerField('Sets', validators=[DataRequired()])
+	reps = IntegerField('Reps', validators=[DataRequired()])
+	calories_burned = IntegerField('Calories Burned', validators=[DataRequired()])
+	weights = IntegerField('Weight', validators=[DataRequired()])'''
+	submit = SubmitField('Get Exercises')
 
 class WorkoutForm(FlaskForm):
 	exercise = StringField('Exercise', validators=[DataRequired()])
