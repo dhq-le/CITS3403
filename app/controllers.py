@@ -5,6 +5,7 @@ from app.models import WorkoutPlan, Workout, Usernames, Friendship,FriendRequest
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 ## sign up page
 def signup():
     form = SignUpForm()
@@ -76,7 +77,35 @@ def profile():
     workout_history = Workout.query.filter_by(user_id=user.id).all()
     return render_template('profile.html', username=session['username'], workout_history=workout_history)
 
-## start course page
+##API for training
+
+API_NINJAS_KEY = 'zeYa187WE3R+mjgiR3qX5A==lQSGTcv8N1sipKiU'  # Replace with your actual API key
+
+def start_course():
+    if not session.get('logged_in'):
+        return redirect(url_for('routes.login'))
+
+    form = MuscleForm()
+    # API Ninjas valid muscle names
+    muscles = ['abdominals', 'biceps', 'calves', 'chest', 'forearms',
+               'glutes', 'hamstrings', 'lats', 'lower_back', 'middle_back',
+               'neck', 'quadriceps', 'traps', 'triceps']
+    form.muscle.choices = [(m, m.capitalize()) for m in muscles]
+    exercises = []
+
+    if request.is_json:
+        muscle = request.json.get("muscle_id")
+        api_url = f"https://api.api-ninjas.com/v1/exercises?muscle={muscle}"
+        response = requests.get(api_url, headers={'X-Api-Key': API_NINJAS_KEY})
+        if response.status_code == requests.codes.ok:
+            print("API Response:", response.text)
+            exercises = response.json()
+        else:
+            print("API Error:", response.status_code, response.text)
+            exercises = []
+        return jsonify(exercises=exercises)
+
+    return render_template('exercise.html', form=form, exercises=exercises)
 def log_workout():
     form = WorkoutForm()
     if form.validate_on_submit():

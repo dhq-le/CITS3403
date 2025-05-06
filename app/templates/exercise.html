@@ -1,0 +1,13 @@
+<form method="post">
+  {{ form.hidden_tag() }}
+  <label for="muscle">Select Target Muscle:</label>
+  {{ form.muscle() }}
+  {{ form.submit() }}
+</form>
+<hr>
+
+<h1>Exercises for {{ muscle }}</h1>
+<!--This implements AJAX-->
+<ul id="exercise-list"></ul>
+
+<script src="{{ url_for('static', filename='js/exercise.js') }}"></script>
