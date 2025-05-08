@@ -1,48 +1,46 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
   const form = document.querySelector("form");
-  form.addEventListener("submit", async function (e) {
-    e.preventDefault();
+  const muscleSelect = document.querySelector("select[name='muscle']");
+  const heading = document.getElementById("exercise-heading");
 
-    const muscleId = document.querySelector("select[name='muscle']").value;
-
-    try {
-      const response = await fetch("/api/start_course", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": document.querySelector("input[name='csrf_token']").value
-        },
-        body: JSON.stringify({ muscle_id: muscleId })
-      });
-
-      if (!response.ok) {
-        throw new Error(`Server error: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const list = document.querySelector("#exercise-list");
-      list.innerHTML = "";
-
-      if (Array.isArray(data.exercises) && data.exercises.length > 0) {
-        data.exercises.forEach(ex => {
-          const item = document.createElement("li");
-          item.innerHTML = `
-            <strong>${ex.name ?? 'Unnamed exercise'}</strong><br>
-            ${ex.instructions?.trim() || 'No instructions available.'}
-          `;
-          list.appendChild(item);
-        });
-      } else {
-        const item = document.createElement("li");
-        item.textContent = "No exercises found for this muscle group.";
-        list.appendChild(item);
-      }
-    } catch (error) {
-      console.error("Fetch error:", error);
-      const debug = document.querySelector("#debug-message");
-      if (debug) {
-        debug.textContent = "Something went wrong. See console for details.";
-      }
+  try {
+    const response = await fetch("/static/data/exercise.json");
+    if (!response.ok) {
+      throw new Error(`Failed to load JSON file: ${response.status}`);
     }
-  });
+    const allData = await response.json();
+    // Populate the dropdown
+    Object.keys(allData).forEach(muscle => {
+      const option = document.createElement("option");
+      option.value = muscle;
+      option.textContent = muscle.charAt(0).toUpperCase() + muscle.slice(1);
+      muscleSelect.appendChild(option);
+    });
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const muscleId = muscleSelect.value;
+      const data = allData[muscleId] || [];
+
+      heading.textContent = `Exercises for ${muscleId.charAt(0).toUpperCase() + muscleId.slice(1)}`;
+      const list = document.querySelector("#exercise-list");
+      list.innerHTML = ""; // Clear previous results
+      data.forEach(exercise => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <strong>${exercise.name ?? 'Unnamed Exercise'}</strong><br>
+          <em>Equipment:</em> ${exercise.equipment ?? 'N/A'}<br>
+          <em>Calories/min:</em> ${exercise.calories_burned_per_min ?? 'N/A'}<br>
+          <em>Details:</em> ${exercise.details ?? 'No description available.'}
+        `;
+        list.appendChild(li);
+      });
+    });
+  } catch (error) {
+    console.error("Fetch error:", error);
+    const debug = document.querySelector("#debug-message");
+    if (debug) {
+      debug.textContent = "Something went wrong. See console for details.";
+    }
+  }
 });

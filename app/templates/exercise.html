@@ -1,13 +1,21 @@
-<form method="post">
-  {{ form.hidden_tag() }}
-  <label for="muscle">Select Target Muscle:</label>
-  {{ form.muscle() }}
-  {{ form.submit() }}
-</form>
-<hr>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exercise Selector</title>
+</head>
+<body>
+  <form id="exercise-form">
+    <label for="muscle">Select Target Muscle Group:</label>
+    <select name="muscle" class="form-control">
+      <option value="" disabled selected>Select a muscle group</option>
+    </select>
+    <button type="submit" class="btn btn-primary">Get Exercises</button>
+  </form>
 
-<h1>Exercises for {{ muscle }}</h1>
-<!--This implements AJAX-->
-<ul id="exercise-list"></ul>
-
+  <hr>
+  <h1 id="exercise-heading">Exercises</h1>
+  <ul id="exercise-list"></ul>
+  <p id="debug-message" style="color: red;"></p>
+</body>
 <script src="{{ url_for('static', filename='js/exercise.js') }}"></script>
+</html>
