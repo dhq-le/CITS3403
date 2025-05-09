@@ -47,6 +47,7 @@ def login():
             else:
                 session['logged_in'] = True
                 session['username'] = temp_username
+                session['user_id'] = user.id
                 return redirect(url_for('routes.index'))
     elif request.method == 'POST':
         error = 'Form validation failed.'
@@ -96,13 +97,21 @@ def log_workout():
 
 ## calorie data chart
 def calories_data():
-    query = text("""  
+    user_id = session.get('user_id')
+    print("SESSION user_id:", user_id)  # 🔍
+
+    if not user_id:
+        return jsonify({"error": "Not logged in"}), 401
+
+    query = text("""
         SELECT date, SUM(calories_burned) AS calories
         FROM workout_history
+        WHERE user_id = :user_id
         GROUP BY date
         ORDER BY date ASC
     """)
-    result = db.session.execute(query).fetchall()
+    result = db.session.execute(query, {"user_id": user_id}).fetchall()
+    print("QUERY RESULT:", result)  # 🔍
 
     data = [{"date": str(row.date), "calories": row.calories} for row in result]
     return jsonify(data)
