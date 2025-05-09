@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, DateField, IntegerField, ValidationError
-from wtforms.validators import DataRequired, Regexp, NumberRange
+from wtforms.validators import DataRequired, Regexp, NumberRange,Length
 import datetime
 
 
@@ -11,9 +11,9 @@ def validate_date(form, field):
 
 
 class LoginForm(FlaskForm):
-	username = StringField('Username', validators=[DataRequired()])
-	password = PasswordField('Password', validators=[DataRequired()])
-	submit = SubmitField('Login')
+    username = StringField('username', validators=[DataRequired(), Length(1, 64)])
+    password = PasswordField('password', validators=[DataRequired()])
+    submit   = SubmitField('login')
 
 class SignUpForm(FlaskForm):
 	username = StringField('Username', validators=[
@@ -49,3 +49,11 @@ class WorkoutForm(FlaskForm):
 	calories_burned = IntegerField('Calories Burned', validators=[DataRequired()])
 	weights = IntegerField('Weight', validators=[DataRequired()])
 	submit = SubmitField('Save Workout')
+
+
+class AddFriendForm(FlaskForm):
+    friend_username = StringField(
+        'username',
+        validators=[DataRequired(), Length(1, 64)]
+    )
+    submit = SubmitField('Add friend')

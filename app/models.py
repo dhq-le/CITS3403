@@ -1,4 +1,6 @@
 from app import db
+from datetime import datetime
+
 
 class Usernames(db.Model):
     __tablename__ = 'usernames'
@@ -15,17 +17,22 @@ class Usernames(db.Model):
         return f"Usernames(id={self.id!r}, username={self.username!r}, password={self.password!r}, height={self.height!r}, weight={self.weight!r}, dob={self.dob!r})"
 
 
-class Friends(db.Model):
-    # This is a composite key table
-    __tablename__ = 'friends'
-    user_id = db.Column(db.Integer, db.ForeignKey('usernames.id', name='fk_friends_user_id'), primary_key=True, nullable=False)
-    friend_username = db.Column(db.String(80), db.ForeignKey('usernames.username', name='fk_friends_username'), primary_key=True, nullable=False)
+class Friendship(db.Model):
+    __tablename__ = 'friendships'
+    id        = db.Column(db.Integer, primary_key=True)
+    user_id   = db.Column(db.Integer, db.ForeignKey('usernames.id'), nullable=False)
+    friend_id = db.Column(db.Integer, db.ForeignKey('usernames.id'), nullable=False)
+    user   = db.relationship('Usernames', foreign_keys=[user_id], backref='friendships')
+    friend = db.relationship('Usernames', foreign_keys=[friend_id])
 
-    # create a relationship to the Usernames table using the user_id foreign key
-    user = db.relationship('Usernames', foreign_keys=[user_id], backref='friends')
-
-    def __repr__(self):
-        return f"Friends(user_id={self.user_id!r}, friend_username={self.friend_username!r})"
+class FriendRequest(db.Model):
+    __tablename__ = 'friend_requests'
+    id             = db.Column(db.Integer, primary_key=True)
+    from_user_id   = db.Column(db.Integer, db.ForeignKey('usernames.id'), nullable=False)
+    to_user_id     = db.Column(db.Integer, db.ForeignKey('usernames.id'), nullable=False)
+    timestamp      = db.Column(db.DateTime, default=datetime.utcnow)
+    from_user      = db.relationship('Usernames', foreign_keys=[from_user_id])
+    to_user        = db.relationship('Usernames', foreign_keys=[to_user_id])
 
 
 class WorkoutPlan:

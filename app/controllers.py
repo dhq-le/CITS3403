@@ -1,7 +1,7 @@
 from flask import jsonify, render_template, session, redirect, url_for, request, flash
 from sqlalchemy import text
 from app.forms import *
-from app.models import WorkoutPlan, Workout, Usernames, Friends
+from app.models import WorkoutPlan, Workout, Usernames, Friendship,FriendRequest
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -28,27 +28,29 @@ def signup():
                 return redirect(url_for('routes.login'))
     return render_template('signup.html', form=form, error=error)   
 
-## login page
 def login():
     form = LoginForm()
     error = None
+
     if form.validate_on_submit():
-        temp_username = form.username.data
+        temp_username = form.username.data.strip()
         if not temp_username:
-            error = 'Please enter a username.'
+            error = 'please enter a username'
         else:
             user = Usernames.query.filter_by(username=temp_username).first()
             if user is None:
-                error = 'Username not found.'
+                error = 'username not found.'
             elif not check_password_hash(user.password, form.password.data):
-                error = 'Incorrect password.'
+                error = 'wrong password'
             else:
                 session['logged_in'] = True
                 session['username'] = temp_username
-                session['user_id'] = user.id
+                session['user_id']  = user.id
                 return redirect(url_for('routes.index'))
+
     elif request.method == 'POST':
-        error = 'Form validation failed.'
+        error = 'failed pass'
+
     return render_template('login.html', form=form, error=error)
 
 ## logout page
@@ -113,3 +115,69 @@ def calories_data():
 
     data = [{"date": str(row.date), "calories": row.calories} for row in result]
     return jsonify(data)
+
+
+def view_friends():
+    user_id = session.get('user_id')
+    if not user_id:
+        return redirect(url_for('routes.login'))
+
+    # 已接受的好友
+    friendships = Friendship.query.filter_by(user_id=user_id).all()
+    friends     = [fs.friend for fs in friendships]
+
+    # 收到的好友请求
+    requests    = FriendRequest.query.filter_by(to_user_id=user_id).all()
+
+    form = AddFriendForm()
+    if form.validate_on_submit():
+        uname = form.friend_username.data.strip()
+        target = Usernames.query.filter_by(username=uname).first()
+        if not target:
+            flash(f'user "{uname}" not found', 'error')
+        elif target.id == user_id:
+            flash('you can\'t add youeself', 'error')
+        else:
+            already_frd = Friendship.query.filter_by(user_id=user_id, friend_id=target.id).first()
+            already_req = FriendRequest.query.filter_by(from_user_id=user_id, to_user_id=target.id).first()
+            if already_frd:
+                flash(f'"{uname}" is already your friend', 'info')
+            elif already_req:
+                flash(f'already send request to  "{uname}",please wait', 'info')
+            else:
+                fr = FriendRequest(from_user_id=user_id, to_user_id=target.id)
+                db.session.add(fr)
+                db.session.commit()
+                flash(f'already send friend request to  "{uname}"!', 'success')
+        return redirect(url_for('routes.view_friends'))
+
+    return render_template('friends.html',
+                           friends=friends,
+                           requests=requests,
+                           form=form)
+
+def accept_friend(req_id):
+    user_id = session.get('user_id')
+    fr = FriendRequest.query.get(req_id)
+    if fr and fr.to_user_id == user_id:
+        # 建立双向好友关系
+        db.session.add(Friendship(user_id=user_id,      friend_id=fr.from_user_id))
+        db.session.add(Friendship(user_id=fr.from_user_id, friend_id=user_id))
+        db.session.delete(fr)
+        db.session.commit()
+        flash('Request Accept', 'success')
+    else:
+        flash('error', 'error')
+    return redirect(url_for('routes.view_friends'))
+
+
+def decline_friend(req_id):
+    user_id = session.get('user_id')
+    fr = FriendRequest.query.get(req_id)
+    if fr and fr.to_user_id == user_id:
+        db.session.delete(fr)
+        db.session.commit()
+        flash('Request refused', 'info')
+    else:
+        flash('error', 'error')
+    return redirect(url_for('routes.view_friends'))
