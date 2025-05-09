@@ -1,5 +1,5 @@
 from app.blueprints import routes_blueprint
-from app.controllers import calories_data, login, logout, index, profile, log_workout, signup, start_course
+from app.controllers import calories_data, login, logout, index, profile, log_workout, signup, start_exercise
 
 
 
@@ -8,6 +8,6 @@ routes_blueprint.route('/signup', methods=['GET', 'POST'])(signup)
 routes_blueprint.route('/logout')(logout)
 routes_blueprint.route('/')(index)
 routes_blueprint.route('/profile')(profile)
-routes_blueprint.route('/start_course', methods=['GET', 'POST'])(start_course)
+routes_blueprint.route('/start_exercise', methods=['GET', 'POST'])(start_exercise)
 routes_blueprint.route('/log', methods=['GET', 'POST'])(log_workout)
 routes_blueprint.route('/api/calories', methods=['GET'])(calories_data)
