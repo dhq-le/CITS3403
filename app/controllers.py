@@ -58,9 +58,9 @@ def logout():
 
 ## index/dashboard page
 def index():
-    if not session.get('logged_in'):
+    if not session.get('logged_in') or not Usernames.query.filter_by(username=session['username']).first():
         return redirect(url_for('routes.login'))
-    plans = [
+    plans = [ ####TODO: REMOVE THIS HARDCODED PART
         WorkoutPlan(session['username'], ["Push-ups", "Squats", "Lunges"]),
         WorkoutPlan(session['username'], ["Running", "Cycling", "Swimming"]),
     ]
