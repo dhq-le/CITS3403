@@ -82,7 +82,7 @@ def profile():
     workout_history = Workout.query.filter_by(user_id=user.id).all()
     return render_template('profile.html', username=session['username'], workout_history=workout_history)
 
-def start_course():
+def start_exercise():
     if not session.get('logged_in'):
         return redirect(url_for('routes.login'))
 
