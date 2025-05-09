@@ -1,135 +1,220 @@
 {
-    "biceps": [
-      {
-        "name": "Bicep Curl",
-        "calories_burned_per_min": 6,
-        "equipment": "Dumbbell",
-        "details": "Hold the barbell with both hands facing up so the wrists, elbows, and shoulders are in a straight line about shoulder-width apart. Lift the barbell toward the shoulders while bending the elbows and keeping them next to the middle of the body. Slowly lower the weight to return to the starting position. Keep chest still, using just the arms for the movement."
-      },
-      {
-        "name": "bent-Over Row",
-        "calories_burned_per_min": 5.5,
-        "equipment": "Barbell",
-        "details": "Grip a barbell with palms down so that the wrists, elbows, and shoulders are in a straight line. Lift the bar from the rack, bend forward at the hips, and keep the back straight with a slight bend in the knees. Lower the bar towards the floor until the elbows are completely straight, and keep the back flat as the bar is pulled towards the belly button. Then slowly lower the bar to the starting position and repeat."
-      },
-      {
-        "name": "Rotational Uppercut",
-        "calories_burned_per_min": 6.5,
-        "equipment": "Dumbbell",
-        "details": "Stand with the feet hip-width apart, hold one dumbbell in each hand with the palms facing up, and the elbows close to the rib cage. Sink back into the hips and press the left foot into the ground to turn to the right, keep the left elbow bent and perform an uppercut with the left arm, bringing the left elbow to shoulder-height. Slowly lower the left arm and turn back to the center. Push the right foot into the ground to turn the left hip while swinging the right arm up in an uppercut."
-      },
-      {
-        "name": "Standing Biceps Curl",
-        "calories_burned_per_min": 7,
-        "equipment": "Resistance Bands/Cables",
-        "details": "Place the center of a resistance band under one foot and grasp the handles with one in each hand. With the palms facing the ceiling, bend the elbows to bring the hands up toward the shoulders. Keep the elbows in close to the sides through the movement, and lower slowly back down to complete the repetition."
-      }
-    ],
-    "triceps": [
-        {
-            "name": "Tricep Extension",
-            "calories_burned_per_min": 6,
-            "equipment": "Dumbbell",
-            "details": "Adjust the seat to a comfortable height and the weight to the appropriate level before beginning. Sitting with a tall back, rest the upper arms on the pad and grasp the handles. Keeping the elbows in a straight line with the shoulders, press the hands downward. Slowly return to the starting position."
-        },
-        {
-            "name": "Tricep Pressdown",
-            "calories_burned_per_min": 6.5,
-            "equipment": "Resistance Bands/Cables",
-            "details": "Stand with the feet hip-width apart, the hips straight, the back tall, and the knees slightly bent. Place the cable pulley at about shoulder-height and attach a rope handle. Grip the rope with both hands and pull it down towards the thighs while keeping the elbows close to the body. Pause for one second before slowly returning to the starting position.",
-            "image": [
-                "/static/images/tricepPress1.jpg",
-                "/static/images/tricepPress2.jpg"
-            ]
-        },
-        {
-            "name": "Skull Crusher",
-            "calories_burned_per_min": 6,
-            "equipment": "Barbell",
-            "details": "Lie on a flat bench with the feet flat on the floor and the knees bent. Hold a barbell with both hands, palms facing up, and extend the arms straight up towards the ceiling. Slowly lower the barbell towards the forehead by bending the elbows, keeping the upper arms still. Pause for one second before slowly returning to the starting position."
-        },
-        {
-            "name": "Tricep Kickback",
-            "calories_burned_per_min": 6.5,
-            "equipment": "Dumbbell",
-            "details": "Stand with the feet hip-width apart, the hips straight, the back tall, and the knees slightly bent. Hold a dumbbell in each hand with the palms facing in. Bend forward at the hips and keep the back straight. Bend the elbows to bring the dumbbells up towards the shoulders, then straighten the arms behind the body while keeping the elbows close to the sides. Pause for one second before slowly returning to the starting position."
-        }
-    ],
-    "chest": [
-      {
-        "name": "Close-grip Bench Press",
-        "calories_burned_per_min": 7,
-        "equipment": "Barbell",
-        "details": "Lie face up on a barbell bench, then reach up and grip the bar with the hands directly in line with the shoulders and the elbows pointed towards the feet. Unrack the bar and bring it towards the chest by bending the elbows and keeping them close to the ribs. Push the feet into the floor, and press the hips into the bench as the bar is pushed away from the chest to return to the starting position."
-      },
-      {
-        "name": "Plank-Ups",
-        "calories_burned_per_min": 6.5,
-        "equipment": "No Equipment",
-        "details": "Start in a push-up position with the hands under the shoulders and the legs stretched out directly behind. Squeeze the thigh and glute muscles to keep body and legs in a straight line, and lower down to the elbows one elbow at a time. From this position on the elbows, press the hands into the floor one at a time to return to the push-up position."
-      },
-      {
-        "name": "Push-up with Staggered Hands",
-        "calories_burned_per_min": 6,
-        "equipment": "No Equipment",
-        "details": "Start in a push-up position with the hands wider than shoulder-width apart and the legs straight out directly behind the body about hip-width apart. Squeeze the thighs and glutes while moving the right hand forward a couple of inches and the left hand out a couple of inches to the left side. This will create an uneven hand position. Slowly lower the body toward the ground then back up to return to the starting position."
-      },
-      {"name": "Single-arm Chest Press",
-        "calories_burned_per_min": 6.5,
-        "equipment": "Resistance Bands/Cables",
-        "details": "Stand with the feet hip-width apart, the hips straight, the back tall, and the knees slightly bent. Place the pulley at shoulder-height, and use a single handle. Turn so that the back is towards the machine and the right arm is directly in front of the pulley. Grip the handle in the right hand with the palm facing down. Press both feet into the floor, squeeze the stomach, and straighten the arm. Pause at the end for one second before slowly bringing the arm back to lower the weight."
-      }
-    ],
-    "back": [
+  "biceps": [
     {
-        "name": "High-Row",
-        "calories_burned_per_min": 6,
-        "equipment": "Resistance Bands/Cables",
-        "details": "Stand with the feet hip-width apart, the hips straight, the back tall, and the knees slightly bent. Place the cable pulley at about shoulder-height, attach a rope handle, and hold one end of the rope in each hand with the palms facing down. Turn to face the machine. Lift the chest up and pull the elbows back until the hands are right in front of the shoulders, then pause for 2-3 seconds. Slowly straighten the arms to return the weight to the starting position."
+      "name": "Chin Up",
+      "calories_burned_per_min": 7,
+      "equipment": "Pull up bar",
+      "details": "Stand under a chin-up bar and grab it with your palms facing you and thumbs wrapped around. Brace your core, keep your shoulders down and back, and cross your legs for stability. Pull yourself up by bending your elbows and driving them down until your chin reaches the bar. Avoid swinging and keep your body straight. Lower yourself slowly until your arms are fully extended. Keep good posture and repeat. You can add a weight belt for extra resistance.",
+      "image": [
+          "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/190-1.jpg",
+          "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/190-2.jpg",
+          "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/190-3.jpg",
+          "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/190-4.jpg",
+          "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/190-1.jpg"
+      ]
     },
     {
-        "name": "Reverse Fly",
-        "calories_burned_per_min": 6.5,
-        "equipment": "Resistance Bands/Cables",
-        "details": "Place two cable pulleys at about shoulder-height (or slightly below) and stand so that each pulley is on either side of the body. With the left hand, grab the handle from the pulley on the right side of the body. With the right hand, grab the pulley on the left, starting the exercise with both arms crossed in front of the body. Keep the back straight, press the feet into the floor, and spread both arms apart until they are in a straight line. Pause before slowly returning to the starting position."
+      "name": "TRX ® Single-arm Row",
+      "calories_burned_per_min": 5.5,
+      "equipment": "TRX",
+      "details": "Hold the TRX handle in your right hand and face the anchor point. Extend your arm to chest height with your thumb pointing up and shoulder pulled down and back. Step into a split stance with your left foot forward. Brace your core and lean back slightly, keeping your body straight and arm extended. Pull your body up by bending your right elbow, keeping your body stable and wrist neutral. Avoid twisting or arching your back. Lower yourself slowly back to the start by straightening your elbow, keeping your shoulder stable and body aligned. For variations, raise your elbow to shoulder height for more upper back focus, or step further from the anchor to make it harder. Only attempt this if you can keep your core and spine stable.",
+      "image":[
+          "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/92-1.jpg",
+          "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/92-2.jpg"
+      ]
     },
     {
-        "name": "Single Arm Row",
-        "calories_burned_per_min": 6,
-        "equipment": "Resistance Bands/Cables",
-        "details": "Stand with the feet hip-width apart.  Keep the hips straight, the back tall, and the knees slightly bent. Attach a single handle to the cable pulley and press feet into the floor while pulling the cable back towards the body with the left hand. At the end of the movement pause for a second before slowly straightening the left arm to lower the weight to the starting position."
+      "name": "Rotational Uppercut",
+      "calories_burned_per_min": 6.5,
+      "equipment": "Dumbbell",
+      "details": "Stand with the feet hip-width apart, hold one dumbbell in each hand with the palms facing up, and the elbows close to the rib cage. Sink back into the hips and press the left foot into the ground to turn to the right, keep the left elbow bent and perform an uppercut with the left arm, bringing the left elbow to shoulder-height. Slowly lower the left arm and turn back to the center. Push the right foot into the ground to turn the left hip while swinging the right arm up in an uppercut.",
+      "image": [
+          "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/369-1.jpg",
+          "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/369-2.jpg"
+      ]
     },
     {
-        "name": "Seated Cable Row",
-        "calories_burned_per_min": 6.5,
-        "equipment": "Resistance Bands/Cables",
-        "details": "Use a seated pulley cable machine and a narrow handle, and place the feet on the floor with knees bent and maintain a straight back. Hold the handle and lift the chest while slowly pulling the elbows backwards close to the rib cage until the handle touches the front of the stomach. Pause for one second before slowly straightening the arms to return the weight to the original starting position."
+      "name": "Standing Biceps Curl",
+      "calories_burned_per_min": 7,
+      "equipment": "Resistance Bands/Cables",
+      "details": "Place the center of a resistance band under one foot and grasp the handles with one in each hand. With the palms facing the ceiling, bend the elbows to bring the hands up toward the shoulders. Keep the elbows in close to the sides through the movement, and lower slowly back down to complete the repetition.",
+      "image": [
+        "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/322-1.jpg",
+        "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/322-2.jpg"
+      ]
     }
-    ],
-    "shoulder": [
-        {
-            "name": "Bottom-up Press",
-            "calories_burned_per_min": 6,
-            "equipment": "KettleBells",
-            "details": "Stand with the feet hip-width apart, the hips straight, the back tall, and the knees slightly bent. Hold a kettlebell in one hand with the palm facing up and the elbow bent at 90 degrees. Press the kettlebell up towards the ceiling while keeping the elbow bent. Pause for one second before slowly lowering the kettlebell back to the starting position."
-        },
-        {
-            "name": "Diagonal Raise",
-            "calories_burned_per_min": 6.5,
-            "equipment": "Dumbbell",
-            "details": "Stand with the feet hip-width apart, hold one dumbbell in the left hand with the left arm down straight and the left palm resting in front of the right thigh. Press the feet into the ground, keep the hips straight and the back tall. Raise the left arm across the body and out to the left side so that the weight is brought up to shoulder-height and the arm is kept straight."
-        },
-        {
-            "name": "Halo",
-            "calories_burned_per_min": 6,
-            "equipment": "KettleBells",
-            "details": "Stand with the feet approximately shoulder-width apart and hold a kettlebell by the horns directly in front of the chest. Keep the back straight while moving the kettlebell from in front of the chest to over the right shoulder, reaching across the body with the left arm. Continue moving the kettlebell around and behind the head to bring it back to the chest by passing it over the left shoulder. Continue for the desired number of repetitions before switching directions."
-        },
-        {
-            "name": "Rotator Cuff External Rotation",
-            "calories_burned_per_min": 6,
-            "equipment": "Resistance Bands/Cables",
-            "details": "Place a cable pulley at about waist-height and attach a single handle, holding it in the left hand so that the right side of the body is closest to the machine. Keep the left elbow tucked in to the body, and turn the shoulder back away from the body to move the left hand to the outside of the body (the cable should pass in front of the stomach). Pause for one second before slowly lowering the weight to the starting position. Switch sides and repeat."
+  ],
+  "triceps": [
+      {
+          "name": "Tricep Extension",
+          "calories_burned_per_min": 6,
+          "equipment": "Dumbbell",
+          "details": "Adjust the seat to a comfortable height and the weight to the appropriate level before beginning. Sitting with a tall back, rest the upper arms on the pad and grasp the handles. Keeping the elbows in a straight line with the shoulders, press the hands downward. Slowly return to the starting position.",
+          "image": [
+              "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/292-1.jpg",
+              "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/292-2.jpg"
+          ]
+      },
+      {
+          "name": "Tricep Pressdown",
+          "calories_burned_per_min": 6.5,
+          "equipment": "Resistance Bands/Cables",
+          "details": "Stand with the feet hip-width apart, the hips straight, the back tall, and the knees slightly bent. Place the cable pulley at about shoulder-height and attach a rope handle. Grip the rope with both hands and pull it down towards the thighs while keeping the elbows close to the body. Pause for one second before slowly returning to the starting position.",
+          "image": [
+              "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/333-1.jpg",
+              "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/333-2.jpg"
+          ]
+      },
+      {
+          "name": "Seated Overhead Press",
+          "calories_burned_per_min": 6,
+          "equipment": "Barbell",
+          "details": "Sit back on a bench with your head, shoulders, and butt touching the backrest, feet flat on the floor. Brace your core and lift the dumbbells to shoulder height with palms facing forward. Keep your wrists straight and shoulders pulled down and back. Push the dumbbells overhead until your arms are straight, without arching your back. Keep your elbows slightly forward and maintain full body contact with the bench. Lower the dumbbells slowly and with control, bending your elbows while keeping your core tight and wrists neutral. A spotter should stand behind you, ready to assist by the wrists if needed.",
+          "image": [
+            "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/45-1.jpg",
+            "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/45-2.jpg",
+            "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/45-3.jpg"
+          ]
+      },
+      {
+          "name": "Tricep Kickback",
+          "calories_burned_per_min": 6.5,
+          "equipment": "Dumbbell",
+          "details": "Stand in a split stance with your right leg forward and hold a dumbbell in your left hand. Brace your core and lean slightly forward, placing your right hand on your thigh. Keep your back straight, shoulder pulled back, and head aligned with your spine. Position your left upper arm close to your torso with your elbow bent at 90 degrees and forearm hanging straight down. Straighten your left arm by pressing the dumbbell back, keeping your upper arm still. Don't twist your torso or arch your back. Slowly return to the starting position, keeping your upper arm close to your side. Focus on good form to work your triceps safely.",
+          "image": [
+              "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/55-1.jpg",
+              "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/55-2.jpg"
+            ]
         }
-    ]
+    ],
+  "chest": [
+    {
+      "name": "Standing Anti-rotation Press",
+      "calories_burned_per_min": 5,
+      "equipment": "Resistance Bands/Cables",
+      "details": "Stand with the feet hip-width apart and the hips straight with the knees slightly bent. The cable pulley should be at approximately chest height and directly to the right of the body (while pressing the handle away from the body, the cable should be parallel with the chest.) Grip one handle in both hands with the fingers laced together and elbows in by the sides. Keep the back straight and tall while pressing the handle forward, and hold for 2-3 seconds before slowly pulling the elbows back to the sides.",
+      "image": [
+        "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/332-1.jpg",
+        "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/332-2.jpg"
+      ]
+    },
+    {
+      "name": "Single-arm Rotational Press",
+      "calories_burned_per_min": 6.5,
+      "equipment": "Resistance Bands/Cables",
+      "details": "Stand with the feet wide so that the left foot is in front and pointed away from the machine and the right foot is behind and turned parallel to the machine. Keep the hips straight, the back tall, and the knees slightly bent. Place the pulley at shoulder-height, use a single handle, and turn to face in the same direction as the left foot. Grip the handle in the right hand with the palm-down, press the ball of the right foot into the floor and rotate the right leg to turn away from the machine while straightening the right arm. Pause at the end for one second before slowly bringing the arm back to lower the weight while rotating the right hip.",
+      "image": [
+        "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/339-1.jpg",
+        "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/339-2.jpg"
+        
+      ]
+    },
+    {
+      "name": "Standing Chest Fly",
+      "calories_burned_per_min": 6,
+      "equipment": "Resistance Bands/Cables",
+      "details": "Place two cable pulleys slightly above the shoulder height with handle attachments, grip one handle in each hand and step forward so that the arms are outstretched to the sides. With the elbows slightly bent, slowly bring both hands together in front of the body. When the hands are together, pause for one second before slowly returning the arms to the starting position. ",
+      "image": [
+        "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/160-1.jpg",
+        "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/160-2.jpg"
+      ]
+    },
+    {"name": "Single-arm Chest Press",
+      "calories_burned_per_min": 6.5,
+      "equipment": "Resistance Bands/Cables",
+      "details": "Stand with the feet hip-width apart, the hips straight, the back tall, and the knees slightly bent. Place the pulley at shoulder-height, and use a single handle. Turn so that the back is towards the machine and the right arm is directly in front of the pulley. Grip the handle in the right hand with the palm facing down. Press both feet into the floor, squeeze the stomach, and straighten the arm. Pause at the end for one second before slowly bringing the arm back to lower the weight.",
+      "image": [
+        "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/338-1.jpg",
+        "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/338-2.jpg"
+      ]
+    }
+  ],
+  "back": [
+  {
+      "name": "High-Row",
+      "calories_burned_per_min": 6,
+      "equipment": "Resistance Bands/Cables",
+      "details": "Stand with the feet hip-width apart, the hips straight, the back tall, and the knees slightly bent. Place the cable pulley at about shoulder-height, attach a rope handle, and hold one end of the rope in each hand with the palms facing down. Turn to face the machine. Lift the chest up and pull the elbows back until the hands are right in front of the shoulders, then pause for 2-3 seconds. Slowly straighten the arms to return the weight to the starting position.",
+      "image":[
+          "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/336-1.jpg",
+          "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/336-2.jpg"
+      ]
+  },
+  {
+      "name": "Reverse Fly",
+      "calories_burned_per_min": 6.5,
+      "equipment": "Resistance Bands/Cables",
+      "details": "Place two cable pulleys at about shoulder-height (or slightly below) and stand so that each pulley is on either side of the body. With the left hand, grab the handle from the pulley on the right side of the body. With the right hand, grab the pulley on the left, starting the exercise with both arms crossed in front of the body. Keep the back straight, press the feet into the floor, and spread both arms apart until they are in a straight line. Pause before slowly returning to the starting position.",
+      "image":[
+        "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/128-1.jpg",
+        "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/128-2.jpg",
+        "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/128-3.jpg",
+        "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/128-4.jpg"
+      ]
+  },
+  {
+      "name": "Single Arm Row",
+      "calories_burned_per_min": 6,
+      "equipment": "Resistance Bands/Cables",
+      "details": "Stand with the feet hip-width apart.  Keep the hips straight, the back tall, and the knees slightly bent. Attach a single handle to the cable pulley and press feet into the floor while pulling the cable back towards the body with the left hand. At the end of the movement pause for a second before slowly straightening the left arm to lower the weight to the starting position.",
+      "image":[
+        "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/337-1.jpg",
+        "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/337-2.jpg"
+      ]
+  },
+  {
+      "name": "Standing Cable Row",
+      "calories_burned_per_min": 6.5,
+      "equipment": "Resistance Bands/Cables",
+      "details": "Stand with the feet hip-width apart, the hips straight, the back tall, and the knees slightly bent. Place the cable pulley at about chest-height, attach two handles, and hold one handle in each hand with the thumbs pointed to the ceiling and the palms facing each other. Lift the chest, and pull the rope back keeping the arms parallel to the floor and the elbows close to the sides. Once the hands reach the front of stomach, pause and then slowly straighten the elbows to return the weight to the starting position.",
+      "image":[
+        "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/335-1.jpg",
+        "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/335-2.jpg"
+      ]
+  }
+  ],
+  "shoulder": [
+      {
+          "name": "Bottom-up Press",
+          "calories_burned_per_min": 6,
+          "equipment": "KettleBells",
+          "details": "Stand with the feet hip-width apart, the hips straight, the back tall, and the knees slightly bent. Hold a kettlebell in one hand with the palm facing up and the elbow bent at 90 degrees. Press the kettlebell up towards the ceiling while keeping the elbow bent. Pause for one second before slowly lowering the kettlebell back to the starting position.",
+          "image": [
+            "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/396-1.jpg",
+            "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/396-2.jpg"
+          ]
+      },
+      {
+          "name": "Diagonal Raise",
+          "calories_burned_per_min": 6.5,
+          "equipment": "Dumbbell",
+          "details": "Stand with the feet hip-width apart, hold one dumbbell in the left hand with the left arm down straight and the left palm resting in front of the right thigh. Press the feet into the ground, keep the hips straight and the back tall. Raise the left arm across the body and out to the left side so that the weight is brought up to shoulder-height and the arm is kept straight.",
+          "image": [
+            "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/371-1.jpg",
+            "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/371-2.jpg"
+          ]
+      },
+      {
+          "name": "Halo",
+          "calories_burned_per_min": 6,
+          "equipment": "KettleBells",
+          "details": "Stand with the feet approximately shoulder-width apart and hold a kettlebell by the horns directly in front of the chest. Keep the back straight while moving the kettlebell from in front of the chest to over the right shoulder, reaching across the body with the left arm. Continue moving the kettlebell around and behind the head to bring it back to the chest by passing it over the left shoulder. Continue for the desired number of repetitions before switching directions.",
+          "image": [
+            "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/394-1.jpg",
+            "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/394-2.jpg",
+            "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/394-3.jpg"
+          ]
+      },
+      {
+          "name": "Rotational Overhead Press",
+          "calories_burned_per_min": 6,
+          "equipment": "Dumbells",
+          "details": "Stand with the feet hip-width apart, hold one dumbbell in each hand with the palms facing each other and the weights in front of the shoulders. Keep the back straight and turn to the right, and when facing the 3 o’clock position press the right hand straight into the air. To lower the weight, pull the elbow back down and keep the back straight while turning to the left. When facing the 9 o’clock position on the left side, press the left hand straight into the air.",
+          "image": [
+            "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/368-1.jpg",
+            "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/368-2.jpg",
+            "https://ik.imagekit.io/02fmeo4exvw/exercise-library/large/368-3.jpg"
+          ]
+      }
+  ]
 }
