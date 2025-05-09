@@ -23,17 +23,36 @@ document.addEventListener("DOMContentLoaded", async function () {
       const data = allData[muscleId] || [];
 
       heading.textContent = `Exercises for ${muscleId.charAt(0).toUpperCase() + muscleId.slice(1)}`;
-      const list = document.querySelector("#exercise-list");
-      list.innerHTML = ""; // Clear previous results
+      const container = document.querySelector("#exercise-list");
+      container.innerHTML = ""; // Clear previous results
       data.forEach(exercise => {
-        const li = document.createElement("li");
-        li.innerHTML = `
+        const card = document.createElement("div");
+        card.className = "exercise-card";
+
+        const detailDiv = document.createElement("div");
+        detailDiv.className = "exercise-details";
+        detailDiv.innerHTML = `
           <strong>${exercise.name ?? 'Unnamed Exercise'}</strong><br>
           <em>Equipment:</em> ${exercise.equipment ?? 'N/A'}<br>
           <em>Calories/min:</em> ${exercise.calories_burned_per_min ?? 'N/A'}<br>
           <em>Details:</em> ${exercise.details ?? 'No description available.'}
         `;
-        list.appendChild(li);
+        
+        // since there is no gifs available, we will use images but switch them in a short period to illustrate a gif.
+        if (Array.isArray(exercise.image) && exercise.image.length > 0) {
+          const img = document.createElement("img");
+          img.src = exercise.image[0];
+          img.alt = exercise.name;
+          let i = 0;
+          setInterval(() => {
+            i = (i + 1) % exercise.image.length;
+            img.src = exercise.image[i];
+          }, 700);
+          card.appendChild(img);
+        }
+
+        card.appendChild(detailDiv);
+        container.appendChild(card);
       });
     });
   } catch (error) {

@@ -38,13 +38,16 @@ def login():
     if form.validate_on_submit():
         temp_username = form.username.data.strip()
         if not temp_username:
-            error = 'please enter a username'
+            error = 'Please enter a username.'
+            flash(error, 'error')
         else:
             user = Usernames.query.filter_by(username=temp_username).first()
             if user is None:
-                error = 'username not found.'
+                error = 'Username not found.'
+                flash(error, 'error')
             elif not check_password_hash(user.password, form.password.data):
-                error = 'wrong password'
+                error = 'Incorrect password.'
+                flash(error, 'error')
             else:
                 session['logged_in'] = True
                 session['username'] = temp_username
@@ -52,8 +55,8 @@ def login():
                 return redirect(url_for('routes.index'))
 
     elif request.method == 'POST':
-        error = 'failed pass'
-
+        error = 'Form validation failed.'
+        flash(error, 'error')
     return render_template('login.html', form=form, error=error)
 
 ## logout page
