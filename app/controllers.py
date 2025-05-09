@@ -1,5 +1,3 @@
-import sqlite3
-import requests
 from flask import jsonify, render_template, session, redirect, url_for, request, flash
 from sqlalchemy import text
 from app.forms import *
@@ -41,18 +39,22 @@ def login():
         temp_username = form.username.data
         if not temp_username:
             error = 'Please enter a username.'
+            flash(error, 'error')
         else:
             user = Usernames.query.filter_by(username=temp_username).first()
             if user is None:
                 error = 'Username not found.'
+                flash(error, 'error')
             elif not check_password_hash(user.password, form.password.data):
                 error = 'Incorrect password.'
+                flash(error, 'error')
             else:
                 session['logged_in'] = True
                 session['username'] = temp_username
                 return redirect(url_for('routes.index'))
     elif request.method == 'POST':
         error = 'Form validation failed.'
+        flash(error, 'error')
     return render_template('login.html', form=form, error=error)
 
 ## logout page

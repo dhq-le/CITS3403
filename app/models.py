@@ -11,6 +11,8 @@ class Usernames(db.Model):
     dob = db.Column(db.Integer, nullable=True)
     ## if we have time later add email here
 
+    #create a get and set method for the password. 
+
     def __repr__(self):
         return f"Usernames(id={self.id!r}, username={self.username!r}, password={self.password!r}, height={self.height!r}, weight={self.weight!r}, dob={self.dob!r})"
 

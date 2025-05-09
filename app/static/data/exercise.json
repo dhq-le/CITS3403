@@ -36,7 +36,11 @@
             "name": "Tricep Pressdown",
             "calories_burned_per_min": 6.5,
             "equipment": "Resistance Bands/Cables",
-            "details": "Stand with the feet hip-width apart, the hips straight, the back tall, and the knees slightly bent. Place the cable pulley at about shoulder-height and attach a rope handle. Grip the rope with both hands and pull it down towards the thighs while keeping the elbows close to the body. Pause for one second before slowly returning to the starting position."
+            "details": "Stand with the feet hip-width apart, the hips straight, the back tall, and the knees slightly bent. Place the cable pulley at about shoulder-height and attach a rope handle. Grip the rope with both hands and pull it down towards the thighs while keeping the elbows close to the body. Pause for one second before slowly returning to the starting position.",
+            "image": [
+                "/static/images/tricepPress1.jpg",
+                "/static/images/tricepPress2.jpg"
+            ]
         },
         {
             "name": "Skull Crusher",
