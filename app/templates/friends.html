@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Friends-List</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/friends.css') }}">
+</head>
+<body>
+  <div class="friends-container">
+    <h1>Friends-List</h1>
+
+    <!-- 待处理请求 -->
+    {% if requests %}
+      <section class="requests-section">
+        <h2>Friend Request</h2>
+        <ul class="requests-list">
+          {% for r in requests %}
+            <li>
+              {{ r.from_user.username }}
+              <form action="{{ url_for('routes.accept_friend', req_id=r.id) }}"
+                    method="post" style="display:inline;">
+                <button type="submit" class="btn accept-btn">Accept</button>
+              </form>
+              <form action="{{ url_for('routes.decline_friend', req_id=r.id) }}"
+                    method="post" style="display:inline;">
+                <button type="submit" class="btn decline-btn">Refuse</button>
+              </form>
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+
+    <!-- 已接受好友 -->
+    {% if friends %}
+      <div class="friend-list">
+        {% for u in friends %}
+          <div class="friend-card">
+            <div class="avatar">{{ u.username[0]|upper }}</div>
+            <div class="username">{{ u.username }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="no-friends">You currently don't have any friends.</p>
+    {% endif %}
+
+    <!-- 发送好友请求 -->
+    <div class="add-friend-section">
+      <h2>Add Friends</h2>
+      <form method="post" class="add-friend-form">
+        {{ form.hidden_tag() }}
+        {{ form.friend_username(class="friend-input", placeholder="friend username") }}
+        {{ form.submit(class="btn add-btn") }}
+      </form>
+    </div>
+
+    <!-- 消息提示 -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flashes">
+          {% for category, msg in messages %}
+            <div class="flash {{ category }}">{{ msg }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <script src="{{ url_for('static', filename='js/friends.js') }}"></script>
+</body>
+</html>

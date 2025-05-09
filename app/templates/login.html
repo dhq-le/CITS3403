@@ -1,34 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
-    <title>Login</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 <body>
-    <div class="logo-container">
-        <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Logo" class="logo">
-    </div>
+  <header>
+    <img src="{{ url_for('static', filename='logo.jpg') }}"
+         alt="Logo" class="logo">
+  </header>
+
+  <form id="loginForm" action="{{ url_for('routes.login') }}" method="post">
+    {{ form.hidden_tag() }}
     <div class="login-box">
-        <h1>Login</h1>
-        {% if error %}
-            <div class="error">{{ error }}</div>
-        {% endif %}
-        <form method="POST" action="{{ url_for('routes.login') }}">
-            {{ form.hidden_tag() }}
-            <div class="form-group">
-                <label>Username:</label>
-                {{ form.username(class="form-control") }}
-            </div>
-            <div class="form-group">
-                <label>Password:</label>
-                {{ form.password(class="form-control") }}
-            </div>
-            {{ form.submit(class="btn-submit") }}
-        </form>
-        <div class="signup-link">
-            <p>Don't have an account? <a href="{{ url_for('routes.signup') }}">Sign Up</a></p>
+      <div id="step-username">
+        <h1>Welcome back</h1>
+        <div class="field">
+          <fieldset>
+            <legend>Username</legend>
+            {{ form.username(id="usernameInput", placeholder="Please enter a username") }}
+          </fieldset>
         </div>
+        <button type="button" class="btn" id="to-password">Continue</button>
+      </div>
+
+      <div id="step-password" style="display:none;">
+        <h1>Hello,<span id="usernameDisplay"></span></h1>
+        <div class="field">
+          <fieldset>
+            <legend>Password</legend>
+            {{ form.password(id="passwordInput", placeholder="Please enter your password") }}
+          </fieldset>
+        </div>
+        <button type="submit" class="btn">{{ form.submit.label.text }}</button>
+      </div>
+
+      {% if error %}
+        <p class="error">{{ error }}</p>
+      {% endif %}
+      <p class="tip">Don't have a account?<a href="{{ url_for('routes.signup') }}">Signup</a></p>
     </div>
+  </form>
+
+  <script src="{{ url_for('static', filename='js/login.js') }}"></script>
 </body>
 </html>
