@@ -1,5 +1,3 @@
-
-import sqlite3
 from flask import jsonify, render_template, session, redirect, url_for, request, flash
 from sqlalchemy import text
 from app.forms import *
@@ -21,7 +19,7 @@ def signup():
             ## check against database, ensure these dont already exist
             if Usernames.query.filter_by(username=username).first() is not None:
                 error = "Username is already taken. Please select a new username."
-                return render_template('signup.html', form=form, error=error)
+                return render_template('signuphtml', form=form, error=error)
             else:
                 hashed = generate_password_hash(password, method='pbkdf2:sha256')
                 new_user = Usernames(username=username, password=hashed, height=height, weight=weight, dob=dob)
@@ -47,6 +45,7 @@ def login():
             else:
                 session['logged_in'] = True
                 session['username'] = temp_username
+                session['user_id'] = user.id
                 return redirect(url_for('routes.index'))
     elif request.method == 'POST':
         error = 'Form validation failed.'
@@ -96,13 +95,21 @@ def log_workout():
 
 ## calorie data chart
 def calories_data():
-    query = text("""  
+    user_id = session.get('user_id')
+    print("SESSION user_id:", user_id)  # 🔍
+
+    if not user_id:
+        return jsonify({"error": "Not logged in"}), 401
+
+    query = text("""
         SELECT date, SUM(calories_burned) AS calories
         FROM workout_history
+        WHERE user_id = :user_id
         GROUP BY date
         ORDER BY date ASC
     """)
-    result = db.session.execute(query).fetchall()
+    result = db.session.execute(query, {"user_id": user_id}).fetchall()
+    print("QUERY RESULT:", result)  # 🔍
 
     data = [{"date": str(row.date), "calories": row.calories} for row in result]
     return jsonify(data)
