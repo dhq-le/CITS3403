@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       throw new Error(`Failed to load JSON file: ${response.status}`);
     }
     const allData = await response.json();
-    // Populate the dropdown
+    // Populate the dropdown with the group of muscle names
     Object.keys(allData).forEach(muscle => {
       const option = document.createElement("option");
       option.value = muscle;
@@ -26,32 +26,43 @@ document.addEventListener("DOMContentLoaded", async function () {
       const container = document.querySelector("#exercise-list");
       container.innerHTML = ""; // Clear previous results
       data.forEach(exercise => {
-        const card = document.createElement("div");
-        card.className = "exercise-card";
+        const card = document.createElement("section");
+        card.className = "card";
 
-        const detailDiv = document.createElement("div");
-        detailDiv.className = "exercise-details";
-        detailDiv.innerHTML = `
-          <strong>${exercise.name ?? 'Unnamed Exercise'}</strong><br>
-          <em>Equipment:</em> ${exercise.equipment ?? 'N/A'}<br>
-          <em>Calories/min:</em> ${exercise.calories_burned_per_min ?? 'N/A'}<br>
-          <em>Details:</em> ${exercise.details ?? 'No description available.'}
-        `;
+        // Create card header
+        const header = document.createElement("div");
+        header.className = "card-header";
+        header.innerHTML = `<h2>${exercise.name ?? 'Unnamed Exercise'}</h2>`;
+        card.appendChild(header);
+
+        // Create card body
+        const body = document.createElement("div");
+        body.className = "card-body";
         
         // since there is no gifs available, we will use images but switch them in a short period to illustrate a gif.
         if (Array.isArray(exercise.image) && exercise.image.length > 0) {
           const img = document.createElement("img");
           img.src = exercise.image[0];
           img.alt = exercise.name;
+          img.className = "card-img";
           let i = 0;
           setInterval(() => {
             i = (i + 1) % exercise.image.length;
             img.src = exercise.image[i];
           }, 700);
-          card.appendChild(img);
+          body.appendChild(img);
         }
 
-        card.appendChild(detailDiv);
+        // Build details list
+        const detailsList = document.createElement("ul");
+        detailsList.innerHTML = `
+          <li><strong>Equipment:</strong> ${exercise.equipment ?? 'N/A'}</li>
+          <li><strong>Calories/min:</strong> ${exercise.calories_burned_per_min ?? 'N/A'}</li>
+          <li><strong>Details:</strong> ${exercise.details ?? 'No description available.'}</li>
+        `;
+        body.appendChild(detailsList);
+
+        card.appendChild(body);
         container.appendChild(card);
       });
     });
@@ -63,3 +74,5 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
 });
+
+        
