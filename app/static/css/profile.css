@@ -1,6 +1,8 @@
 body {
   background: #f2f4f8;
   font-family: Arial, sans-serif;
+  margin: 0;
+  overflow-x: hidden;
 }
 
 .profile-dashboard {
@@ -67,4 +69,10 @@ body {
   margin-bottom: 1.5rem;
   padding: 1rem 1.2rem;
   box-shadow: 0 2px 4px rgba(16,231,255,0.06);
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }

@@ -1,9 +1,11 @@
-from flask import jsonify, render_template, session, redirect, url_for, request, flash
+import os
+from flask import app, jsonify, render_template, session, redirect, url_for, request, flash, current_app
 from sqlalchemy import text
 from app.forms import *
 from app.models import WorkoutPlan, Workout, Usernames, Friendship,FriendRequest
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 import json
 from pathlib import Path
 
@@ -38,15 +40,6 @@ def login():
     if form.validate_on_submit():
         temp_username = form.username.data.strip()
         if not temp_username:
-<<<<<<< HEAD
-            error = 'please enter a username'
-        else:
-            user = Usernames.query.filter_by(username=temp_username).first()
-            if user is None:
-                error = 'username not found.'
-            elif not check_password_hash(user.password, form.password.data):
-                error = 'wrong password'
-=======
             error = 'Please enter a username.'
             flash(error, 'error')
         else:
@@ -57,7 +50,6 @@ def login():
             elif not check_password_hash(user.password, form.password.data):
                 error = 'Incorrect password.'
                 flash(error, 'error')
->>>>>>> b306f65b145eac3474d2f4072b0108f686b47de1
             else:
                 session['logged_in'] = True
                 session['username'] = temp_username
@@ -65,13 +57,8 @@ def login():
                 return redirect(url_for('routes.index'))
 
     elif request.method == 'POST':
-<<<<<<< HEAD
-        error = 'failed pass'
-
-=======
         error = 'Form validation failed.'
         flash(error, 'error')
->>>>>>> b306f65b145eac3474d2f4072b0108f686b47de1
     return render_template('login.html', form=form, error=error)
 
 ## logout page
@@ -95,7 +82,8 @@ def profile():
         return redirect(url_for('routes.login'))
     user = Usernames.query.filter_by(username=session['username']).first()
     workout_history = Workout.query.filter_by(user_id=user.id).all()
-    return render_template('profile.html', username=session['username'], workout_history=workout_history)
+    return render_template('profile.html', user=user, username=session['username'], workout_history=workout_history, 
+                           height=user.height, dob=user.dob, friends_count=len(user.friendships), profile_pic=user.profile_pic)
 
 def start_exercise():
     if not session.get('logged_in'):
@@ -224,3 +212,48 @@ def decline_friend(req_id):
     else:
         flash('error', 'error')
     return redirect(url_for('routes.view_friends'))
+
+UPLOAD_FOLDER = 'static/profile_pics'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+UPLOAD_FOLDER = 'static/profile_pics'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def edit_profile():
+    user = Usernames.query.filter_by(username=session.get('username')).first()
+    if not user:
+        return redirect(url_for('routes.login'))
+
+    form = EditProfileForm(obj=user)
+
+    if form.validate_on_submit():
+        user.username = form.username.data
+        if form.password.data:
+            user.password = generate_password_hash(form.password.data)
+        user.height = form.height.data
+        user.dob = request.form['dob']  # because it's a raw <input type="date">
+
+        file = request.files.get('profile_pic')
+        if file and file.filename:
+            upload_folder = os.path.join(current_app.root_path, 'static', 'profile_pics')
+            os.makedirs(upload_folder, exist_ok=True)
+
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(upload_folder, filename)
+            file.save(file_path)
+
+            user.profile_pic = filename  # store only the filename
+
+        db.session.commit()
+        session['username'] = user.username
+        return redirect(url_for('routes.profile'))
+
+    return render_template('edit_profile.html', form=form, user=user)

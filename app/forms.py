@@ -1,11 +1,6 @@
 from flask_wtf import FlaskForm
-<<<<<<< HEAD
-from wtforms import StringField, PasswordField, SubmitField, DateField, IntegerField, ValidationError
-from wtforms.validators import DataRequired, Regexp, NumberRange,Length
-=======
 from wtforms import StringField, PasswordField, SubmitField, DateField, IntegerField, ValidationError, SelectField
-from wtforms.validators import DataRequired, Regexp, NumberRange, Length
->>>>>>> b306f65b145eac3474d2f4072b0108f686b47de1
+from wtforms.validators import DataRequired, Regexp, NumberRange, Length, Optional
 import datetime
 import json
 from pathlib import Path
@@ -79,3 +74,24 @@ class AddFriendForm(FlaskForm):
         validators=[DataRequired(), Length(1, 64)]
     )
     submit = SubmitField('Add friend')
+
+class EditProfileForm(FlaskForm):
+	username = StringField('Username', validators=[
+		DataRequired(),
+		Regexp( ##regex rule for usernames
+			r'^\w+$', message="Username must contain only letters, numbers, or underscores.")
+	])
+	password = PasswordField('Password', validators=[
+		Optional(),
+		Regexp( ##regex rule for passwords
+			r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
+			message="Password must be at least 8 characters long and include a letter, a number, and a special character."
+		)
+	])
+	height = IntegerField('Height (in cm)', validators=[
+		Optional(),
+		NumberRange(min=0, message="Height must be greater than zero.")
+	])
+	dob = DateField('Date of Birth', validators=[Optional(), validate_date],
+					render_kw={"max": max_date.strftime('%Y-%m-%d')})
+	submit = SubmitField('Update Profile')
