@@ -174,3 +174,9 @@ cython_debug/
 .pypirc
 .DS_Store
 .DS_Store
+
+# images that are uploaded for profile pictures
+app/static/profile_pics/
+static/profile_pics/
+
+
