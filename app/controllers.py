@@ -220,13 +220,6 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-UPLOAD_FOLDER = 'static/profile_pics'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 def edit_profile():
     user = Usernames.query.filter_by(username=session.get('username')).first()
     if not user:
@@ -239,7 +232,7 @@ def edit_profile():
         if form.password.data:
             user.password = generate_password_hash(form.password.data)
         user.height = form.height.data
-        user.dob = request.form['dob']  # because it's a raw <input type="date">
+        user.dob = request.form['dob']  
 
         file = request.files.get('profile_pic')
         if file and file.filename:
@@ -250,7 +243,7 @@ def edit_profile():
             file_path = os.path.join(upload_folder, filename)
             file.save(file_path)
 
-            user.profile_pic = filename  # store only the filename
+            user.profile_pic = filename 
 
         db.session.commit()
         session['username'] = user.username
