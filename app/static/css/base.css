@@ -196,8 +196,6 @@ html, body {
 		width: calc(100% - 250px);
 		transform: translateX(250px);
 	}
-
-
 }
 
 /* Mobile view */

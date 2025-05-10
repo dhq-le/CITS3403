@@ -1,7 +1,14 @@
 from flask_wtf import FlaskForm
+<<<<<<< HEAD
 from wtforms import StringField, PasswordField, SubmitField, DateField, IntegerField, ValidationError
 from wtforms.validators import DataRequired, Regexp, NumberRange,Length
+=======
+from wtforms import StringField, PasswordField, SubmitField, DateField, IntegerField, ValidationError, SelectField
+from wtforms.validators import DataRequired, Regexp, NumberRange, Length
+>>>>>>> b306f65b145eac3474d2f4072b0108f686b47de1
 import datetime
+import json
+from pathlib import Path
 
 
 max_date = datetime.date.today()
@@ -39,6 +46,21 @@ class SignUpForm(FlaskForm):
 	dob = DateField('Date of Birth', validators=[validate_date],
 		render_kw={"max": max_date.strftime('%Y-%m-%d')})
 	submit = SubmitField('Sign Up!')
+
+class MuscleForm(FlaskForm):
+	muscle = SelectField('Target Muscle Group', validators=[DataRequired()])
+	submit = SubmitField('Get Exercises')
+
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		# Load muscle groups from local JSON
+		json_path = Path(__file__).resolve().parent.parent / 'static' / 'data' / 'exercises.json'
+		if json_path.exists():
+			with open(json_path) as f:
+				data = json.load(f)
+				self.muscle.choices = [(key, key.capitalize()) for key in data.keys()]
+		else:
+			self.muscle.choices = []
 
 class WorkoutForm(FlaskForm):
 	exercise = StringField('Exercise', validators=[DataRequired()])
