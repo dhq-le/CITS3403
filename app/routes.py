@@ -1,9 +1,5 @@
 from app.blueprints import routes_blueprint
-<<<<<<< HEAD
-from app.controllers import calories_data, login, logout, index, profile, log_workout, signup, view_friends, accept_friend, decline_friend
-=======
-from app.controllers import calories_data, login, logout, index, profile, log_workout, signup, view_friends, accept_friend, decline_friend, start_exercise
->>>>>>> b306f65b145eac3474d2f4072b0108f686b47de1
+from app.controllers import calories_data, edit_profile, login, logout, index, profile, log_workout, signup, view_friends, accept_friend, decline_friend, start_exercise
 
 
 
@@ -18,4 +14,5 @@ routes_blueprint.route('/api/calories', methods=['GET'])(calories_data)
 routes_blueprint.route('/friends', methods=['GET','POST'])(view_friends)
 routes_blueprint.route('/friends/accept/<int:req_id>', methods=['POST'])(accept_friend)
 routes_blueprint.route('/friends/decline/<int:req_id>', methods=['POST'])(decline_friend)
+routes_blueprint.route('/edit_profile', methods=['GET', 'POST'])(edit_profile)
 

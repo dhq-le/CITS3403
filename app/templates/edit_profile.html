@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Edit Profile{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/edit_profile.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container-sm">
+  <main class="dashboard profile-dashboard">
+    <section class="card" id="edit-profile">
+      <div class="card-header">
+        <h2>👤 Edit Profile</h2>
+      </div>
+
+      <div class="card-body">
+        <!-- Form Starts -->
+        <form method="POST" action="{{ url_for('routes.edit_profile') }}" enctype="multipart/form-data" class="edit-profile-body">
+          {{ form.hidden_tag() }}
+
+          <div class="profile-pic-container">
+            <label for="profile_pic" class="upload-label">
+              <img id="profilePicPreview"
+                  src="{{ url_for('static', filename='profile_pics/' + user.profile_pic) if user.profile_pic else url_for('static', filename='images/user.png') }}"
+                  alt="Profile Picture" class="profile-pic-edit">
+              <span class="upload-icon">+</span>
+            </label>
+            <input type="file" name="profile_pic" id="profile_pic" style="display: none;" onchange="previewProfilePic(event)">
+          </div>
+
+          <div class="form-fields-side">
+            {% if error %}
+              <div class="error">{{ error }}</div>
+            {% endif %}
+
+            <div class="form-group">
+              <label for="username">Username</label>
+              {{ form.username(id="username", class="form-control") }}
+              {% if form.username.errors %}
+                <div class="error">{{ form.username.errors[0] }}</div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password (leave blank to keep current)</label>
+              {{ form.password(id="password", class="form-control") }}
+              {% if form.password.errors %}
+                <div class="error">{{ form.password.errors[0] }}</div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              <label for="height">Height (cm)</label>
+              {{ form.height(id="height", class="form-control") }}
+              {% if form.height.errors %}
+                <div class="error">{{ form.height.errors[0] }}</div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              <label for="dob">Date of Birth</label>
+              <input type="date" name="dob" id="dob" value="{{ form.dob.data }}" class="form-control">
+              {% if form.dob.errors %}
+                <div class="error">{{ form.dob.errors[0] }}</div>
+              {% endif %}
+            </div>
+
+            {{ form.submit(class="cool-button") }}
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+</div>
+
+
+
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+
+<script src="{{ url_for('static', filename='js/edit_profile.js') }}"></script>
+{% endblock %}
