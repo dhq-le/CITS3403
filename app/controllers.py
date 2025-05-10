@@ -4,6 +4,9 @@ from app.forms import *
 from app.models import WorkoutPlan, Workout, Usernames, Friendship,FriendRequest
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
+import json
+from pathlib import Path
+
 
 ## sign up page
 def signup():
@@ -35,13 +38,16 @@ def login():
     if form.validate_on_submit():
         temp_username = form.username.data.strip()
         if not temp_username:
-            error = 'please enter a username'
+            error = 'Please enter a username.'
+            flash(error, 'error')
         else:
             user = Usernames.query.filter_by(username=temp_username).first()
             if user is None:
-                error = 'username not found.'
+                error = 'Username not found.'
+                flash(error, 'error')
             elif not check_password_hash(user.password, form.password.data):
-                error = 'wrong password'
+                error = 'Incorrect password.'
+                flash(error, 'error')
             else:
                 session['logged_in'] = True
                 session['username'] = temp_username
@@ -49,8 +55,8 @@ def login():
                 return redirect(url_for('routes.index'))
 
     elif request.method == 'POST':
-        error = 'failed pass'
-
+        error = 'Form validation failed.'
+        flash(error, 'error')
     return render_template('login.html', form=form, error=error)
 
 ## logout page
@@ -76,7 +82,29 @@ def profile():
     workout_history = Workout.query.filter_by(user_id=user.id).all()
     return render_template('profile.html', username=session['username'], workout_history=workout_history)
 
-## start course page
+def start_exercise():
+    if not session.get('logged_in'):
+        return redirect(url_for('routes.login'))
+
+    form = MuscleForm()
+    json_path = Path(__file__).resolve().parent.parent / 'static' / 'data' / 'exercises.json'
+
+    if json_path.exists():
+        with open(json_path) as f:
+            all_data = json.load(f)
+        form.muscle.choices = [(key, key.capitalize()) for key in all_data.keys()]
+    else:
+        all_data = {}
+        form.muscle.choices = []
+
+    exercises = []
+
+    if request.is_json:
+        muscle = request.json.get("muscle_id")
+        exercises = all_data.get(muscle, [])
+        return jsonify(exercises=exercises)
+
+    return render_template('exercise.html', form=form, exercises=exercises)
 def log_workout():
     form = WorkoutForm()
     if form.validate_on_submit():
