@@ -37,7 +37,12 @@
       <div class="friend-list">
         {% for u in friends %}
           <div class="friend-card" data-username="{{ u.username }}">
-            <div class="avatar">{{ u.username[0]|upper }}</div>
+            <div class="avatar">
+              <img
+                src="{{ url_for('static', filename='profile_pics/' + u.profile_pic) if u.profile_pic else url_for('static', filename='images/user.png') }}"
+                alt="{{ u.username }}'s profile picture"
+                class="friend-avatar">
+            </div>
             <div class="username">{{ u.username }}</div>
           </div>
         {% endfor %}
@@ -68,8 +73,8 @@
     {% endwith %}
   </div>
 
-  <div id="comparison-graph-section" style="display: none;">
-    <h2>Calories Burnt Comparison</h2>
+  <div id="comparison-graph-section" style="display: none;" class="chart-container">
+    <h2 class="chart-title">Calories Burnt Comparison</h2>
     <canvas id="comparisonChart"></canvas>
   </div>
 {% endblock %}
@@ -77,4 +82,5 @@
 {% block scripts %}
 {{ super() }}
   <script src="{{ url_for('static', filename='js/friends.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script> 
 {% endblock %}
