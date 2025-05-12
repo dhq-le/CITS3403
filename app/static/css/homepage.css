@@ -43,7 +43,7 @@ body {
 }
 
 /* CARD STRUCTURE */
-.card-header {
+.card-header{
     background-color: rgb(35, 225, 246);
     height: 2.5rem;
     padding: 0 1rem;
@@ -52,6 +52,7 @@ body {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     margin-bottom: 1rem;
+    text-decoration: none;
 }
 
 .card-header h2 {
@@ -59,6 +60,7 @@ body {
     font-size: 1rem;
     color: inherit;
     font-weight: 600;
+    text-decoration: none;
 }
 
 .card-body {

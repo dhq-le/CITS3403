@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   const heading = document.getElementById("exercise-heading");
 
   try {
-    const response = await fetch("/static/data/exercise.json");
+    const response = await fetch("/static/data/exercises.json");
     if (!response.ok) {
       throw new Error(`Failed to load JSON file: ${response.status}`);
     }
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         // Create card header
         const header = document.createElement("div");
         header.className = "card-header";
-        header.innerHTML = `<h2>${exercise.name ?? 'Unnamed Exercise'}</h2>`;
+        header.innerHTML = `<a href="/log?exercise=${encodeURIComponent(exercise.name)}" class="card-header-link"><h2>${exercise.name ?? 'Unnamed Exercise'}</h2></a>`;
         card.appendChild(header);
 
         // Create card body
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         const detailsList = document.createElement("ul");
         detailsList.innerHTML = `
           <li><strong>Equipment:</strong> ${exercise.equipment ?? 'N/A'}</li>
-          <li><strong>Calories/min:</strong> ${exercise.calories_burned_per_min ?? 'N/A'}</li>
+          <li><strong>Calories/rep:</strong> ${exercise.calories_burned_per_rep ?? 'N/A'}</li>
           <li><strong>Details:</strong> ${exercise.details ?? 'No description available.'}</li>
         `;
         body.appendChild(detailsList);

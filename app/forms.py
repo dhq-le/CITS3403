@@ -63,7 +63,7 @@ class WorkoutForm(FlaskForm):
 			render_kw={"max": max_date.strftime('%Y-%m-%d')})
 	sets = IntegerField('Sets', validators=[DataRequired()])
 	reps = IntegerField('Reps', validators=[DataRequired()])
-	calories_burned = IntegerField('Calories Burned', validators=[DataRequired()])
+	# calories_burned = IntegerField('Calories Burned', validators=[DataRequired()]) this will be worked on the backend
 	weights = IntegerField('Weight', validators=[DataRequired()])
 	submit = SubmitField('Save Workout')
 
