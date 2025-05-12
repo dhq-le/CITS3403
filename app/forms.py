@@ -25,9 +25,9 @@ class SignUpForm(FlaskForm):
 	])
 	password = StringField('Password', validators=[
 		DataRequired(),
-		Regexp( ##regex rule for passwords
-			r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
-			message="Password must be at least 8 characters long and include a letter, a number, and a special character."
+		Regexp( ##regex rule for passwords, the special character set is !@#$%^&*()_+-=[]{};:'",.<>/?\|`~
+			r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};:\'",.<>/?\\|`~])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};:\'",.<>/?\\|`~]{8,}$',
+		message="Password must be at least 8 characters long and include a letter, a number, and a special character."
 		)
 	])
 	height = IntegerField('Height (in cm)', validators=[
