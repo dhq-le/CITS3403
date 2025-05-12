@@ -110,20 +110,53 @@ def start_exercise():
     return render_template('exercise.html', form=form, exercises=exercises)
 def log_workout():
     form = WorkoutForm()
+    #Autofil the field
+    query_param = request.args.get('exercise')
+    if query_param:
+        form.exercise.data = query_param
+
     if form.validate_on_submit():
+        exercise_param = form.exercise.data
+        sets = form.sets.data or 0
+        reps = form.reps.data or 0
+        calories_per_rep = 0
+
+        # Load calories per rep from JSON
+        json_path = Path(__file__).resolve().parent / 'static' / 'data' / 'exercises.json'
+        if json_path.exists():
+     
+            with open(json_path) as f:
+                all_data = json.load(f)
+            if not all_data:
+                print("ERROR: all_data is empty! JSON might be malformed or missing content.")
+            else:
+                print(f"Loaded muscle groups: {list(all_data.keys())}")
+            for group in all_data.values():
+                for ex in group:
+                    print(f"Checking: exercise_param='{exercise_param}', ex['name']='{ex['name']}'")
+                    if exercise_param.lower() in ex["name"].lower():
+                        print("MATCH FOUND")
+                        calories_per_rep = ex.get("calories_burned_per_rep", 0)
+                        break
+            
+        total_calories = calories_per_rep * sets * reps
+
+        print(f"DEBUG: {exercise_param} — {sets=} {reps=} {calories_per_rep=} {total_calories=}")  # TEMP LOG
+
         workout = Workout(
-        	user_id=Usernames.query.filter_by(username=session['username']).first().id,
-            exercise=form.exercise.data,
+            user_id=Usernames.query.filter_by(username=session['username']).first().id,
+            exercise=exercise_param,
             date=form.date.data.strftime('%Y%m%d'),
-            sets=form.sets.data,
-            reps=form.reps.data,
-            calories_burned=form.calories_burned.data,
+            sets=sets,
+            reps=reps,
+            calories_burned=total_calories,
             weights=form.weights.data
         )
         db.session.add(workout)
         db.session.commit()
-        flash('Workout logged!')
+        flash(f'Workout logged! Calories burned: {total_calories}')
         return redirect(url_for('routes.index'))
+
     return render_template('log.html', form=form)
 
 ## calorie data chart
