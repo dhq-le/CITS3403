@@ -51,13 +51,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 {
                   label: "You",
                   data: userCalories,
-                  borderColor: "blue",
+                  borderColor: 'rgb(75, 192, 192)',
                   tension: 0.2
                 },
                 {
                   label: friend,
                   data: friendCalories,
-                  borderColor: "red",
+                  borderColor: "rgb(192,42,75)",
                   tension: 0.2
                 }
               ]
