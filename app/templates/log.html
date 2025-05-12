@@ -34,6 +34,11 @@
       </div>
 
       <div class="form-group">
+        <label for="completion_status">Is this a completed workout, or a plan?</label>
+        {{ form.completion_status() }}
+      </div>
+
+      <div class="form-group">
         {{ form.submit(class="btn btn-primary") }}
       </div>
     </form>

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, DateField, IntegerField, ValidationError, SelectField
+from wtforms import StringField, PasswordField, SubmitField, DateField, IntegerField, ValidationError, SelectField, BooleanField
 from wtforms.validators import DataRequired, Regexp, NumberRange, Length, Optional
 import datetime
 import json
@@ -65,6 +65,7 @@ class WorkoutForm(FlaskForm):
 	reps = IntegerField('Reps', validators=[DataRequired()])
 	# calories_burned = IntegerField('Calories Burned', validators=[DataRequired()]) this will be worked on the backend
 	weights = IntegerField('Weight', validators=[DataRequired()])
+	completion_status = BooleanField('Completion Status')
 	submit = SubmitField('Save Workout')
 
 
