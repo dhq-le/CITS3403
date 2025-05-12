@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Friends-List</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/friends.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}FitnessPlus Profile{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/friends.css') }}">
+{% endblock %}
+
+{% block content %}
   <div class="friends-container">
     <h1>Friends-List</h1>
 
@@ -35,7 +36,7 @@
     {% if friends %}
       <div class="friend-list">
         {% for u in friends %}
-          <div class="friend-card">
+          <div class="friend-card" data-username="{{ u.username }}">
             <div class="avatar">{{ u.username[0]|upper }}</div>
             <div class="username">{{ u.username }}</div>
           </div>
@@ -67,6 +68,13 @@
     {% endwith %}
   </div>
 
+  <div id="comparison-graph-section" style="display: none;">
+    <h2>Calories Burnt Comparison</h2>
+    <canvas id="comparisonChart"></canvas>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
   <script src="{{ url_for('static', filename='js/friends.js') }}"></script>
-</body>
-</html>
+{% endblock %}
