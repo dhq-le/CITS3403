@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Login</title>
@@ -7,6 +7,7 @@
 </head>
 <body>
   <header>
+    <!-- Logo of the application -->
     <img src="{{ url_for('static', filename='logo.jpg') }}"
          alt="Logo" class="logo">
   </header>
@@ -15,6 +16,7 @@
     {{ form.hidden_tag() }}
     <div class="login-box">
       <div id="step-username">
+        <!-- Step for entering username -->
         <h1>Welcome back</h1>
         <div class="field">
           <fieldset>
@@ -26,6 +28,7 @@
       </div>
 
       <div id="step-password" style="display:none;">
+        <!-- Step for entering password -->
         <h1>Hello,<span id="usernameDisplay"></span></h1>
         <div class="field">
           <fieldset>
@@ -37,6 +40,7 @@
       </div>
 
       {% if error %}
+        <!-- Display error message if any -->
         <p class="error">{{ error }}</p>
       {% endif %}
       <p class="tip">Don't have a account?<a href="{{ url_for('routes.signup') }}">Signup</a></p>

@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // 聚焦到添加好友输入框
+  // Focus on add friend input
   var input = document.querySelector('.friend-input');
   if (input) input.focus();
 
-  // 5秒后淡出所有 flash
+  // Fade out all flash messages after 5 seconds
   var flashes = document.querySelectorAll('.flash');
   if (flashes.length) {
     setTimeout(function () {
