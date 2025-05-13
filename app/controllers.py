@@ -260,7 +260,7 @@ def edit_profile():
     if form.validate_on_submit():
         user.username = form.username.data
         if form.password.data:
-            user.password = generate_password_hash(form.password.data)
+            user.password = user.set_password(form.password.data)
         user.height = form.height.data
         user.dob = request.form['dob']  
 
