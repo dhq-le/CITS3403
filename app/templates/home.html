@@ -22,12 +22,11 @@
 		</div>
 		<div class="card-body">
 			{% for plan in plans %}
-			<ul>
-				{% for exercise in plan.exercises %}
-				<li>{{ exercise }}</li>
-				{% endfor %}
-			</ul>
+				<ul>
+					<li>{{ plan.exercise }} - {{ plan.sets }} sets - {{ plan.reps }} reps - {{ plan.weights }} kg</li>
+				</ul>
 			{% endfor %}
+
 		</div>
 		<button class="cool-button" onclick="location.href='{{ url_for('routes.start_exercise') }}';">Start Course</button>
 	</section>

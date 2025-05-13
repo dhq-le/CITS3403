@@ -1,3 +1,7 @@
+from os import setsid
+
+from werkzeug.wsgi import responder
+
 from app import db
 from datetime import datetime
 
@@ -39,11 +43,13 @@ class FriendRequest(db.Model):
 
 
 class WorkoutPlan:
-    def __init__(self, owner, exercises):
-        self.owner = owner
-        self.exercises = exercises
+    def __init__(self, exercise, sets, reps, weights):
+        self.exercise = exercise
+        self.sets = sets
+        self.reps = reps
+        self.weights = weights
     def __repr__(self):
-        return f"WorkoutPlan(owner={self.owner!r}, exercises={self.exercises!r})"
+        return f"WorkoutPlan(exercise={self.exercise!r}, sets={self.sets!r}, reps={self.reps!r}, weights={self.weights!r})"
     
 
 class Workout(db.Model):
@@ -51,11 +57,12 @@ class Workout(db.Model):
     workout_id = db.Column(db.Integer, nullable=False, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('usernames.id', name='fk_workouts_user_id'), nullable=False) ##add db.ForeignKey('user.username') when user table is added.
     exercise = db.Column(db.String(100), nullable=False)
-    date = db.Column(db.Integer)
+    date = db.Column(db.Date)
     sets = db.Column(db.Integer)
     reps = db.Column(db.Integer)
     calories_burned = db.Column(db.Integer)
     weights = db.Column(db.Integer)
+    completion = db.Column(db.Boolean, default=False)
 
 
     def __repr__(self):
