@@ -8,37 +8,27 @@
 <body>
   <header>
     <!-- Logo of the application -->
-    <img src="{{ url_for('static', filename='logo.jpg') }}"
+    <img src="{{ url_for('static', filename='images/logo.jpg') }}"
          alt="Logo" class="logo">
   </header>
 
   <form id="loginForm" action="{{ url_for('routes.login') }}" method="post">
     {{ form.hidden_tag() }}
     <div class="login-box">
-      <div id="step-username">
-        <!-- Step for entering username -->
-        <h1>Welcome back</h1>
-        <div class="field">
-          <fieldset>
-            <legend>Username</legend>
-            {{ form.username(id="usernameInput", placeholder="Please enter a username") }}
-          </fieldset>
-        </div>
-        <button type="button" class="btn" id="to-password">Continue</button>
+      <h1>Welcome back</h1>
+      <div class="field">
+        <fieldset>
+          <legend>Username</legend>
+          {{ form.username(id="usernameInput", placeholder="Please enter a username") }}
+        </fieldset>
       </div>
-
-      <div id="step-password" style="display:none;">
-        <!-- Step for entering password -->
-        <h1>Hello,<span id="usernameDisplay"></span></h1>
-        <div class="field">
-          <fieldset>
-            <legend>Password</legend>
-            {{ form.password(id="passwordInput", placeholder="Please enter your password") }}
-          </fieldset>
-        </div>
-        <button type="submit" class="btn">{{ form.submit.label.text }}</button>
+      <div class="field">
+        <fieldset>
+          <legend>Password</legend>
+          {{ form.password(id="passwordInput", placeholder="Please enter your password") }}
+        </fieldset>
       </div>
-
+      <button type="submit" class="btn">{{ form.submit.label.text }}</button>
       {% if error %}
         <!-- Display error message if any -->
         <p class="error">{{ error }}</p>
