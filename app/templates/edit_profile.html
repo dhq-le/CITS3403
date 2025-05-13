@@ -25,7 +25,7 @@
               <img id="profilePicPreview"
                   src="{{ url_for('static', filename='profile_pics/' + user.profile_pic) if user.profile_pic else url_for('static', filename='images/user.png') }}"
                   alt="Profile Picture" class="profile-pic-edit">
-              <span class="upload-icon">+</span>
+              <span class="upload-icon" title="Change profile photo">+</span>
             </label>
             <input type="file" name="profile_pic" id="profile_pic" style="display: none;" onchange="previewProfilePic(event)">
           </div>
