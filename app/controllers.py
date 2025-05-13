@@ -1,14 +1,13 @@
 import os
-from flask import app, jsonify, render_template, session, redirect, url_for, request, flash, current_app
+from flask import jsonify, render_template, session, redirect, url_for, request, flash, current_app
 from sqlalchemy import text
 from app.forms import *
 from app.models import WorkoutPlan, Workout, Usernames, Friendship,FriendRequest
 from app import db
-from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 import json
 from pathlib import Path
-
+from flask_login import login_user, logout_user, login_required, current_user
 
 ## sign up page
 def signup():
@@ -26,8 +25,8 @@ def signup():
                 error = "Username is already taken. Please select a new username."
                 return render_template('signuphtml', form=form, error=error)
             else:
-                hashed = generate_password_hash(password, method='pbkdf2:sha256')
-                new_user = Usernames(username=username, password=hashed, height=height, weight=weight, dob=dob)
+                new_user = Usernames(username=username, height=height, weight=weight, dob=dob)
+                new_user.set_password(password)
                 db.session.add(new_user)
                 db.session.commit()
                 return redirect(url_for('routes.login'))
@@ -47,13 +46,11 @@ def login():
             if user is None:
                 error = 'Username not found.'
                 flash(error, 'error')
-            elif not check_password_hash(user.password, form.password.data):
+            elif not user.check_password(form.password.data):
                 error = 'Incorrect password.'
                 flash(error, 'error')
             else:
-                session['logged_in'] = True
-                session['username'] = temp_username
-                session['user_id']  = user.id
+                login_user(user)
                 return redirect(url_for('routes.index'))
 
     elif request.method == 'POST':
@@ -63,32 +60,28 @@ def login():
 
 ## logout page
 def logout():
-    session.clear()
+    logout_user()
     return redirect(url_for('routes.login'))
 
 ## index/dashboard page
+@login_required
 def index():
-    if not session.get('logged_in') or not Usernames.query.filter_by(username=session['username']).first():
-        return redirect(url_for('routes.login'))
     plans = [ ####TODO: REMOVE THIS HARDCODED PART
-        WorkoutPlan(session['username'], ["Push-ups", "Squats", "Lunges"]),
-        WorkoutPlan(session['username'], ["Running", "Cycling", "Swimming"]),
+        WorkoutPlan(current_user.username, ["Push-ups", "Squats", "Lunges"]),
+        WorkoutPlan(current_user.username, ["Running", "Cycling", "Swimming"]),
     ]
-    return render_template('home.html', plans=plans, username=session['username'])
+    return render_template('home.html', plans=plans, username=current_user.username)
 
 ## profile page
+@login_required
 def profile():
-    if not session.get('logged_in'):
-        return redirect(url_for('routes.login'))
-    user = Usernames.query.filter_by(username=session['username']).first()
+    user = Usernames.query.filter_by(username=current_user.username).first()
     workout_history = Workout.query.filter_by(user_id=user.id).all()
-    return render_template('profile.html', user=user, username=session['username'], workout_history=workout_history, 
+    return render_template('profile.html', user=user, username=current_user.username, workout_history=workout_history, 
                            height=user.height, dob=user.dob, friends_count=len(user.friendships), profile_pic=user.profile_pic)
 
+@login_required
 def start_exercise():
-    if not session.get('logged_in'):
-        return redirect(url_for('routes.login'))
-
     form = MuscleForm()
     json_path = Path(__file__).resolve().parent.parent / 'static' / 'data' / 'exercises.json'
 
@@ -108,6 +101,7 @@ def start_exercise():
         return jsonify(exercises=exercises)
 
     return render_template('exercise.html', form=form, exercises=exercises)
+@login_required
 def log_workout():
     form = WorkoutForm()
     #Autofil the field
@@ -144,7 +138,7 @@ def log_workout():
         print(f"DEBUG: {exercise_param} — {sets=} {reps=} {calories_per_rep=} {total_calories=}")  # TEMP LOG
 
         workout = Workout(
-            user_id=Usernames.query.filter_by(username=session['username']).first().id,
+            user_id=current_user.id,
             exercise=exercise_param,
             date=form.date.data.strftime('%Y%m%d'),
             sets=sets,
@@ -160,8 +154,9 @@ def log_workout():
     return render_template('log.html', form=form)
 
 ## calorie data chart
+@login_required
 def calories_data():
-    user_id = session.get('user_id')
+    user_id = current_user.id
     print("SESSION user_id:", user_id)  # 🔍
 
     if not user_id:
@@ -181,10 +176,9 @@ def calories_data():
     return jsonify(data)
 
 
+@login_required
 def view_friends():
-    user_id = session.get('user_id')
-    if not user_id:
-        return redirect(url_for('routes.login'))
+    user_id = current_user.id
 
     # 已接受的好友
     friendships = Friendship.query.filter_by(user_id=user_id).all()
@@ -220,8 +214,9 @@ def view_friends():
                            requests=requests,
                            form=form)
 
+@login_required
 def accept_friend(req_id):
-    user_id = session.get('user_id')
+    user_id = current_user.id
     fr = FriendRequest.query.get(req_id)
     if fr and fr.to_user_id == user_id:
         # 建立双向好友关系
@@ -235,8 +230,9 @@ def accept_friend(req_id):
     return redirect(url_for('routes.view_friends'))
 
 
+@login_required
 def decline_friend(req_id):
-    user_id = session.get('user_id')
+    user_id = current_user.id
     fr = FriendRequest.query.get(req_id)
     if fr and fr.to_user_id == user_id:
         db.session.delete(fr)
@@ -253,8 +249,9 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+@login_required
 def edit_profile():
-    user = Usernames.query.filter_by(username=session.get('username')).first()
+    user = Usernames.query.filter_by(username=current_user.username).first()
     if not user:
         return redirect(url_for('routes.login'))
 
