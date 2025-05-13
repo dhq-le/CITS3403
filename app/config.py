@@ -1,8 +1,15 @@
 import os
 
+from dotenv import load_dotenv
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 default_database_path = 'sqlite:///'+os.path.join(basedir, 'database.db')
 
+load_dotenv(os.path.join(basedir, '.env'))
+
 class Config:
-	SECRET_KEY = 'fhfuw9eg8eu3oievjeopfijvdfpovjefujhevofjevpoiefwhv'
-	SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', default_database_path)
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    # Fallback option if SECRET_KEY is not set in .env:
+    # SECRET_KEY = os.environ.get('SECRET_KEY', 'default-fallback-secret')
+
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', default_database_path)
