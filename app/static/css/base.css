@@ -111,6 +111,14 @@ html, body {
     box-shadow: 0 4px 12px rgba(0, 86, 179, 0.4);
 }
 
+.fixed-bottom {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+}
+
 /* Desktop view */
 @media (min-width: 768px) {
 	#menu-button {
@@ -120,15 +128,6 @@ html, body {
 		transition: all 0.3s ease;
 		left: 175px; /* Position from the left */
 		z-index: 1100; /* Higher than sidebar */
-	}
-
-	#menu-icon {
-
-	}
-
-	#menu-icon.rotate {
-		transform: rotate(180deg);
-		transform-origin: center;
 	}
 
 	#menu-button.collapsed {
