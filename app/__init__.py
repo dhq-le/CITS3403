@@ -1,15 +1,14 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-import os
-from app.config import Config
+from config import Config
 
 db = SQLAlchemy()
 migrate = Migrate()
 
-def create_app():
+def create_app(config_class=Config):
         app = Flask(__name__)
-        app.config.from_object(Config)
+        app.config.from_object(config_class)
 
         from app.models import Workout, Usernames, Friendship, FriendRequest
         db.init_app(app)

@@ -31,6 +31,8 @@ def signup():
                 new_user = Usernames(username=username, password=hashed, height=height, weight=weight, dob=dob)
                 db.session.add(new_user)
                 db.session.commit()
+                db.session.flush()
+                flash('Account created successfully', 'success')
                 return redirect(url_for('routes.login'))
     return render_template('signup.html', form=form, error=error)   
 

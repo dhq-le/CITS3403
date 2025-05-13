@@ -8,7 +8,7 @@ from pathlib import Path
 
 max_date = datetime.date.today()
 def validate_date(form, field):
-	if field.data > max_date:
+	if field.data and field.data > max_date:
 		raise ValidationError("Date cannot be in the future.")
 
 
