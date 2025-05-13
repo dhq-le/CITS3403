@@ -21,17 +21,28 @@
 }
 
 .upload-icon {
-  font-size: 2rem;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
+  bottom: 0;
+  right: 0;
+  background-color: #00dfff;  
+  color: #fff;
+  font-size: 20px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  padding: 0.5rem;
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+  box-shadow: 0 0 4px rgba(0,0,0,0.2);
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
+
+.upload-label:hover .upload-icon {
+  background-color: #00b5cc;
+}
+
 
 .upload-label {
   position: relative;
