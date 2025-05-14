@@ -10,7 +10,7 @@ from app.models import Usernames
 class BaseTestCase(unittest.TestCase):
     def setUp(self):
         """Set up test environment"""
-        self.app = create_app('config.TestConfig')  # Use the test config
+        self.app = create_app('config.TestingConfig')  # Use the test config
         self.client = self.app.test_client()
 
         with self.app.app_context():  # Ensure app context is pushed

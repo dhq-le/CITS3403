@@ -1,8 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-import os #maybe no need
-from app.config import Config
 from flask_login import LoginManager
 
 db = SQLAlchemy()
@@ -18,7 +16,7 @@ def load_user(user_id):
     return Usernames.query.get(int(user_id))
 
 def create_app(config_class=None):
-        from app.config import Config
+        from config import Config
         if config_class is None:
             config_class = Config
         app = Flask(__name__)
