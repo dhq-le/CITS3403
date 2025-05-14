@@ -15,7 +15,7 @@ def validate_date(form, field):
 class LoginForm(FlaskForm):
     username = StringField('username', validators=[DataRequired(), Length(1, 64)])
     password = PasswordField('password', validators=[DataRequired()])
-    submit   = SubmitField('login')
+    submit   = SubmitField('Login')
 
 class SignUpForm(FlaskForm):
 	username = StringField('Username', validators=[
