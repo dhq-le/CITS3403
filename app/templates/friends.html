@@ -1,14 +1,175 @@
-<!-- filepath: /Users/Zhuanz/Downloads/kong/CITS3403-Project/app/templates/friends.html -->
 {% extends "base.html" %}
 {% block title %}FitnessPlus Profile{% endblock %}
 
 {% block head %}
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/friends.css') }}">
+<style>
+  body {
+    background: #fff;
+    min-height: 100vh;
+  }
+  .friends-container {
+    background: rgba(255,255,255,0.97);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(30,60,114,0.10);
+    padding: 2.5rem 2rem 2rem 2rem;
+    max-width: 700px;
+    margin: 48px auto 32px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  .add-friend-btn {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    background: #1e3c72;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(30,60,114,0.10);
+    cursor: pointer;
+    transition: background 0.2s;
+    z-index: 10;
+  }
+  .add-friend-btn:hover {
+    background: #2d5aad;
+  }
+  .modal-bg {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(30,60,114,0.18);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-bg.active { display: flex; }
+  .modal-content {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1rem 1.2rem 0.8rem 1.2rem;
+    box-shadow: 0 4px 24px rgba(30,60,114,0.18);
+    min-width: 180px;
+    max-width: 320px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    top: -50px;
+  }
+  .modal-content h2 { color: #1e3c72; margin-bottom: 1rem; font-size: 1.1rem; }
+  .modal-content .close-modal {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    color: #888;
+    cursor: pointer;
+  }
+  .modal-content .close-modal:hover { color: #d32f2f; }
+  .modal-content input {
+    width: 95%;
+    padding: 6px 8px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 0.92rem;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .modal-content input:focus { border-color: #1e3c72; }
+  .modal-content .btn-submit {
+    background: #1e3c72;
+    color: #fff;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.92rem;
+    transition: background 0.2s;
+  }
+  .modal-content .btn-submit:hover { background: #2d5aad; }
+  .friend-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+    margin-top: 32px;
+  }
+  .friend-card {
+    background: #f7fcfd;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(30,60,114,0.08);
+    padding: 18px 10px 10px 10px;
+    transition: box-shadow 0.2s, transform 0.2s;
+    border: 1.5px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 160px;
+  }
+  .friend-card:hover {
+    box-shadow: 0 6px 18px rgba(30,60,114,0.18);
+    transform: translateY(-2px) scale(1.03);
+    border-color: #10e7ff;
+  }
+  .avatar {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 8px;
+    border-radius: 50%;
+    border: 3px solid #10e7ff;
+    overflow: hidden;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .friend-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .username {
+    font-size: 18px;
+    color: #1e3c72;
+    font-weight: 600;
+    word-break: break-word;
+    text-align: center;
+    margin-top: 8px;
+  }
+  .no-friends {
+    text-align: center;
+    color: #888;
+    margin-bottom: 32px;
+    font-size: 16px;
+  }
+  h1 {
+    text-align: center;
+    color: #1e3c72;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0 0 24px 0;
+    width: 100%;
+  }
+</style>
 {% endblock %}
 
 {% block content %}
   <div class="friends-container">
+    <button class="add-friend-btn" id="openAddFriendModal" title="Add Friend">+</button>
     <h1>Friends-List</h1>
 
     {% if requests %}
@@ -60,16 +221,6 @@
       <p class="no-friends">You currently don't have any friends.</p>
     {% endif %}
 
-    <!-- Send Friend Request -->
-    <div class="add-friend-section">
-      <h2>Add Friends</h2>
-      <form method="post" class="add-friend-form">
-        {{ form.hidden_tag() }}
-        {{ form.friend_username(class="friend-input", placeholder="friend username") }}
-        {{ form.submit(class="btn add-btn") }}
-      </form>
-    </div>
-
     <!-- Flash Messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
@@ -82,6 +233,18 @@
     {% endwith %}
   </div>
 
+  <!-- Add Friend Modal -->
+  <div class="modal-bg" id="addFriendModal">
+    <div class="modal-content">
+      <button class="close-modal" id="closeAddFriendModal">&times;</button>
+      <h2>Add Friend</h2>
+      <form method="post" class="add-friend-form" style="flex-direction:column;gap:12px;align-items:center;" id="modalAddFriendForm">
+        {{ form.hidden_tag() }}
+        {{ form.friend_username(class="friend-input", placeholder="friend username") }}
+        {{ form.submit(class="btn-submit", value="Add") }}
+      </form>
+    </div>
+  </div>
   <div id="comparison-graph-section" style="display: none;" class="chart-container">
     <h2 class="chart-title">Calories Burnt Comparison</h2>
     <canvas id="comparisonChart"></canvas>
@@ -90,6 +253,14 @@
 
 {% block scripts %}
 {{ super() }}
-  <script src="{{ url_for('static', filename='js/friends.js') }}"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script> 
+<script>
+  const openBtn = document.getElementById('openAddFriendModal');
+  const modal = document.getElementById('addFriendModal');
+  const closeBtn = document.getElementById('closeAddFriendModal');
+  openBtn.onclick = () => { modal.classList.add('active'); };
+  closeBtn.onclick = () => { modal.classList.remove('active'); };
+  window.onclick = (e) => { if(e.target === modal) modal.classList.remove('active'); };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script src="{{ url_for('static', filename='js/friends.js') }}"></script>
 {% endblock %}
