@@ -17,9 +17,12 @@ def load_user(user_id):
     from app.models import Usernames
     return Usernames.query.get(int(user_id))
 
-def create_app():
+def create_app(config_class=None):
+        from app.config import Config
+        if config_class is None:
+            config_class = Config
         app = Flask(__name__)
-        app.config.from_object(Config)
+        app.config.from_object(config_class)
 
         from app.models import Workout, Usernames, Friendship
         db.init_app(app)
