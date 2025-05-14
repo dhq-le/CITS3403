@@ -15,7 +15,7 @@
   <form id="loginForm" action="{{ url_for('routes.login') }}" method="post">
     {{ form.hidden_tag() }}
     <div class="login-box">
-      <h1>Welcome back!</h1>
+      <h1>Welcome back</h1>
       <div class="field">
         <fieldset>
           <legend>Username</legend>
@@ -28,7 +28,7 @@
           {{ form.password(id="passwordInput", placeholder="Please enter your password") }}
         </fieldset>
       </div>
-     <button type="submit" class="cool-button">{{ form.submit.label.text }}</button>
+      <button type="submit" class="btn">{{ form.submit.label.text }}</button>
       {% if error %}
         <!-- Display error message if any -->
         <p class="error">{{ error }}</p>
