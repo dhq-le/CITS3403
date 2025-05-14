@@ -72,6 +72,13 @@
                 {% if not error and form.dob.errors %}<div class="error">{{ form.dob.errors[0] }}</div>{% endif %}
             </div>
             {{ form.submit(class="cool-button") }}
+            <br>
+            <br>
+            <button type="button" class="cool-button" onclick="window.location='{{ url_for('routes.login') }}'">
+              Back to Login
+            </button>
+
+
         </form>
     </main>
 </body>
