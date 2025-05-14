@@ -172,6 +172,37 @@
     <button class="add-friend-btn" id="openAddFriendModal" title="Add Friend">+</button>
     <h1>Friends-List</h1>
 
+    {% if requests %}
+      <section class="requests-section">
+        <h2>Friend Requests</h2>
+        <ul class="requests-list">
+          {% for r in requests %}
+            <li>
+              {{ r.from_user.username }}
+              <form action="{{ url_for('routes.accept_friend', req_id=r.id) }}"
+                    method="post" style="display:inline;">
+                <button type="submit" class="btn accept-btn">Accept</button>
+              </form>
+              <form action="{{ url_for('routes.decline_friend', req_id=r.id) }}"
+                    method="post" style="display:inline;">
+                <button type="submit" class="btn decline-btn">Refuse</button>
+              </form>
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+
+    <!-- 发送好友请求 -->
+    <div class="add-friend-section">
+      <h2>Add Friends</h2>
+      <form method="post" class="add-friend-form">
+        {{ form.hidden_tag() }}
+        {{ form.friend_username(class="friend-input", placeholder="friend username") }}
+        {{ form.submit(class="btn add-btn") }}
+      </form>
+    </div>
+
     {% if friends %}
       <div class="friend-list">
         {% for u in friends %}
