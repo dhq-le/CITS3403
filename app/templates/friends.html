@@ -1,3 +1,4 @@
+<!-- filepath: /Users/Zhuanz/Downloads/kong/CITS3403-Project/app/templates/friends.html -->
 {% extends "base.html" %}
 {% block title %}FitnessPlus Profile{% endblock %}
 
@@ -10,7 +11,7 @@
   <div class="friends-container">
     <h1>Friends-List</h1>
 
-    <!-- 待处理请求 -->
+    <!-- Pending Requests -->
     {% if requests %}
       <section class="requests-section">
         <h2>Friend Request</h2>
@@ -32,7 +33,7 @@
       </section>
     {% endif %}
 
-    <!-- 已接受好友 -->
+    <!-- Accepted Friends -->
     {% if friends %}
       <div class="friend-list">
         {% for u in friends %}
@@ -51,7 +52,7 @@
       <p class="no-friends">You currently don't have any friends.</p>
     {% endif %}
 
-    <!-- 发送好友请求 -->
+    <!-- Send Friend Request -->
     <div class="add-friend-section">
       <h2>Add Friends</h2>
       <form method="post" class="add-friend-form">
@@ -61,7 +62,7 @@
       </form>
     </div>
 
-    <!-- 消息提示 -->
+    <!-- Flash Messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         <div class="flashes">

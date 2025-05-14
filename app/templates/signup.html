@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <title>Sign Up</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: Arial, sans-serif; background: #f5f5f5; display: flex; align-items: center; justify-content: center; height: 100vh; }
+        body { font-family: Arial, sans-serif; background: url("../static/images/bg.jpeg") no-repeat center center fixed; background-size: cover; display: flex; align-items: center; justify-content: center; height: 100vh; }
         header { position: absolute; top: 20px; left: 20px; }
         header .logo { width: 60px; }
         main { background: #fff; padding: 24px; width: 100%; max-width: 360px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
@@ -21,7 +21,7 @@
 </head>
 <body>
     <header>
-        <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Logo" class="logo">
+        <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo" class="logo">
     </header>
     <main>
         <h2>Create a FitnessPlus Account</h2>
