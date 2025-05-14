@@ -23,13 +23,10 @@ class SignUpForm(FlaskForm):
 		Regexp( ##regex rule for usernames
 			r'^\w+$', message="Username must contain only letters, numbers, or underscores.")
 	])
-	password = StringField('Password', validators=[
-		DataRequired(),
-		Regexp( ##regex rule for passwords, the special character set is !@#$%^&*()_+-=[]{};:'",.<>/?\|`~
-			r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};:\'",.<>/?\\|`~])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};:\'",.<>/?\\|`~]{8,}$',
-		message="Password must be at least 8 characters long and include a letter, a number, and a special character."
-		)
-	])
+	password = PasswordField('Password', validators=[
+        DataRequired(),
+        Length(min=8, message="Password must be at least 8 characters long.")
+    ])
 	height = IntegerField('Height (in cm)', validators=[
 		DataRequired(),
 		NumberRange(min=0, message="Height must be greater than zero.")
