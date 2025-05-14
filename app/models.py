@@ -4,9 +4,10 @@ from werkzeug.wsgi import responder
 
 from app import db
 from datetime import datetime
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
-
-class Usernames(db.Model):
+class Usernames(UserMixin, db.Model):
     __tablename__ = 'usernames'
     id = db.Column(db.Integer,
                    primary_key=True, autoincrement=True)  # although not necessary, it is a good practice to have an id column and quicker lookups
@@ -19,6 +20,13 @@ class Usernames(db.Model):
     ## if we have time later add email here
 
     #create a get and set method for the password. 
+    def set_password(self, password):
+        """Hash and set the user's password."""
+        self.password = generate_password_hash(password)
+
+    def check_password(self, password):
+      """Verify a plaintext password against the stored hash."""
+      return check_password_hash(self.password, password)
 
     def __repr__(self):
         return f"Usernames(id={self.id!r}, username={self.username!r}, password={self.password!r}, height={self.height!r}, weight={self.weight!r}, dob={self.dob!r})"

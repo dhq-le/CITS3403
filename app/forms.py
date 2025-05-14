@@ -15,7 +15,7 @@ def validate_date(form, field):
 class LoginForm(FlaskForm):
     username = StringField('username', validators=[DataRequired(), Length(1, 64)])
     password = PasswordField('password', validators=[DataRequired()])
-    submit   = SubmitField('login')
+    submit   = SubmitField('Login')
 
 class SignUpForm(FlaskForm):
 	username = StringField('Username', validators=[
@@ -23,13 +23,10 @@ class SignUpForm(FlaskForm):
 		Regexp( ##regex rule for usernames
 			r'^\w+$', message="Username must contain only letters, numbers, or underscores.")
 	])
-	password = StringField('Password', validators=[
-		DataRequired(),
-		Regexp( ##regex rule for passwords, the special character set is !@#$%^&*()_+-=[]{};:'",.<>/?\|`~
-			r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};:\'",.<>/?\\|`~])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};:\'",.<>/?\\|`~]{8,}$',
-		message="Password must be at least 8 characters long and include a letter, a number, and a special character."
-		)
-	])
+	password = PasswordField('Password', validators=[
+        DataRequired(),
+        Length(min=8, message="Password must be at least 8 characters long.")
+    ])
 	height = IntegerField('Height (in cm)', validators=[
 		DataRequired(),
 		NumberRange(min=0, message="Height must be greater than zero.")
@@ -61,8 +58,8 @@ class WorkoutForm(FlaskForm):
 	exercise = StringField('Exercise', validators=[DataRequired()])
 	date = DateField('Date', format='%Y-%m-%d', validators=[DataRequired(), validate_date],
 			render_kw={"max": max_date.strftime('%Y-%m-%d')})
-	sets = IntegerField('Sets', validators=[DataRequired()])
-	reps = IntegerField('Reps', validators=[DataRequired()])
+	sets = IntegerField('Sets', validators=[DataRequired(), NumberRange(min=0, message="Sets must be 0 or greater.")])
+	reps = IntegerField('Reps', validators=[DataRequired(), NumberRange(min=0, message="Reps must be 0 or greater.")])
 	# calories_burned = IntegerField('Calories Burned', validators=[DataRequired()]) this will be worked on the backend
 	weights = IntegerField('Weight', validators=[DataRequired()])
 	completion_status = BooleanField('Completion Status')

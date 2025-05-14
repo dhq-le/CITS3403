@@ -128,7 +128,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+# we need the env file to get the SECRET_KEY
 .venv
 env/
 venv/

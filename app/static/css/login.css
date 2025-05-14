@@ -5,7 +5,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f5f5f5;
+  background: url("../images/Media.jpeg") no-repeat center center fixed;
+  background-size: cover;
   font-family: sans-serif;
 }
 
@@ -38,14 +39,14 @@ header {
   margin-bottom: 24px;
 }
 .field fieldset {
-  border: 2px solid #4CAF50;
+  border: 2px solid #1e3c72;
   border-radius: 8px;
   padding: 0 12px;
 }
 .field legend {
   padding: 0 4px;
   font-size: 14px;
-  color: #4CAF50;
+  color: #1e3c72;
 }
 .field input {
   width: 100%;
@@ -58,7 +59,7 @@ header {
 .btn {
   width: 100%;
   padding: 14px 0;
-  background: #4CAF50;
+  background: #0366d6;
   color: #fff;
   font-size: 18px;
   border: none;
@@ -68,11 +69,11 @@ header {
 
 .tip {
   font-size: 14px;
-  color: #666;
+  color: #1e3c72;
   margin-top: 16px;
 }
 .tip a {
-  color: #4CAF50;
+  color: #1e3c72;
   text-decoration: none;
   margin-left: 4px;
 }
@@ -80,4 +81,24 @@ header {
 .error {
   color: #e74c3c;
   margin-top: 12px;
+}
+
+.cool-button{
+  background-color: #0366d6;
+  display: inline-block;
+  padding: 12px 24px;      /* increase padding for a wider look */
+  min-width: 200px;         /* ensure at least 200px width */
+  text-align: center;       /* center the text */            
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 30px;
+  transition: all 0.2s ease;
+}
+
+.cool-button:hover{
+  background-color: #0056b3;
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 86, 179, 0.4);
 }
