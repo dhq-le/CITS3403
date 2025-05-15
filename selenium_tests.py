@@ -2,7 +2,6 @@ import unittest
 import time
 from threading import Thread
 from werkzeug.serving import make_server
-
 from app import create_app, db
 from app.models import Usernames
 from config import TestingConfig

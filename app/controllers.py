@@ -55,6 +55,7 @@ def login():
                 flash(error, 'error')
             else:
                 login_user(user)
+                flash('Login successful.', 'success')
                 return redirect(url_for('routes.index'))
 
     elif request.method == 'POST':
@@ -70,9 +71,7 @@ def logout():
 ## index/dashboard page
 @login_required
 def index():
-    if not session.get('logged_in') or not Usernames.query.filter_by(username=session['username']).first():
-        return redirect(url_for('routes.login'))
-    user = Usernames.query.filter_by(username=session['username']).first()
+    user = current_user
     plans = []
     workout_plans = Workout.query.filter(
         Workout.user_id == user.id,
@@ -82,7 +81,7 @@ def index():
 
     for plan in workout_plans:
         plans.append(WorkoutPlan(exercise=plan.exercise, sets=plan.sets, reps=plan.reps, weights=plan.weights))
-    return render_template('home.html', plans=plans, username=session['username'])
+    return render_template('home.html', plans=plans, username=user.username)
 
 ## profile page
 @login_required
