@@ -4,7 +4,19 @@ document.addEventListener('DOMContentLoaded', () => {
 	const menuIcon = document.getElementById('menu-icon');
 	const main = document.getElementsByTagName('main')[0];
 	const header = document.getElementsByTagName('h1')[0];
+	const flashes = document.querySelectorAll('.flash');
 
+    flashes.forEach((flash) => {
+      // Show the flash message
+      setTimeout(() => {
+        flash.classList.add('show');
+      }, 100); // small delay to allow DOM paint
+
+      // Hide it after 5 seconds
+      setTimeout(() => {
+        flash.classList.remove('show');
+      }, 5000);
+    });
 
 	function toggleSidebar() {
 		sidebar.classList.toggle('collapsed');

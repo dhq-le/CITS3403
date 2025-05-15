@@ -152,24 +152,6 @@
   margin-left: 4px;
 }
 
-.flashes {
-  text-align: center;
-  margin-top: 16px;
-}
-
-.flash {
-  display: inline-block;
-  padding: 8px 12px;
-  border-radius: 8px;
-  margin: 4px;
-  opacity: 1;
-  transition: opacity 0.5s ease;
-}
-
-.flash.fade-out { opacity: 0; }
-.flash.error   { background: #fdecea; color: #d32f2f; }
-.flash.success { background: #e8f5e9; color: #388e3c; }
-.flash.info    { background: #e3f2fd; color: #1976d2; }
 
 #comparison-graph-section {
   max-width: 500px;
