@@ -96,14 +96,6 @@
 
 {% block scripts %}
 {{ super() }}
-<script>
-  const openBtn = document.getElementById('openAddFriendModal');
-  const modal = document.getElementById('addFriendModal');
-  const closeBtn = document.getElementById('closeAddFriendModal');
-  openBtn.onclick = () => { modal.classList.add('active'); };
-  closeBtn.onclick = () => { modal.classList.remove('active'); };
-  window.onclick = (e) => { if(e.target === modal) modal.classList.remove('active'); };
-</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script src="{{ url_for('static', filename='js/friends.js') }}"></script>
 {% endblock %}
