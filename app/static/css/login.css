@@ -33,6 +33,7 @@ header {
   margin-bottom: 24px;
   font-size: 28px;
   color: #333;
+  text-align: center;
 }
 
 .field {
@@ -54,17 +55,6 @@ header {
   border: none;
   outline: none;
   font-size: 16px;
-}
-
-.btn {
-  width: 100%;
-  padding: 14px 0;
-  background: #0366d6;
-  color: #fff;
-  font-size: 18px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
 }
 
 .tip {
