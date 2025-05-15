@@ -66,7 +66,7 @@ class SeleniumTests(unittest.TestCase):
         )
         cls.driver.find_element(By.ID, "usernameInput").send_keys("selenium_user")
         # reveal password field
-        cls.driver.find_element(By.ID, "to-password").click()
+        cls.driver.find_element(By.ID, "passwordInput").click()
         WebDriverWait(cls.driver, 5).until(
             EC.visibility_of_element_located((By.ID, "passwordInput"))
         )
