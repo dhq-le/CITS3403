@@ -9,6 +9,7 @@
 	--navbar-color: gainsboro;
 	--warning-color: rgb(255, 105, 97);
 	--success-color: rgb(193, 225, 193);
+	--information-color: rgb(167, 199, 231	);
 }
 
 
@@ -151,8 +152,13 @@ html, body {
 .flash.error {
 	background-color: var(--warning-color);
 }
+
 .flash.success {
 	background-color: var(--success-color);
+}
+
+.flash.info {
+	background-color: var(--information-color);
 }
 
 /* Desktop view */

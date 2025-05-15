@@ -56,8 +56,7 @@ class MuscleForm(FlaskForm):
 
 class WorkoutForm(FlaskForm):
         exercise = StringField('Exercise', validators=[DataRequired()])
-        date = DateField('Date', format='%Y-%m-%d', validators=[DataRequired(), validate_date],
-                         render_kw={"max": max_date.strftime('%Y-%m-%d')})
+        date = DateField('Date', format='%Y-%m-%d', validators=[DataRequired()])
         sets = IntegerField('Sets', validators=[DataRequired(), NumberRange(min=0, message="Sets must be 0 or greater.")])
         reps = IntegerField('Reps', validators=[DataRequired(), NumberRange(min=0, message="Reps must be 0 or greater.")])
         # calories_burned = IntegerField('Calories Burned', validators=[DataRequired()]) this will be worked on the backend

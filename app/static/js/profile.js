@@ -27,3 +27,33 @@ function deleteWorkout(workoutId) {
 		alert("Error sending delete request.");
 	});
 }
+
+
+function markAsCompleted(workoutId) {
+	if (!confirm("Mark this workout as completed?")) return;
+
+	fetch(`/complete_workout/${workoutId}`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-CSRFToken': '{{ csrf_token() }}'  // Only if using Flask-WTF
+		}
+	})
+	.then(response => response.json())
+	.then(data => {
+		if (data.success) {
+			const card = document.getElementById(`workout-${workoutId}`);
+			if (card) {
+				card.style.transition = 'opacity 0.4s';
+				card.style.opacity = 0;
+				setTimeout(() => card.remove(), 400);
+			}
+		} else {
+			alert("Failed to mark as completed.");
+		}
+	})
+	.catch(err => {
+		console.error("Error completing workout:", err);
+		alert("Error completing workout.");
+	});
+}

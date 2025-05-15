@@ -128,6 +128,15 @@ def delete_workout(workout_id):
         return jsonify({'success': True})
     return jsonify({'success': False, 'error': 'Workout not found'}), 404
 
+@login_required
+def complete_workout(workout_id):
+    workout = Workout.query.filter_by(workout_id=workout_id, user_id=current_user.id).first()
+    if workout:
+        workout.completion = True
+        db.session.commit()
+        return jsonify({'success': True})
+    return jsonify({'success': False, 'error': 'Workout not found'}), 404
+
 
 @login_required
 def start_exercise():
@@ -189,7 +198,10 @@ def log_workout():
             form.exercise.data = query_param
 
     if form.validate_on_submit():
-
+        if form.completion_status.data is True:
+            if form.date.data > date.today():
+                flash('Can\'t select a date in the future for a workout you\'ve completed!', 'error')
+                return render_template('log.html', form=form)
         exercise_param = form.exercise.data
         sets = form.sets.data or 0
         reps = form.reps.data or 0
@@ -278,6 +290,7 @@ def calories_data():
         SELECT date, SUM(calories_burned) AS calories
         FROM workout_history
         WHERE user_id = :uid
+        AND completion = True
         GROUP BY date
         ORDER BY date
     """)
@@ -285,6 +298,7 @@ def calories_data():
         SELECT date, SUM(calories_burned) AS calories
         FROM workout_history
         WHERE user_id = :fid
+        AND completion = True
         GROUP BY date
         ORDER BY date
     """)
@@ -302,11 +316,11 @@ def calories_data():
 def view_friends():
     user_id = current_user.id
 
-    # 已接受的好友
+    # Accepted friends
     friendships = Friendship.query.filter_by(user_id=user_id).all()
     friends     = [fs.friend for fs in friendships]
 
-    # 收到的好友请求
+    # Received friend requests
     requests    = FriendRequest.query.filter_by(to_user_id=user_id).all()
 
     form = AddFriendForm()
@@ -314,41 +328,42 @@ def view_friends():
         uname = form.friend_username.data.strip()
         target = Usernames.query.filter_by(username=uname).first()
         if not target:
-            flash(f'user "{uname}" not found', 'error')
+            flash(f'Couldn\'t find a user by the name of {uname}!', 'error')
         elif target.id == user_id:
-            flash('you can\'t add youeself', 'error')
+            flash('You can\'t add yourself!', 'error')
         else:
             already_frd = Friendship.query.filter_by(user_id=user_id, friend_id=target.id).first()
             already_req = FriendRequest.query.filter_by(from_user_id=user_id, to_user_id=target.id).first()
             if already_frd:
-                flash(f'"{uname}" is already your friend', 'info')
+                flash(f'{uname} is already your friend.', 'error')
             elif already_req:
-                flash(f'already send request to  "{uname}",please wait', 'info')
+                flash(f'Already sent a request to {uname}.', 'error')
             else:
                 fr = FriendRequest(from_user_id=user_id, to_user_id=target.id)
                 db.session.add(fr)
                 db.session.commit()
-                flash(f'already send friend request to  "{uname}"!', 'success')
+                flash(f'Successfully sent a friend request to {uname}!', 'success')
         return redirect(url_for('routes.view_friends'))
 
     return render_template('friends.html',
                            friends=friends,
                            requests=requests,
-                           form=form)
+                           form=form
+                           )
 
 @login_required
 def accept_friend(req_id):
     user_id = current_user.id
     fr = FriendRequest.query.get(req_id)
     if fr and fr.to_user_id == user_id:
-        # 建立双向好友关系
-        db.session.add(Friendship(user_id=user_id,      friend_id=fr.from_user_id))
+        # Establish a bidirectional friendship
+        db.session.add(Friendship(user_id=user_id, friend_id=fr.from_user_id))
         db.session.add(Friendship(user_id=fr.from_user_id, friend_id=user_id))
         db.session.delete(fr)
         db.session.commit()
-        flash('Request Accept', 'success')
+        flash('Request accepted!', 'info')
     else:
-        flash('error', 'error')
+        flash('You\'ve run into an error! Please try again later.', 'error')
     return redirect(url_for('routes.view_friends'))
 
 
@@ -359,10 +374,11 @@ def decline_friend(req_id):
     if fr and fr.to_user_id == user_id:
         db.session.delete(fr)
         db.session.commit()
-        flash('Request refused', 'info')
+        flash('Request declined.', 'info')
     else:
-        flash('error', 'error')
+        flash('You\'ve run into an error! Please try again later.', 'error')
     return redirect(url_for('routes.view_friends'))
+
 
 UPLOAD_FOLDER = 'static/profile_pics'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -373,16 +389,15 @@ def allowed_file(filename):
 
 @login_required
 def edit_profile():
-    user = Usernames.query.filter_by(username=current_user.username).first()
-    if not user:
-        return redirect(url_for('routes.login'))
+    user = current_user
 
     form = EditProfileForm(obj=user)
 
     if form.validate_on_submit():
         if Usernames.query.filter_by(username=form.username.data).first():
-            flash('That username is already taken.', 'error')
-            return render_template('edit_profile.html', form=form, user=user)
+            if form.username.data != user.username:
+                flash('That username is already taken.', 'error')
+                return render_template('edit_profile.html', form=form, user=user)
         user.username = form.username.data
         if form.password.data is not None:
             print(form.password.data)

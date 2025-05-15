@@ -25,7 +25,7 @@
 							<p><strong>Weight:</strong> {{ plan.weights }}</p>
 							<p><strong>Predicted Calories Burned:</strong> {{ plan.calories_burned }}</p>
 
-							<button class="cool-button" onclick="location.href='{{ url_for('routes.log_workout', plan_id=plan.workout_id) }}'">
+							<button class="cool-button" onclick="markAsCompleted({{ plan.workout_id }})">
 								Mark as Completed
 							</button>
 							<button class="cool-button" onclick="location.href='{{ url_for('routes.log_workout', plan_id=plan.workout_id, next=request.path) }}'">
