@@ -2,8 +2,7 @@ import unittest
 from app import create_app, db
 from app.models import Usernames, Friendship, FriendRequest, Workout
 from flask.testing import FlaskClient
-from datetime import datetime
-from werkzeug.security import generate_password_hash
+from datetime import datetime, timezone
 
 class PageTests(unittest.TestCase):
     def setUp(self):
@@ -130,7 +129,7 @@ class ModelsTestCase(unittest.TestCase):
         workout = Workout(
             user_id=self.user1.id,
             exercise="Push Ups",
-            date=datetime.utcnow().date(),
+            date=datetime.now(timezone.utc).date(),
             sets=3,
             reps=12,
             calories_burned=100,

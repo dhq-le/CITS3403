@@ -16,19 +16,25 @@
 			</div>
 			<div class="card-body">
 				{% for plan in workout_plans %}
-				<section class="card">
-					<div class="card-body">
-						<p><strong>Date:</strong> {{ plan.date }}</p>
-						<p><strong>Exercise:</strong> {{ plan.exercise }}</p>
-						<p><strong>Sets:</strong> {{ plan.sets }}</p>
-						<p><strong>Reps:</strong> {{ plan.reps }}</p>
-						<p><strong>Weight:</strong> {{ plan.weights }}</p>
-						<p><strong>Predicted Calories Burned:</strong> {{ plan.calories_burned }}</p>
-						<button class="cool-button" onclick="location.href='{{ url_for('routes.log_workout', plan_id=plan.workout_id) }}'">
-							Update Workout Plan
-						</button>
-						<a class="cool-button">Delete Workout Plan</a>
-					</div>
+					<section class="card">
+						<div class="card-body workout-card" id="workout-{{ plan.workout_id }}">
+							<p><strong>Date:</strong> {{ plan.date }}</p>
+							<p><strong>Exercise:</strong> {{ plan.exercise }}</p>
+							<p><strong>Sets:</strong> {{ plan.sets }}</p>
+							<p><strong>Reps:</strong> {{ plan.reps }}</p>
+							<p><strong>Weight:</strong> {{ plan.weights }}</p>
+							<p><strong>Predicted Calories Burned:</strong> {{ plan.calories_burned }}</p>
+
+							<button class="cool-button" onclick="location.href='{{ url_for('routes.log_workout', plan_id=plan.workout_id) }}'">
+								Mark as Completed
+							</button>
+							<button class="cool-button" onclick="location.href='{{ url_for('routes.log_workout', plan_id=plan.workout_id, next=request.path) }}'">
+								Update Workout Plan
+							</button>
+							<button class="cool-button" onclick="deleteWorkout({{ plan.workout_id }})">
+								Delete Workout Plan
+							</button>
+						</div>
 				</section>
 				{% endfor %}
 			</div>

@@ -7,9 +7,10 @@ from app import db
 from werkzeug.utils import secure_filename
 import json
 from pathlib import Path
-from datetime import date
-
+from datetime import date, datetime
 from flask_login import login_user, logout_user, login_required, current_user
+from urllib.parse import urlparse, urljoin
+
 
 ## sign up page
 def signup():
@@ -68,11 +69,23 @@ def logout():
     logout_user()
     return redirect(url_for('routes.login'))
 
+def calculate_age(dob_str):
+    dob = datetime.strptime(dob_str, "%Y-%m-%d").date()
+    print("hi",dob)
+    today = date.today()
+    age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
+    return age
+
 ## index/dashboard page
 @login_required
 def index():
+
     user = current_user
     plans = []
+    if user.dob:
+        age = calculate_age(user.dob)
+    else:
+        age = "No age provided."
     workout_plans = Workout.query.filter(
         Workout.user_id == user.id,
         Workout.completion == False,
@@ -81,7 +94,7 @@ def index():
 
     for plan in workout_plans:
         plans.append(WorkoutPlan(exercise=plan.exercise, sets=plan.sets, reps=plan.reps, weights=plan.weights))
-    return render_template('home.html', plans=plans, username=user.username)
+    return render_template('home.html', plans=plans, username=user.username, user=user, age=age)
 
 ## profile page
 @login_required
@@ -93,16 +106,27 @@ def profile():
     ).all()
     return render_template('profile.html', user=user, username=current_user.username, workout_history=workout_history,
                            height=user.height, dob=user.dob, friends_count=len(user.friendships), profile_pic=user.profile_pic)
+
+
 ## workout plans page
+@login_required
 def workout_plans():
-    if not session.get('logged_in'):
-        return redirect(url_for('routes.login'))
-    user = Usernames.query.filter_by(username=session['username']).first()
+    user = current_user
     workout_plans = Workout.query.filter(
         Workout.user_id == user.id,
         Workout.completion == False
     ).all()
     return render_template('workout_plans.html', user=user, username=session['username'], workout_plans=workout_plans)
+
+
+@login_required
+def delete_workout(workout_id):
+    workout = Workout.query.filter_by(workout_id=workout_id, user_id=current_user.id).first()
+    if workout:
+        db.session.delete(workout)
+        db.session.commit()
+        return jsonify({'success': True})
+    return jsonify({'success': False, 'error': 'Workout not found'}), 404
 
 
 @login_required
@@ -127,15 +151,45 @@ def start_exercise():
 
     return render_template('exercise.html', form=form, exercises=exercises)
 
+
+def is_safe_url(target):
+    # Prevent open redirect vulnerabilities
+    ref_url = urlparse(request.host_url)
+    test_url = urlparse(urljoin(request.host_url, target))
+    return test_url.scheme in ('http', 'https') and ref_url.netloc == test_url.netloc
+
 @login_required
 def log_workout():
     form = WorkoutForm()
-    #Autofil the field
-    query_param = request.args.get('exercise')
-    if query_param:
-        form.exercise.data = query_param
+
+    plan_id = request.values.get('plan_id')  # plan_id to identify updates
+    next_url = request.args.get('next') or url_for('routes.index')
+
+    if not is_safe_url(next_url):
+        next_url = url_for('routes.index')
+
+    # If updating, fetch the existing workout
+    if plan_id:
+        workout = Workout.query.filter_by(workout_id=plan_id, user_id=current_user.id).first()
+        if workout:
+            if request.method == 'GET':
+                # Pre-fill form fields with existing workout data
+                form.next.data = next_url  # Preserved into form
+                form.exercise.data = workout.exercise
+                form.date.data = workout.date
+                form.sets.data = workout.sets
+                form.reps.data = workout.reps
+                form.weights.data = workout.weights
+                form.completion_status.data = workout.completion
+
+    # Handle pre-filling via ?exercise= query
+    else:
+        query_param = request.args.get('exercise')
+        if query_param and not plan_id:
+            form.exercise.data = query_param
 
     if form.validate_on_submit():
+
         exercise_param = form.exercise.data
         sets = form.sets.data or 0
         reps = form.reps.data or 0
@@ -144,41 +198,46 @@ def log_workout():
         # Load calories per rep from JSON
         json_path = Path(__file__).resolve().parent / 'static' / 'data' / 'exercises.json'
         if json_path.exists():
-     
             with open(json_path) as f:
                 all_data = json.load(f)
-            if not all_data:
-                print("ERROR: all_data is empty! JSON might be malformed or missing content.")
-            else:
-                print(f"Loaded muscle groups: {list(all_data.keys())}")
             for group in all_data.values():
                 for ex in group:
-                    print(f"Checking: exercise_param='{exercise_param}', ex['name']='{ex['name']}'")
                     if exercise_param.lower() in ex["name"].lower():
-                        print("MATCH FOUND")
                         calories_per_rep = ex.get("calories_burned_per_rep", 0)
                         break
-            
+
         total_calories = calories_per_rep * sets * reps
 
-        print(f"DEBUG: {exercise_param} — {sets=} {reps=} {calories_per_rep=} {total_calories=}")  # TEMP LOG
+        if workout:
+            # Update existing workout
+            workout.exercise = exercise_param
+            workout.date = form.date.data
+            workout.sets = sets
+            workout.reps = reps
+            workout.weights = form.weights.data
+            workout.calories_burned = total_calories
+            workout.completion = form.completion_status.data
+            flash(f'Workout updated! Calories burned: {total_calories}')
+        else:
+            # Create new workout
+            workout = Workout(
+                user_id=current_user.id,
+                exercise=exercise_param,
+                date=form.date.data,
+                sets=sets,
+                reps=reps,
+                calories_burned=total_calories,
+                weights=form.weights.data,
+                completion=form.completion_status.data
+            )
+            db.session.add(workout)
+            flash(f'Workout logged! Calories burned: {total_calories}')
 
-        workout = Workout(
-            user_id=current_user.id,
-            exercise=exercise_param,
-            date=form.date.data.strftime('%Y%m%d'),
-            sets=sets,
-            reps=reps,
-            calories_burned=total_calories,
-            weights=form.weights.data
-        )
-        db.session.add(workout)
         db.session.commit()
-        flash(f'Workout logged! Calories burned: {total_calories}')
-        return redirect(url_for('routes.index'))
+        next_url = form.next.data or url_for('routes.index')
+        return redirect(next_url)
 
     return render_template('log.html', form=form)
-
 
 ## calorie data chart
 @login_required
@@ -199,6 +258,7 @@ def calories_data():
             SELECT date, SUM(calories_burned) AS calories
             FROM workout_history
             WHERE user_id = :user_id
+            AND completion = True
             GROUP BY date
             ORDER BY date ASC
         """)
@@ -320,6 +380,9 @@ def edit_profile():
     form = EditProfileForm(obj=user)
 
     if form.validate_on_submit():
+        if Usernames.query.filter_by(username=form.username.data).first():
+            flash('That username is already taken.', 'error')
+            return render_template('edit_profile.html', form=form, user=user)
         user.username = form.username.data
         if form.password.data is not None:
             print(form.password.data)
@@ -345,6 +408,7 @@ def edit_profile():
 
         db.session.commit()
         session['username'] = user.username
+        flash('Successfully updated your information!', 'success')
         return redirect(url_for('routes.profile'))
 
     return render_template('edit_profile.html', form=form, user=user)

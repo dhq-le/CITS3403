@@ -21,13 +21,29 @@
 			<h2>🏋 Today's Workout</h2>
 		</div>
 		<div class="card-body">
-			{% for plan in plans %}
-				<ul>
-					<li>{{ plan.exercise }} - {{ plan.sets }} sets - {{ plan.reps }} reps - {{ plan.weights }} kg</li>
-				</ul>
-			{% endfor %}
-
+		  <table class="table table-striped table-bordered">
+			<thead>
+			  <tr>
+				<th>Exercise</th>
+				<th>Sets</th>
+				<th>Reps</th>
+				<th>Weight (kg)</th>
+			  </tr>
+			</thead>
+			<tbody>
+			  {% for plan in plans %}
+			  <tr>
+				<td>{{ plan.exercise }}</td>
+				<td>{{ plan.sets }}</td>
+				<td>{{ plan.reps }}</td>
+				<td>{{ plan.weights }}</td>
+			  </tr>
+			  {% endfor %}
+			</tbody>
+		  </table>
 		</div>
+
+
 		<button class="cool-button" onclick="location.href='{{ url_for('routes.start_exercise') }}';">Start Course</button>
 	</section>
 
@@ -59,10 +75,10 @@
 			<h2>♥️ Health</h2>
 		</div>
 		<div class="card-body">
-			<p>Name: <span id="user-name">John Doe</span></p>
-			<p>Age: <span id="user-age">30</span></p>
-			<p>Height: <span id="user-height">180 cm</span></p>
-			<p>Weight: <span id="user-weight">75 kg</span></p>
+		  <p>Username: <span id="user-name">{{ user.username }}</span></p>
+		  <p>Age: <span id="user-age">{{ age }} years old</span></p>
+		  <p>Height: <span id="user-height">{{ user.height }} cm</span></p>
+		  <p>Weight: <span id="user-weight">{{ user.weight }} kg</span></p>
 		</div>
 	</section>
 

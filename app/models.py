@@ -1,9 +1,5 @@
-from os import setsid
-
-from werkzeug.wsgi import responder
-
 from app import db
-from datetime import datetime
+from datetime import datetime, timezone
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -45,7 +41,7 @@ class FriendRequest(db.Model):
     id             = db.Column(db.Integer, primary_key=True)
     from_user_id   = db.Column(db.Integer, db.ForeignKey('usernames.id'), nullable=False)
     to_user_id     = db.Column(db.Integer, db.ForeignKey('usernames.id'), nullable=False)
-    timestamp      = db.Column(db.DateTime, default=datetime.utcnow)
+    timestamp      = db.Column(db.DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
     from_user      = db.relationship('Usernames', foreign_keys=[from_user_id])
     to_user        = db.relationship('Usernames', foreign_keys=[to_user_id])
 

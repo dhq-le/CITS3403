@@ -7,8 +7,8 @@
 	--highlight-color: rgba(0, 191, 255, 0.5);
 	--settings-color: darkgrey;
 	--navbar-color: gainsboro;
-	--warning-color: red;
-	--success-color: green;
+	--warning-color: rgb(255, 105, 97);
+	--success-color: rgb(193, 225, 193);
 }
 
 
@@ -22,6 +22,8 @@ html, body {
 	height: calc(var(--vh) * 100);
 	overflow-x: hidden;
 }
+
+
 
 
 .sidebar {
@@ -109,6 +111,48 @@ html, body {
     background-color: #0056b3;
     transform: scale(1.02);
     box-shadow: 0 4px 12px rgba(0, 86, 179, 0.4);
+}
+
+.flashes {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1000;
+}
+
+
+
+.flash {
+	position: relative;
+	bottom: 20px;
+	right: 20px;
+	background-color: var(--success-color);
+	color: var(--text-color);
+	padding: 15px 20px;
+	border-radius: 5px;
+	display: flex;
+	align-items: center;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	font-size: 16px;
+	z-index: 1000;
+	visibility: hidden;
+	opacity: 0;
+	transition: opacity 0.5s ease;
+}
+
+.flash.show {
+	visibility: visible;
+	opacity: 1;
+}
+
+.flash.error {
+	background-color: var(--warning-color);
+}
+.flash.success {
+	background-color: var(--success-color);
 }
 
 /* Desktop view */
