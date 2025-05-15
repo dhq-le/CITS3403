@@ -301,17 +301,21 @@ def edit_profile():
 
         file = request.files.get('profile_pic')
         if file and file.filename:
-            upload_folder = os.path.join(current_app.root_path, 'static', 'profile_pics')
-            os.makedirs(upload_folder, exist_ok=True)
+            if allowed_file(file.filename):
+                upload_folder = os.path.join(current_app.root_path, 'static', 'profile_pics')
+                os.makedirs(upload_folder, exist_ok=True)
 
-            filename = secure_filename(file.filename)
-            file_path = os.path.join(upload_folder, filename)
-            file.save(file_path)
+                filename = secure_filename(file.filename)
+                file_path = os.path.join(upload_folder, filename)
+                file.save(file_path)
 
-            user.profile_pic = filename 
+                user.profile_pic = filename 
+            else:
+                flash('File not allowed. Please upload a valid image file (png, jpg, jpeg).', 'error')
+                return render_template('edit_profile.html', form=form, user=user)
 
         db.session.commit()
         session['username'] = user.username
         return redirect(url_for('routes.profile'))
-
+    
     return render_template('edit_profile.html', form=form, user=user)
