@@ -61,16 +61,6 @@
       <p class="no-friends">You currently don't have any friends.</p>
     {% endif %}
 
-    <!-- Flash Messages -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <div class="flashes">
-          {% for category, msg in messages %}
-            <div class="flash {{ category }}">{{ msg }}</div>
-          {% endfor %}
-        </div>
-      {% endif %}
-    {% endwith %}
   </div>
 
   <!-- Add Friend Modal -->
