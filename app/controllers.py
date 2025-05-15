@@ -25,7 +25,7 @@ def signup():
             ## check against database, ensure these dont already exist
             if Usernames.query.filter_by(username=username).first() is not None:
                 error = "Username is already taken. Please select a new username."
-                return render_template('signuphtml', form=form, error=error)
+                return render_template('signup.html', form=form, error=error)
             else:
                 new_user = Usernames(username=username, height=height, weight=weight, dob=dob)
                 new_user.set_password(password)
@@ -88,7 +88,7 @@ def index():
 def profile():
     if not session.get('logged_in'):
         return redirect(url_for('routes.login'))
-    user = Usernames.query.filter_by(username=session['username']).first()
+    user = current_user
     workout_history = Workout.query.filter(
         Workout.user_id == user.id,
         Workout.completion == True
