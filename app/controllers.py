@@ -23,7 +23,7 @@ def signup():
             ## check against database, ensure these dont already exist
             if Usernames.query.filter_by(username=username).first() is not None:
                 error = "Username is already taken. Please select a new username."
-                return render_template('signuphtml', form=form, error=error)
+                return render_template('signup.html', form=form, error=error)
             else:
                 new_user = Usernames(username=username, height=height, weight=weight, dob=dob)
                 new_user.set_password(password)
@@ -75,7 +75,7 @@ def index():
 ## profile page
 @login_required
 def profile():
-    user = Usernames.query.filter_by(username=current_user.username).first()
+    user = current_user
     workout_history = Workout.query.filter_by(user_id=user.id).all()
     return render_template('profile.html', user=user, username=current_user.username, workout_history=workout_history, 
                            height=user.height, dob=user.dob, friends_count=len(user.friendships), profile_pic=user.profile_pic)
@@ -294,8 +294,10 @@ def edit_profile():
 
     if form.validate_on_submit():
         user.username = form.username.data
-        if form.password.data:
-            user.password = user.set_password(form.password.data)
+        if form.password.data is not None:
+            print(form.password.data)
+            user.set_password(form.password.data)
+            print(user.password)
         user.height = form.height.data
         user.dob = request.form['dob']  
 
