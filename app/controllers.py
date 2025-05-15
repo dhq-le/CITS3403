@@ -25,7 +25,7 @@ def signup():
             ## check against database, ensure these dont already exist
             if Usernames.query.filter_by(username=username).first() is not None:
                 error = "Username is already taken. Please select a new username."
-                return render_template('signuphtml', form=form, error=error)
+                return render_template('signup.html', form=form, error=error)
             else:
                 new_user = Usernames(username=username, height=height, weight=weight, dob=dob)
                 new_user.set_password(password)
@@ -86,14 +86,12 @@ def index():
 ## profile page
 @login_required
 def profile():
-    if not session.get('logged_in'):
-        return redirect(url_for('routes.login'))
-    user = Usernames.query.filter_by(username=session['username']).first()
+    user = current_user
     workout_history = Workout.query.filter(
-        Workout.user_id == user.id,
-        Workout.completion == True
+	    Workout.user_id == user.id,
+	    Workout.completion == True
     ).all()
-    return render_template('profile.html', user=user, username=session['username'], workout_history=workout_history, 
+    return render_template('profile.html', user=user, username=current_user.username, workout_history=workout_history,
                            height=user.height, dob=user.dob, friends_count=len(user.friendships), profile_pic=user.profile_pic)
 ## workout plans page
 def workout_plans():
@@ -129,90 +127,54 @@ def start_exercise():
 
     return render_template('exercise.html', form=form, exercises=exercises)
 
-
-def calorie_calculator(form):
-        exercise_param = form.exercise.data
-        sets = form.sets.data or 0
-        reps = form.reps.data or 0
-        completion_status = form.completion_status.data or False
-
-        calories_per_rep = 0
-        json_path = Path(__file__).resolve().parent / 'static' / 'data' / 'exercises.json'
-        if json_path.exists():
-            with open(json_path) as f:
-                all_data = json.load(f)
-            for group in all_data.values():
-                for ex in group:
-                    if exercise_param.lower() in ex["name"].lower():
-                        calories_per_rep = ex.get("calories_burned_per_rep", 0)
-                        break
-        total_calories = calories_per_rep * sets * reps
-        return total_calories
-
 @login_required
 def log_workout():
     form = WorkoutForm()
-    plan_id = request.args.get('plan_id')
-    workout = None
-    message = ""
-
-    # Check if editing an existing plan
-    if plan_id:
-        workout = Workout.query.get(int(plan_id))
-        if workout and workout.user_id == Usernames.query.filter_by(username=session['username']).first().id:
-            # Pre-fill form with existing data
-            form.exercise.data = workout.exercise
-            form.sets.data = workout.sets
-            form.reps.data = workout.reps
-            form.weights.data = workout.weights
-            form.date.data = workout.date
-            form.completion_status.data = workout.completion
-
-    # Autofill if coming from quick-log link
+    #Autofil the field
     query_param = request.args.get('exercise')
-    if query_param and not plan_id:
+    if query_param:
         form.exercise.data = query_param
 
-    # Check if the form has been submitted
     if form.validate_on_submit():
-        # Calculate calories
-        total_calories = calorie_calculator(form)
+        exercise_param = form.exercise.data
+        sets = form.sets.data or 0
+        reps = form.reps.data or 0
+        calories_per_rep = 0
 
-        if plan_id:  # Updating an existing workout
-            if workout:
-                workout.exercise = form.exercise.data
-                workout.sets = form.sets.data or 0
-                workout.reps = form.reps.data or 0
-                workout.date = form.date.data
-                workout.calories_burned = total_calories
-                workout.weights = form.weights.data
-                workout.completion = form.completion_status.data or False
-                db.session.commit()
-                message = f"Workout {'updated' if workout.completion else 'plan updated'}!"
+        # Load calories per rep from JSON
+        json_path = Path(__file__).resolve().parent / 'static' / 'data' / 'exercises.json'
+        if json_path.exists():
+     
+            with open(json_path) as f:
+                all_data = json.load(f)
+            if not all_data:
+                print("ERROR: all_data is empty! JSON might be malformed or missing content.")
             else:
-                flash("Workout not found.")
-                return redirect(url_for('routes.index'))
+                print(f"Loaded muscle groups: {list(all_data.keys())}")
+            for group in all_data.values():
+                for ex in group:
+                    print(f"Checking: exercise_param='{exercise_param}', ex['name']='{ex['name']}'")
+                    if exercise_param.lower() in ex["name"].lower():
+                        print("MATCH FOUND")
+                        calories_per_rep = ex.get("calories_burned_per_rep", 0)
+                        break
+            
+        total_calories = calories_per_rep * sets * reps
 
-        else:  # Creating a new workout
-            # Check if the workout is completed and not set for a future date
-            if form.completion_status.data and form.date.data > date.today():
-                flash("Can't upload a completed workout later than today! Either select a date before today, or make this a workout plan.")
-            else:
-                workout = Workout(
-                    user_id=Usernames.query.filter_by(username=session['username']).first().id,
-                    exercise=form.exercise.data,
-                    date=form.date.data,
-                    sets=form.sets.data or 0,
-                    reps=form.reps.data or 0,
-                    calories_burned=total_calories,
-                    weights=form.weights.data,
-                    completion=form.completion_status.data or False
-                )
-                db.session.add(workout)
-                db.session.commit()
-                message = f"Workout logged! Calories burned: {total_calories}" if workout.completion else "Workout plan saved!"
+        print(f"DEBUG: {exercise_param} — {sets=} {reps=} {calories_per_rep=} {total_calories=}")  # TEMP LOG
 
-        flash(message)
+        workout = Workout(
+            user_id=current_user.id,
+            exercise=exercise_param,
+            date=form.date.data.strftime('%Y%m%d'),
+            sets=sets,
+            reps=reps,
+            calories_burned=total_calories,
+            weights=form.weights.data
+        )
+        db.session.add(workout)
+        db.session.commit()
+        flash(f'Workout logged! Calories burned: {total_calories}')
         return redirect(url_for('routes.index'))
 
     return render_template('log.html', form=form)
@@ -359,21 +321,27 @@ def edit_profile():
 
     if form.validate_on_submit():
         user.username = form.username.data
-        if form.password.data:
-            user.password = user.set_password(form.password.data)
+        if form.password.data is not None:
+            print(form.password.data)
+            user.set_password(form.password.data)
+            print(user.password)
         user.height = form.height.data
         user.dob = request.form['dob']  
 
         file = request.files.get('profile_pic')
         if file and file.filename:
-            upload_folder = os.path.join(current_app.root_path, 'static', 'profile_pics')
-            os.makedirs(upload_folder, exist_ok=True)
+            if allowed_file(file.filename):
+                upload_folder = os.path.join(current_app.root_path, 'static', 'profile_pics')
+                os.makedirs(upload_folder, exist_ok=True)
 
-            filename = secure_filename(file.filename)
-            file_path = os.path.join(upload_folder, filename)
-            file.save(file_path)
+                filename = secure_filename(file.filename)
+                file_path = os.path.join(upload_folder, filename)
+                file.save(file_path)
 
-            user.profile_pic = filename 
+                user.profile_pic = filename
+            else:
+                flash('File not allowed. Please upload a valid image file (png, jpg, jpeg).', 'error')
+                return render_template('edit_profile.html', form=form, user=user)
 
         db.session.commit()
         session['username'] = user.username

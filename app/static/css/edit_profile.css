@@ -66,3 +66,22 @@
   border: 1px solid #ccc;
 }
 
+.flashes {
+  margin-bottom: 1rem;
+}
+.flash {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.flash.error {
+  background: #ffe6e6;
+  color: #b30000;
+  border: 1px solid #b30000;
+}
+.flash.success {
+  background: #e6ffed;
+  color: #007a29;
+  border: 1px solid #007a29;
+}
+
