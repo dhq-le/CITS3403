@@ -1,19 +1,24 @@
 document.addEventListener('DOMContentLoaded', function () {
   // Focus on add friend input
-  var input = document.querySelector('.friend-input');
+  const input = document.querySelector('.friend-input');
   if (input) input.focus();
 
   // Fade out all flash messages after 5 seconds
-  var flashes = document.querySelectorAll('.flash');
+  const flashes = document.querySelectorAll('.flash');
   if (flashes.length) {
-    setTimeout(function () {
-      flashes.forEach(function (el) {
-        el.classList.add('fade-out');
-      });
+    setTimeout(() => {
+      flashes.forEach(el => el.classList.add('fade-out'));
     }, 5000);
   }
 
-  const cards = document.querySelectorAll('.friend-card');
+  // Chart Overlay Logic
+  const cards = document.querySelectorAll('.friend-row');
+  const overlay = document.getElementById('comparisonOverlay');
+  const closeBtn = document.getElementById('closeOverlay');
+  const nameDisplay = document.getElementById('friendNameDisplay');
+  const ctx = document.getElementById('comparisonChart');
+  let chartInstance;
+
   cards.forEach(card => {
     card.addEventListener('click', () => {
       const friend = card.dataset.username;
@@ -37,13 +42,11 @@ document.addEventListener('DOMContentLoaded', function () {
           const userCalories = userData.map(e => e.calories);
           const friendCalories = friendData.map(e => e.calories);
 
-          const ctx = document.getElementById('comparisonChart');
-          if (!ctx) {
-            console.error("Comparison chart not found");
-            return;
+          if (chartInstance) {
+            chartInstance.destroy();
           }
 
-          new Chart(ctx, {
+          chartInstance = new Chart(ctx, {
             type: 'line',
             data: {
               labels: labels,
@@ -57,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 {
                   label: friend,
                   data: friendCalories,
-                  borderColor: "rgb(192,42,75)",
+                  borderColor: "rgb(192, 42, 75)",
                   tension: 0.2
                 }
               ]
@@ -72,8 +75,34 @@ document.addEventListener('DOMContentLoaded', function () {
             }
           });
 
-          document.getElementById('comparison-graph-section').style.display = 'block';
+          nameDisplay.textContent = friend;
+          overlay.classList.add('active');
         });
     });
   });
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      overlay.classList.remove('active');
+    });
+  }
+
+  // Add Friend Modal Logic
+  const openBtn = document.getElementById('openAddFriendModal');
+  const modal = document.getElementById('addFriendModal');
+  const closeModalBtn = document.getElementById('closeAddFriendModal');
+
+  if (openBtn && modal && closeModalBtn) {
+    openBtn.onclick = () => {
+      modal.classList.add('active');
+    };
+    closeModalBtn.onclick = () => {
+      modal.classList.remove('active');
+    };
+    window.onclick = (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+      }
+    };
+  }
 });
