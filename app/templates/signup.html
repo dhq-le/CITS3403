@@ -3,82 +3,56 @@
 <head>
     <meta charset="utf-8">
     <title>Sign Up</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: Arial, sans-serif; background: url("../static/images/Media.jpeg") no-repeat center center fixed; background-size: cover; display: flex; align-items: center; justify-content: center; height: 100vh; }
-        header { position: absolute; top: 20px; left: 20px; }
-        header .logo { width: 200px; }
-        main { background: #fff; padding: 24px; width: 100%; max-width: 360px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        h2 { margin-bottom: 16px; font-size: 20px; color: #333; text-align: center; }
-        .form-group { margin-bottom: 12px; }
-        label { display: block; margin-bottom: 4px; font-size: 14px; color: #555; }
-        input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
-        input:focus { outline: none; border-color: #4CAF50; }
-        .error { margin-top: 4px; font-size: 12px; color: #e74c3c; }
-        .cool-button{
-            background-color: #0366d6;
-            display: inline-block;
-            padding: 12px 24px;      /* increase padding for a wider look */
-            min-width: 200px;         /* ensure at least 200px width */
-            text-align: center;       /* center the text */            
-            color: #fff;
-            border: none;
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            border-radius: 30px;
-            transition: all 0.2s ease;
-        }
-
-        .cool-button:hover{
-            background-color: #0056b3;
-            transform: scale(1.02);
-            box-shadow: 0 4px 12px rgba(0, 86, 179, 0.4);
-        }
-        
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 <body>
     <header>
         <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo" class="logo">
     </header>
     <main>
-        <h2>Create a FitnessPlus Account</h2>
-        <form method="POST" action="{{ url_for('routes.signup') }}">
-            {{ form.hidden_tag() }}
-            {% if error %}<div class="error">{{ error }}</div>{% endif %}
-            <div class="form-group">
-                <label for="username">Username</label>
-                {{ form.username(id="username") }}
-                {% if not error and form.username.errors %}<div class="error">{{ form.username.errors[0] }}</div>{% endif %}
+        <form id="signupForm" method="POST" action="{{ url_for('routes.signup') }}">
+            <div class="login-box">
+                {{ form.hidden_tag() }}
+                {% if error %}<div class="error">{{ error }}</div>{% endif %}
+                <h1>Create Account</h1>
+                <div class="field">
+                  <fieldset>
+                    <legend>Username</legend>
+                    {{ form.username(id="username", placeholder="Please choose a username") }}
+                  </fieldset>
+                  {% if not error and form.username.errors %}<div class="error">{{ form.username.errors[0] }}</div>{% endif %}
+                </div>
+                <div class="field">
+                  <fieldset>
+                    <legend>Password</legend>
+                    {{ form.password(id="password", placeholder="Please choose a password") }}
+                  </fieldset>
+                  {% if not error and form.password.errors %}<div class="error">{{ form.password.errors[0] }}</div>{% endif %}
+                </div>
+                <div class="field">
+                  <fieldset>
+                    <legend>Height (cm)</legend>
+                    {{ form.height(id="height", placeholder="Enter height in cm") }}
+                  </fieldset>
+                  {% if not error and form.height.errors %}<div class="error">{{ form.height.errors[0] }}</div>{% endif %}
+                </div>
+                <div class="field">
+                  <fieldset>
+                    <legend>Weight (kg)</legend>
+                    {{ form.weight(id="weight", placeholder="Enter weight in kg") }}
+                  </fieldset>
+                  {% if not error and form.weight.errors %}<div class="error">{{ form.weight.errors[0] }}</div>{% endif %}
+                </div>
+                <div class="field">
+                  <fieldset>
+                    <legend>Date of Birth</legend>
+                    {{ form.dob(id="dob", placeholder="YYYY-MM-DD") }}
+                  </fieldset>
+                  {% if not error and form.dob.errors %}<div class="error">{{ form.dob.errors[0] }}</div>{% endif %}
+                </div>
+                <button type="submit" class="cool-button">{{ form.submit.label.text }}</button>
+                <p class="tip">Already have an account? <a href="{{ url_for('routes.login') }}">Login</a></p>
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                {{ form.password(id="password") }}
-                {% if not error and form.password.errors %}<div class="error">{{ form.password.errors[0] }}</div>{% endif %}
-            </div>
-            <div class="form-group">
-                <label for="height">Height (cm)</label>
-                {{ form.height(id="height") }}
-                {% if not error and form.height.errors %}<div class="error">{{ form.height.errors[0] }}</div>{% endif %}
-            </div>
-            <div class="form-group">
-                <label for="weight">Weight (kg)</label>
-                {{ form.weight(id="weight") }}
-                {% if not error and form.weight.errors %}<div class="error">{{ form.weight.errors[0] }}</div>{% endif %}
-            </div>
-            <div class="form-group">
-                <label for="dob">Date of Birth</label>
-                {{ form.dob(id="dob") }}
-                {% if not error and form.dob.errors %}<div class="error">{{ form.dob.errors[0] }}</div>{% endif %}
-            </div>
-            {{ form.submit(class="cool-button") }}
-            <br>
-            <br>
-            <button type="button" class="cool-button" onclick="window.location='{{ url_for('routes.login') }}'">
-              Back to Login
-            </button>
-
-
         </form>
     </main>
 </body>
