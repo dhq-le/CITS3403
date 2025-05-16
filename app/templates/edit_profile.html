@@ -66,15 +66,6 @@
                 <div class="error">{{ form.dob.errors[0] }}</div>
               {% endif %}
             </div>
-            {% with messages = get_flashed_messages(with_categories=true) %}
-              {% if messages %}
-                <div class="flashes">
-                  {% for category, msg in messages %}
-                    <div class="flash {{ category }}">{{ msg }}</div>
-                  {% endfor %}
-                </div>
-              {% endif %}
-            {% endwith %}
 
             {{ form.submit(class="cool-button") }}
           </div>
@@ -91,6 +82,5 @@
 
 {% block scripts %}
 {{ super() }}
-
 <script src="{{ url_for('static', filename='js/edit_profile.js') }}"></script>
 {% endblock %}
