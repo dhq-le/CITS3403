@@ -97,3 +97,11 @@ header {
   visibility: hidden;
   opacity: 0;
 }
+
+form#loginForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
