@@ -116,7 +116,7 @@ def workout_plans():
         Workout.user_id == user.id,
         Workout.completion == False
     ).all()
-    return render_template('workout_plans.html', user=user, username=session['username'], workout_plans=workout_plans)
+    return render_template('workout_plans.html', user=user, username=user.username, workout_plans=workout_plans)
 
 
 @login_required
@@ -422,7 +422,6 @@ def edit_profile():
                 return render_template('edit_profile.html', form=form, user=user)
 
         db.session.commit()
-        session['username'] = user.username
         flash('Successfully updated your information!', 'success')
         return redirect(url_for('routes.profile'))
 

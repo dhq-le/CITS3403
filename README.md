@@ -42,8 +42,18 @@ flask db upgrade
 flask db migrate -m "comment"
 ```
 
+5. Initialise the database.
 
-5. Start the server.
+Windows:
+```
+python init_db_rows.py
+```
+macOS/Linux:
+```
+python3 init_db_rows.py
+```
+
+6. Start the server.
 
 Windows:
 ```
@@ -55,6 +65,16 @@ macOS/Linux:
 ```
 python3 run.py
 ```
+
+## Testing Instructions	
+To run both selenium and unit tests, run this command from the root directory (whilst in the virtual environment):
+
+```
+python -m unittest discover -s tests 
+```
+ 
+
+
 
 ## Uploading to GitHub
 If you install any dependencies, ensure that these are added to the requirements.txt file. 
