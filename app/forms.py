@@ -75,11 +75,12 @@ class AddFriendForm(FlaskForm):
 
 class EditProfileForm(FlaskForm):
         username = StringField('Username', validators=[
-                Optional(),
+                DataRequired(),
                 Regexp( ##regex rule for usernames
                         r'^\w+$', message="Username must contain only letters, numbers, or underscores.")
         ])
         password = PasswordField('Password', validators=[
+                Optional(),
                 Length(min=8, message="Password must be at least 8 characters long.")
         ])
         height = IntegerField('Height (in cm)', validators=[
