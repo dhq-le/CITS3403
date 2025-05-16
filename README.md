@@ -33,16 +33,8 @@ source venv/bin/activate
 pip install -r 'requirements.txt'
 ```
 
-4. Initialise the database.
-```
-flask db upgrade
-```
-**NOTE:** If you are making any changes to the database, run this line first:
-```
-flask db migrate -m "comment"
-```
 
-5. Initialise the database.
+4. Initialise the database.
 
 Windows:
 ```
@@ -52,19 +44,18 @@ macOS/Linux:
 ```
 python3 init_db_rows.py
 ```
-
-6. Start the server.
-
-Windows:
+**NOTE:** If you are making any changes to the database, run this line first:
 ```
-python run.py
+flask db migrate -m "comment"
+flask db upgrade
 ```
 
+5. Start the server.
 
-macOS/Linux:
 ```
-python3 run.py
+flask run 
 ```
+**NOTE:** If this is being run in a development environment, run with argument `--debug`.
 
 ## Testing Instructions	
 To run both selenium and unit tests, run this command from the root directory (whilst in the virtual environment):
