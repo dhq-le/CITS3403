@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
@@ -33,9 +34,19 @@
         <!-- Display error message if any -->
         <p class="error">{{ error }}</p>
       {% endif %}
-      <p class="tip">Don't have a account?<a href="{{ url_for('routes.signup') }}">Signup</a></p>
+      <p class="tip">Don't have an account?<a href="{{ url_for('routes.signup') }}">Signup</a></p>
     </div>
   </form>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flashes">
+        {% for category, msg in messages %}
+          <div class="flash {{ category }}">{{ msg }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
 
   <script src="{{ url_for('static', filename='js/login.js') }}"></script>
 </body>

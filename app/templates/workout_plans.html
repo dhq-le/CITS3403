@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}FitnessPlus Workout Plans{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container-sm">
+	<main class="dashboard workout-plans-dashboard">
+		<!-- Workout Plans CARD -->
+		<section class="card" id="workout-plans">
+			<div class="card-header">
+				<h2>🏋️‍♂️ Workout Plans</h2>
+			</div>
+			<div class="card-body">
+				{% for plan in workout_plans %}
+					<section class="card">
+						<div class="card-body workout-card" id="workout-{{ plan.workout_id }}">
+							<p><strong>Date:</strong> {{ plan.date }}</p>
+							<p><strong>Exercise:</strong> {{ plan.exercise }}</p>
+							<p><strong>Sets:</strong> {{ plan.sets }}</p>
+							<p><strong>Reps:</strong> {{ plan.reps }}</p>
+							<p><strong>Weight:</strong> {{ plan.weights }}</p>
+							<p><strong>Predicted Calories Burned:</strong> {{ plan.calories_burned }}</p>
+
+							<button class="cool-button" onclick="markAsCompleted({{ plan.workout_id }})">
+								Mark as Completed
+							</button>
+							<button class="cool-button" onclick="location.href='{{ url_for('routes.log_workout', plan_id=plan.workout_id, next=request.path) }}'">
+								Update Workout Plan
+							</button>
+							<button class="cool-button" onclick="deleteWorkout({{ plan.workout_id }})">
+								Delete Workout Plan
+							</button>
+						</div>
+				</section>
+				{% endfor %}
+			</div>
+		</section>
+	</main>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+{% endblock %}

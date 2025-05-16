@@ -38,14 +38,20 @@
 			</div>
 			<div class="card-body">
 				{% for workout in workout_history %}
-				<div class="workout-entry">
-					<p><strong>Date:</strong> {{ workout.date }}</p>
-					<p><strong>Exercise:</strong> {{ workout.exercise }}</p>
-					<p><strong>Sets:</strong> {{ workout.sets }}</p>
-					<p><strong>Reps:</strong> {{ workout.reps }}</p>
-					<p><strong>Weight:</strong> {{ workout.weights }}</p>
-					<p><strong>Calories Burned:</strong> {{ workout.calories_burned }}</p>
-				</div>
+					<div class="card-body workout-card" id="workout-{{ workout.workout_id }}">
+						<p><strong>Date:</strong> {{ workout.date }}</p>
+						<p><strong>Exercise:</strong> {{ workout.exercise }}</p>
+						<p><strong>Sets:</strong> {{ workout.sets }}</p>
+						<p><strong>Reps:</strong> {{ workout.reps }}</p>
+						<p><strong>Weight:</strong> {{ workout.weights }}</p>
+						<p><strong>Calories Burned:</strong> {{ workout.calories_burned }}</p>
+						<button class="cool-button" onclick="location.href='{{ url_for('routes.log_workout', plan_id=workout.workout_id, next=request.path) }}'">
+							Update Workout
+						</button>
+						<button class="cool-button" onclick="deleteWorkout({{ workout.workout_id }})">
+							Delete Workout
+						</button>
+					</div>
 				{% endfor %}
 			</div>
 		</section>

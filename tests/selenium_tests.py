@@ -2,10 +2,9 @@ import unittest
 import time
 from threading import Thread
 from werkzeug.serving import make_server
-
 from app import create_app, db
 from app.models import Usernames
-from app.config import TestingConfig
+from config import TestingConfig
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By

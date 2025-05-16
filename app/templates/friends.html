@@ -12,7 +12,9 @@
 {% block content %}
   <div class="friends-container">
     <button class="add-friend-btn" id="openAddFriendModal" title="Add Friend">+</button>
-    <h1>Friends-List</h1>
+    <div class="friends-header">
+      <h1>Friends</h1>
+    </div>
 
     {% if requests %}
       <section class="requests-section">
@@ -36,26 +38,22 @@
     {% endif %}
 
     <!-- 发送好友请求 -->
-    <div class="add-friend-section">
+    <!-- <div class="add-friend-section">
       <h2>Add Friends</h2>
       <form method="post" class="add-friend-form">
         {{ form.hidden_tag() }}
         {{ form.friend_username(class="friend-input", placeholder="friend username") }}
         {{ form.submit(class="btn add-btn") }}
       </form>
-    </div>
+    </div> -->
 
     {% if friends %}
-      <div class="friend-list">
+      <div class="friend-list-wrapper">
         {% for u in friends %}
-          <div class="friend-card" data-username="{{ u.username }}">
-            <div class="avatar">
-              <img
-                src="{{ url_for('static', filename='profile_pics/' + u.profile_pic) if u.profile_pic else url_for('static', filename='images/user.png') }}"
-                alt="{{ u.username }}'s profile picture"
-                class="friend-avatar">
-            </div>
-            <div class="username">{{ u.username }}</div>
+          <div class="friend-row" data-username="{{ u.username }}">
+            <img src="{{ url_for('static', filename='profile_pics/' + u.profile_pic) if u.profile_pic else url_for('static', filename='images/user.png') }}"
+                class="friend-thumb" alt="profile picture">
+            <span class="friend-name">{{ u.username }}</span>
           </div>
         {% endfor %}
       </div>
@@ -63,16 +61,6 @@
       <p class="no-friends">You currently don't have any friends.</p>
     {% endif %}
 
-    <!-- Flash Messages -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <div class="flashes">
-          {% for category, msg in messages %}
-            <div class="flash {{ category }}">{{ msg }}</div>
-          {% endfor %}
-        </div>
-      {% endif %}
-    {% endwith %}
   </div>
 
   <!-- Add Friend Modal -->
@@ -87,22 +75,17 @@
       </form>
     </div>
   </div>
-  <div id="comparison-graph-section" style="display: none;" class="chart-container">
-    <h2 class="chart-title">Calories Burnt Comparison</h2>
-    <canvas id="comparisonChart"></canvas>
-  </div>
+  <div id="comparisonOverlay" class="comparison-overlay">
+    <div class="overlay-content">
+      <button id="closeOverlay" class="close-overlay">&times;</button>
+      <h3>Calories Burnt vs <span id="friendNameDisplay"></span></h3>
+      <canvas id="comparisonChart"></canvas>
+    </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
 {{ super() }}
-<script>
-  const openBtn = document.getElementById('openAddFriendModal');
-  const modal = document.getElementById('addFriendModal');
-  const closeBtn = document.getElementById('closeAddFriendModal');
-  openBtn.onclick = () => { modal.classList.add('active'); };
-  closeBtn.onclick = () => { modal.classList.remove('active'); };
-  window.onclick = (e) => { if(e.target === modal) modal.classList.remove('active'); };
-</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script src="{{ url_for('static', filename='js/friends.js') }}"></script>
 {% endblock %}

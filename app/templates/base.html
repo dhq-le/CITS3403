@@ -57,6 +57,9 @@
 						<a class="nav-link" href=" {{ url_for('routes.index') }}">Home</a>
 					</li>
 					<li class="nav-item">
+						<a class="nav-link" href="{{ url_for('routes.workout_plans') }}">Workout Plans</a>
+					</li>
+					<li class="nav-item">
 						<a class="nav-link" href=" {{ url_for('routes.view_friends') }}">Friends</a>
 					</li>
 					<li class="nav-item">
@@ -69,7 +72,15 @@
 
 	{% block content %}
 	{% endblock %}
-
+	{% with messages = get_flashed_messages(with_categories=true) %}
+	  {% if messages %}
+		<div class="flashes">
+		  {% for category, msg in messages %}
+			<div class="flash {{ category }}">{{ msg }}</div>
+		  {% endfor %}
+		</div>
+	  {% endif %}
+	{% endwith %}
 
 
 	<!-- Footer section -->
