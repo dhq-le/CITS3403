@@ -11,7 +11,7 @@ class Usernames(UserMixin, db.Model):
     password = db.Column(db.String(120), nullable=False)
     height = db.Column(db.Integer, nullable=True)
     weight = db.Column(db.Integer, nullable=True)
-    dob = db.Column(db.Integer, nullable=True)
+    dob = db.Column(db.Date, nullable=True)
     profile_pic = db.Column(db.String(120), nullable=True)  # this will be a link to the image, not the image itself
     ## if we have time later add email here
 

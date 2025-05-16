@@ -69,12 +69,12 @@ def logout():
     logout_user()
     return redirect(url_for('routes.login'))
 
-def calculate_age(dob_str):
-    dob = datetime.strptime(dob_str, "%Y-%m-%d").date()
-    print("hi",dob)
+
+def calculate_age(dob_date: date) -> int:
     today = date.today()
-    age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
+    age = today.year - dob_date.year - ((today.month, today.day) < (dob_date.month, dob_date.day))
     return age
+
 
 ## index/dashboard page
 @login_required
@@ -404,7 +404,7 @@ def edit_profile():
             user.set_password(form.password.data)
             print(user.password)
         user.height = form.height.data
-        user.dob = request.form['dob']  
+        user.dob = form.dob.data
 
         file = request.files.get('profile_pic')
         if file and file.filename:
