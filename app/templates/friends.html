@@ -76,6 +76,17 @@
     </div>
   </div>
   <div id="comparisonOverlay" class="comparison-overlay">
+    <div style="margin-bottom: 1rem;">
+      <div class="view-selector">
+        <label for="compareTimeRange">View: </label>
+        <select id="compareTimeRange">
+          <option value="month">This Month</option>
+          <option value="year">This Year</option>
+          <option value="all">All Time</option>
+        </select>
+      </div>
+    </div>
+
     <div class="overlay-content">
       <button id="closeOverlay" class="close-overlay">&times;</button>
       <h3>Calories Burnt vs <span id="friendNameDisplay"></span></h3>
