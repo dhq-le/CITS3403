@@ -1,32 +1,14 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const ctx = document.getElementById('caloriesburntchart')?.getContext('2d');
-  if (!ctx) return; // silently fail
-
-  let chart;
-
-
-  function fetchAndRender(range) {
-    fetch(`/api/calories?range=${range}`)
+    fetch('/api/calories')
       .then(res => res.json())
       .then(data => {
         const labels = data.map(entry => {
-          const d = new Date(entry.date);
-
-          if (range === 'month') {
-            return d.toLocaleDateString('en-AU', { day: '2-digit' });
-          } else if (range === 'year') {
-            return d.toLocaleDateString('en-AU', { day: '2-digit', month: 'short' });
-          } else {
-            // 'all' or default — include year for clarity
-            return d.toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' });
-          }
+          const d = entry.date;
+          return `${d.slice(6, 8)}/${d.slice(4, 6)}`;
         });
-
         const calories = data.map(entry => entry.calories);
-
-        if (chart) chart.destroy();
-
-        chart = new Chart(ctx, {
+  
+        new Chart(document.getElementById('caloriesburntchart'), {
           type: 'line',
           data: {
             labels: labels,
@@ -48,14 +30,5 @@ document.addEventListener('DOMContentLoaded', function () {
           }
         });
       });
-  }
-
-  fetchAndRender('month');
-
-  document.getElementById('timeRange').addEventListener('change', function () {
-    fetchAndRender(this.value);
   });
-});
-
-
-    
+  

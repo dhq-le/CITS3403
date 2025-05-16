@@ -17,15 +17,13 @@ document.addEventListener('DOMContentLoaded', function () {
   const closeBtn = document.getElementById('closeOverlay');
   const nameDisplay = document.getElementById('friendNameDisplay');
   const ctx = document.getElementById('comparisonChart');
-  const rangeSelector = document.getElementById('compareTimeRange');
   let chartInstance;
 
   cards.forEach(card => {
     card.addEventListener('click', () => {
       const friend = card.dataset.username;
-      const range = rangeSelector?.value || 'month';
 
-      fetch(`/api/calories?friend=${friend}&range=${range}`)
+      fetch(`/api/calories?friend=${friend}`)
         .then(res => res.json())
         .then(data => {
           if (data.error) {
@@ -36,16 +34,9 @@ document.addEventListener('DOMContentLoaded', function () {
           const userData = data.user;
           const friendData = data.friend;
 
-          // Generate labels using appropriate format based on range
           const labels = userData.map(entry => {
-            const d = new Date(entry.date);
-            if (range === 'month') {
-              return d.toLocaleDateString('en-AU', { day: '2-digit' });
-            } else if (range === 'year') {
-              return d.toLocaleDateString('en-AU', { day: '2-digit', month: 'short' });
-            } else {
-              return d.toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' });
-            }
+            const d = entry.date;
+            return `${d.slice(6, 8)}/${d.slice(4, 6)}`;
           });
 
           const userCalories = userData.map(e => e.calories);
@@ -93,16 +84,6 @@ document.addEventListener('DOMContentLoaded', function () {
   if (closeBtn) {
     closeBtn.addEventListener('click', () => {
       overlay.classList.remove('active');
-    });
-  }
-
-  // Re-fetch data if time range changes
-  if (rangeSelector) {
-    rangeSelector.addEventListener('change', () => {
-      const activeFriendCard = document.querySelector('.friend-row[data-username="' + nameDisplay.textContent + '"]');
-      if (activeFriendCard) {
-        activeFriendCard.click(); // re-trigger chart for current friend
-      }
     });
   }
 
