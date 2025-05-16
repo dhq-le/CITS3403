@@ -16,6 +16,7 @@
       <div class="card-body workout-log-body">
         <form method="POST" action="{{ url_for('routes.log_workout') }}">
           {{ form.hidden_tag() }}
+          <input type="hidden" name="exercise" value="{{ form.exercise.data }}">
           <input type="hidden" name="plan_id" value="{{ request.args.get('plan_id') }}">
 
           <div class="form-group">
