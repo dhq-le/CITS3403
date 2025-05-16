@@ -23,7 +23,7 @@ def signup():
             ## check against database, ensure these dont already exist
             if Usernames.query.filter_by(username=username).first() is not None:
                 error = "Username is already taken. Please select a new username."
-                return render_template('signuphtml', form=form, error=error)
+                return render_template('signup.html', form=form, error=error)
             else:
                 new_user = Usernames(username=username, height=height, weight=weight, dob=dob)
                 new_user.set_password(password)
