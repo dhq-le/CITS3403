@@ -80,6 +80,8 @@ class PageTests(unittest.TestCase):
         response = self.client.get('/', follow_redirects=True)
         self.assertIn(b'Login', response.data)
 
+
+    ##### DATABASE TESTS #####
     def test_user_creation(self):
         user = Usernames.query.filter_by(username='alice').first()
         self.assertIsNotNone(user)
