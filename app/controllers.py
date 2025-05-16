@@ -229,7 +229,7 @@ def log_workout():
             workout.weights = form.weights.data
             workout.calories_burned = total_calories
             workout.completion = form.completion_status.data
-            flash(f'Workout updated! Calories burned: {total_calories}')
+            flash(f'Workout updated!')
         else:
             # Create new workout
             workout = Workout(
@@ -243,7 +243,7 @@ def log_workout():
                 completion=form.completion_status.data
             )
             db.session.add(workout)
-            flash(f'Workout logged! Calories burned: {total_calories}')
+            flash('Workout logged!')
 
         db.session.commit()
         next_url = form.next.data or url_for('routes.index')
