@@ -254,55 +254,57 @@ def log_workout():
 ## calorie data chart
 @login_required
 def calories_data():
+
     user_id = current_user.id
+    print("SESSION user_id:", user_id)
+
     if not user_id:
         return jsonify({"error": "Not logged in"}), 401
 
-    # Time range filter
-    range_filter = request.args.get("range", "month")
-    today = date.today()
-
-    if range_filter == "month":
-        start_date = today.replace(day=1)
-    elif range_filter == "year":
-        start_date = today.replace(month=1, day=1)
-    else:
-        start_date = None  # 'all' means no filtering
-
-    # Check if friend comparison
+    # check if it's a friend comparison
     friend_username = request.args.get('friend')
 
-    def build_query(user_id):
-        base_query = """
+    # if no friend param: just return your own data (for profile/home)
+    if not friend_username:
+        query = text("""
             SELECT date, SUM(calories_burned) AS calories
             FROM workout_history
             WHERE user_id = :user_id
-              AND completion = True
-        """
-        if start_date:
-            base_query += " AND date >= :start_date"
-        base_query += " GROUP BY date ORDER BY date ASC"
+            AND completion = True
+            GROUP BY date
+            ORDER BY date ASC
+        """)
+        result = db.session.execute(query, {"user_id": user_id}).fetchall()
+        data = [{"date": str(row.date), "calories": row.calories} for row in result]
+        return jsonify(data)
 
-        params = {"user_id": user_id}
-        if start_date:
-            params["start_date"] = start_date
-        return db.session.execute(text(base_query), params).fetchall()
-
-    # If no friend — just user's data
-    if not friend_username:
-        result = build_query(user_id)
-        return jsonify([
-            {"date": str(row.date), "calories": row.calories} for row in result
-        ])
-
-    # Comparison mode with friend
-    from app.models import Usernames
+    # otherwise: comparison mode
+    from app.models import Usernames  # adjust if needed based on where Usernames is defined
     friend = Usernames.query.filter_by(username=friend_username).first()
     if not friend:
         return jsonify({"error": "Friend not found"}), 404
 
-    user_result = build_query(user_id)
-    friend_result = build_query(friend.id)
+    print(f"Comparing with friend: {friend.username} (ID: {friend.id})")
+
+    user_query = text("""
+        SELECT date, SUM(calories_burned) AS calories
+        FROM workout_history
+        WHERE user_id = :uid
+        AND completion = True
+        GROUP BY date
+        ORDER BY date
+    """)
+    friend_query = text("""
+        SELECT date, SUM(calories_burned) AS calories
+        FROM workout_history
+        WHERE user_id = :fid
+        AND completion = True
+        GROUP BY date
+        ORDER BY date
+    """)
+
+    user_result = db.session.execute(user_query, {"uid": user_id}).fetchall()
+    friend_result = db.session.execute(friend_query, {"fid": friend.id}).fetchall()
 
     return jsonify({
         "user": [{"date": str(row.date), "calories": row.calories} for row in user_result],
