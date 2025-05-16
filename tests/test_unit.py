@@ -1,13 +1,13 @@
 import unittest
 from app import create_app, db
+from config import TestingConfig
 from app.models import Usernames, Friendship, FriendRequest, Workout
 from flask.testing import FlaskClient
 from datetime import datetime, timezone
 
 class PageTests(unittest.TestCase):
     def setUp(self):
-        self.app = create_app()
-        self.app.config['TESTING'] = True
+        self.app = create_app(TestingConfig)
         self.app.config['WTF_CSRF_ENABLED'] = False
         self.app_context = self.app.app_context()
         self.app_context.push()
