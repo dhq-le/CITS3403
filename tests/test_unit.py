@@ -80,31 +80,6 @@ class PageTests(unittest.TestCase):
         response = self.client.get('/', follow_redirects=True)
         self.assertIn(b'Login', response.data)
 
-
-
-
-######## DATABASE TEST CASES
-class ModelsTestCase(unittest.TestCase):
-
-    def setUp(self):
-        self.app = create_app()
-        self.app_context = self.app.app_context()
-        self.app_context.push()
-        self.client = self.app.test_client(use_cookies=True)
-        db.create_all()
-
-        # Create sample users
-        self.user1 = Usernames(username='alice', password='password1', height=160, weight=60)
-        self.user2 = Usernames(username='bob', password='password2', height=175, weight=80)
-        db.session.add(self.user1)
-        db.session.add(self.user2)
-        db.session.commit()
-
-    def tearDown(self):
-        db.session.remove()
-        db.drop_all()
-        self.app_context.pop()
-
     def test_user_creation(self):
         user = Usernames.query.filter_by(username='alice').first()
         self.assertIsNotNone(user)
