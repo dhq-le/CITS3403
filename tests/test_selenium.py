@@ -5,6 +5,7 @@ from werkzeug.serving import make_server
 from app import create_app, db
 from app.models import Usernames
 from config import TestingConfig
+from datetime import datetime
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -39,7 +40,7 @@ class SeleniumTests(unittest.TestCase):
         # Initialize in-memory database and add a test user
         with app.app_context():
             db.create_all()
-            u = Usernames(username="selenium_user", height=170, weight=65, dob=19900101)
+            u = Usernames(username="selenium_user", height=170, weight=65, dob=datetime.strptime(str(19900101), "%Y%m%d").date())
             u.set_password("selenium_pass")
             db.session.add(u)
             db.session.commit()
@@ -58,8 +59,7 @@ class SeleniumTests(unittest.TestCase):
     @classmethod
     def _login(cls):
         cls.driver.get("http://127.0.0.1:5000/login")
-        # Debug: dump login page HTML
-        print(cls.driver.page_source)
+
         WebDriverWait(cls.driver, 5).until(
             EC.presence_of_element_located((By.NAME, "username"))
         )
@@ -71,9 +71,6 @@ class SeleniumTests(unittest.TestCase):
         )
         cls.driver.find_element(By.ID, "passwordInput").send_keys("selenium_pass")
         cls.driver.find_element(By.XPATH, "//button[@type='submit']").click()
-        # Debug: dump post-login page HTML and URL
-        print("Post-login URL:", cls.driver.current_url)
-        print(cls.driver.page_source)
         # login redirect: wait for dashboard welcome header
         WebDriverWait(cls.driver, 5).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, "header.dashboard-header h1"))
@@ -85,7 +82,6 @@ class SeleniumTests(unittest.TestCase):
         WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.NAME, "username"))
         )
-        print(self.driver.page_source)
         driver.find_element(By.NAME, "username").send_keys("new_user")
         driver.find_element(By.NAME, "password").send_keys("new_pass")
         driver.find_element(By.NAME, "height").send_keys("180")
@@ -93,9 +89,6 @@ class SeleniumTests(unittest.TestCase):
         driver.find_element(By.NAME, "dob").send_keys("19900202")
         # submit and wait for login page to load
         driver.find_element(By.TAG_NAME, "form").submit()
-        # Debug: print current URL and page HTML after signup submit
-        print("After signup URL:", driver.current_url)
-        print(driver.page_source)
         WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.ID, "usernameInput"))
         )

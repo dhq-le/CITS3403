@@ -33,28 +33,39 @@ source venv/bin/activate
 pip install -r 'requirements.txt'
 ```
 
+
 4. Initialise the database.
+
+Windows:
 ```
-flask db upgrade
+python init_db_rows.py
+```
+macOS/Linux:
+```
+python3 init_db_rows.py
 ```
 **NOTE:** If you are making any changes to the database, run this line first:
 ```
 flask db migrate -m "comment"
+flask db upgrade
 ```
-
 
 5. Start the server.
 
-Windows:
 ```
-python run.py
+flask run 
 ```
+**NOTE:** If this is being run in a development environment, run with argument `--debug`.
+
+## Testing Instructions	
+To run both selenium and unit tests, run this command from the root directory (whilst in the virtual environment):
+
+```
+python -m unittest discover -s tests 
+```
+ 
 
 
-macOS/Linux:
-```
-python3 run.py
-```
 
 ## Uploading to GitHub
 If you install any dependencies, ensure that these are added to the requirements.txt file. 

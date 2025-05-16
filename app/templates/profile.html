@@ -22,7 +22,6 @@
 
 				<div class="profile-details">
 					<p><strong>Username:</strong> {{ user.username }}</p>
-					<p><strong>Friends:</strong> {{ user.friends_count }}</p>
 					<p><strong>Height:</strong> {{ user.height }} cm</p>
 					<p><strong>Date of Birth:</strong> {{ user.dob }}</p>
 					<button class="cool-button" onclick="location.href='{{ url_for('routes.edit_profile') }}';">Edit Profile</button>
@@ -45,9 +44,6 @@
 						<p><strong>Reps:</strong> {{ workout.reps }}</p>
 						<p><strong>Weight:</strong> {{ workout.weights }}</p>
 						<p><strong>Calories Burned:</strong> {{ workout.calories_burned }}</p>
-						<button class="cool-button" onclick="location.href='{{ url_for('routes.log_workout', plan_id=workout.workout_id, next=request.path) }}'">
-							Update Workout
-						</button>
 						<button class="cool-button" onclick="deleteWorkout({{ workout.workout_id }})">
 							Delete Workout
 						</button>
