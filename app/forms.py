@@ -80,7 +80,6 @@ class EditProfileForm(FlaskForm):
                         r'^\w+$', message="Username must contain only letters, numbers, or underscores.")
         ])
         password = PasswordField('Password', validators=[
-                DataRequired(),
                 Length(min=8, message="Password must be at least 8 characters long.")
         ])
         height = IntegerField('Height (in cm)', validators=[
