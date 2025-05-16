@@ -113,8 +113,19 @@ class ModelsTestCase(unittest.TestCase):
         friendship = Friendship(user_id=self.user1.id, friend_id=self.user2.id)
         db.session.add(friendship)
         db.session.commit()
+        db.session.refresh(friendship)
         self.assertEqual(Friendship.query.count(), 1)
         self.assertEqual(friendship.user.username, 'alice')
+
+    def test_friend_request(self):
+        req = FriendRequest(from_user_id=self.user1.id, to_user_id=self.user2.id)
+        db.session.add(req)
+        db.session.commit()
+        result = FriendRequest.query.first()
+        db.session.refresh(req)
+        self.assertEqual(result.from_user.username, 'alice')
+        self.assertEqual(result.to_user.username, 'bob')
+        self.assertTrue(isinstance(result.timestamp, datetime))
 
     def test_workout_creation(self):
         workout = Workout(
