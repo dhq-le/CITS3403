@@ -11,6 +11,7 @@ class PageTests(unittest.TestCase):
         self.app.config['WTF_CSRF_ENABLED'] = False
         self.app_context = self.app.app_context()
         self.app_context.push()
+        db.drop_all()
         db.create_all()
 
         # Create test client
@@ -144,7 +145,3 @@ class ModelsTestCase(unittest.TestCase):
         self.assertEqual(w.exercise, "Push Ups")
         self.assertTrue(w.completion)
         self.assertEqual(w.user_id, self.user1.id)
-
-
-if __name__ == '__main__':
-    unittest.main()
