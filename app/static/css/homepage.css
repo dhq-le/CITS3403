@@ -28,11 +28,14 @@ body {
 
 /* MAIN DASHBOARD GRID */
 .dashboard {
-    display: grid;
-    grid-template-columns: 2fr 2fr 1.5fr; /* Adjust columns as needed */
-    gap: 1rem;
-    padding: 1rem;
+  display: grid;
+  grid-template-columns: 600px 600px;
+  gap: 2rem;
+  padding: 2rem;
+  width: max-content; /* Fixed width like your old layout */
+  margin:0 auto;
 }
+
 
 /* DASHBOARD CARDS */
 .dashboard section {
@@ -42,17 +45,32 @@ body {
     border: 1px solid #e0e0e0;
 }
 
+.dashboard-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.view-selector {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 /* CARD STRUCTURE */
 .card-header{
     background-color: rgb(35, 225, 246);
-    height: 2.5rem;
     padding: 0 1rem;
     display: flex;
+    justify-content: space-between;  /* Pushes content to edges */
+    align-items: center;             /* Vertically center items */
     border-bottom: 1px solid #e0e0e0;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
+    height: auto;
+    min-height: 2.5rem;
     margin-bottom: 1rem;
-    text-decoration: none;
 }
 
 .card-header h2 {
@@ -181,4 +199,23 @@ body {
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     padding: 20px;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.chart-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  margin-left: 1rem;
+}
+
+.chart-header select {
+  font-size: 0.9rem;
+  padding: 0.3rem 0.5rem;
 }
