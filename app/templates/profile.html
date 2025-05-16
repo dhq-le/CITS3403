@@ -45,9 +45,6 @@
 						<p><strong>Reps:</strong> {{ workout.reps }}</p>
 						<p><strong>Weight:</strong> {{ workout.weights }}</p>
 						<p><strong>Calories Burned:</strong> {{ workout.calories_burned }}</p>
-						<button class="cool-button" onclick="location.href='{{ url_for('routes.log_workout', plan_id=workout.workout_id, next=request.path) }}'">
-							Update Workout
-						</button>
 						<button class="cool-button" onclick="deleteWorkout({{ workout.workout_id }})">
 							Delete Workout
 						</button>
