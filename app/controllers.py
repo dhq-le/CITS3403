@@ -399,7 +399,7 @@ def edit_profile():
                 flash('That username is already taken.', 'error')
                 return render_template('edit_profile.html', form=form, user=user)
         user.username = form.username.data
-        if form.password.data is not None:
+        if form.password.data != '':
             print(form.password.data)
             user.set_password(form.password.data)
             print(user.password)
