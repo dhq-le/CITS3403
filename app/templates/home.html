@@ -13,76 +13,79 @@
 </header>
 
 <!-- MAIN DASHBOARD CONTENT -->
-<main class="dashboard">
+<div class="dashboard-wrapper">
+	<main class="dashboard">
+		
 
-	<!-- Today's Workout CARD -->
-	<section class="card" id="today-workout">
-		<div class="card-header">
-			<h2>🏋 Today's Workout</h2>
-		</div>
-		<div class="card-body">
-		  <table class="table table-striped table-bordered">
-			<thead>
-			  <tr>
-				<th>Exercise</th>
-				<th>Sets</th>
-				<th>Reps</th>
-				<th>Weight (kg)</th>
-			  </tr>
-			</thead>
-			<tbody>
-			  {% for plan in plans %}
-			  <tr>
-				<td>{{ plan.exercise }}</td>
-				<td>{{ plan.sets }}</td>
-				<td>{{ plan.reps }}</td>
-				<td>{{ plan.weights }}</td>
-			  </tr>
-			  {% endfor %}
-			</tbody>
-		  </table>
-		</div>
+		<!-- Today's Workout CARD -->
+		<section class="card" id="today-workout">
+			<div class="card-header">
+				<h2>🏋 Today's Workout</h2>
+			</div>
+			<div class="card-body">
+				<table class="table table-striped table-bordered">
+				<thead>
+					<tr>
+					<th>Exercise</th>
+					<th>Sets</th>
+					<th>Reps</th>
+					<th>Weight (kg)</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for plan in plans %}
+					<tr>
+					<td>{{ plan.exercise }}</td>
+					<td>{{ plan.sets }}</td>
+					<td>{{ plan.reps }}</td>
+					<td>{{ plan.weights }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+				</table>
+			</div>
 
 
-		<button class="cool-button" onclick="location.href='{{ url_for('routes.start_exercise') }}';">Start Course</button>
-	</section>
+			<button class="cool-button" onclick="location.href='{{ url_for('routes.start_exercise') }}';">Start Course</button>
+		</section>
 
-	<!-- Progress Tracker CARD -->
-	<section class="card" id="progress-tracker">
-		<div class="card-header">
-			<h2>📈 Progress Tracker</h2>
-		</div>
-		<!-- Placeholder for progress tracker items @special case -->
-		<div class="progress-tracker-item">
-			<h3>Calories Intake</h3>
-			<div class="chart-placeholder">Chart Placeholder</div>
-		</div>
+		<!-- Progress Tracker CARD -->
+		<section class="card" id="progress-tracker">
+			<div class="card-header">
+				<h2>📈 Progress Tracker</h2>
+			</div>
 
-		<div class="progress-tracker-item">
-			<h3>Calories Burnt</h3>
-			<canvas id="caloriesburntchart" width="400" height="200"></canvas>
-		</div>
+			<div class="progress-tracker-item">
+				<div class="chart-header">
+					<h3>Calories Burnt</h3>
+					<div class="view-selector">
+					<label for="timeRange">View:</label>
+					<select id="timeRange">
+						<option value="month">This Month</option>
+						<option value="year">This Year</option>
+						<option value="all">All Time</option>
+					</select>
+				</div>
+			</div>
+				<canvas id="caloriesburntchart" width="400" height="200"></canvas>
+			</div>
 
-		<div class="progress-tracker-item">
-			<h3>Weight</h3>
-			<div class="chart-placeholder">Chart Placeholder</div>
-		</div>
-	</section>
+		<!-- Health CARD -->
+		<section class="card" id="health">
+			<div class="card-header">
+				<h2>♥️ Health</h2>
+			</div>
+			<div class="card-body">
+				<p>Username: <span id="user-name">{{ user.username }}</span></p>
+				<p>Age: <span id="user-age">{{ age }} years old</span></p>
+				<p>Height: <span id="user-height">{{ user.height }} cm</span></p>
+				<p>Weight: <span id="user-weight">{{ user.weight }} kg</span></p>
+			</div>
+		</section>
 
-	<!-- Health CARD -->
-	<section class="card" id="health">
-		<div class="card-header">
-			<h2>♥️ Health</h2>
-		</div>
-		<div class="card-body">
-		  <p>Username: <span id="user-name">{{ user.username }}</span></p>
-		  <p>Age: <span id="user-age">{{ age }} years old</span></p>
-		  <p>Height: <span id="user-height">{{ user.height }} cm</span></p>
-		  <p>Weight: <span id="user-weight">{{ user.weight }} kg</span></p>
-		</div>
-	</section>
 
-</main>
+	</main>
+</div>
 {% endblock %}
 
 {% block scripts %}
