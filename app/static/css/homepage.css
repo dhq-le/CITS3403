@@ -219,3 +219,15 @@ body {
   font-size: 0.9rem;
   padding: 0.3rem 0.5rem;
 }
+
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: 1fr; /* One column layout */
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .card {
+    width: 100%;
+  }
+}

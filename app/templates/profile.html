@@ -37,6 +37,7 @@
 			</div>
 			<div class="card-body">
 				{% for workout in workout_history %}
+				<section class="card">
 					<div class="card-body workout-card" id="workout-{{ workout.workout_id }}">
 						<p><strong>Date:</strong> {{ workout.date }}</p>
 						<p><strong>Exercise:</strong> {{ workout.exercise }}</p>
@@ -48,6 +49,7 @@
 							Delete Workout
 						</button>
 					</div>
+				</section>
 				{% endfor %}
 			</div>
 		</section>
