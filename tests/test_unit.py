@@ -113,6 +113,7 @@ class ModelsTestCase(unittest.TestCase):
         friendship = Friendship(user_id=self.user1.id, friend_id=self.user2.id)
         db.session.add(friendship)
         db.session.commit()
+        db.session.refresh(friendship)
         self.assertEqual(Friendship.query.count(), 1)
         self.assertEqual(friendship.user.username, 'alice')
 

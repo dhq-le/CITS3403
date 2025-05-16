@@ -44,7 +44,7 @@ macOS/Linux:
 ```
 python3 init_db_rows.py
 ```
-**NOTE:** If you are making any changes to the database, run this line first:
+**NOTE:** If you are making any changes to the database, run these lines first:
 ```
 flask db migrate -m "comment"
 flask db upgrade
